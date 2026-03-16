@@ -1,0 +1,2318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bernese Mountain Dog — The Gentle Giant of the Alps</title>
+  <meta name="description" content="Discover everything about the majestic Bernese Mountain Dog — history, temperament, care, and why they capture every heart they meet." />
+  <meta property="og:title" content="Bernese Mountain Dog — The Gentle Giant of the Alps" />
+  <meta property="og:description" content="Discover everything about the majestic Bernese Mountain Dog." />
+  <meta property="og:type" content="website" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       CSS CUSTOM PROPERTIES — Berner Tri-Color Palette
+       ============================================================ */
+    :root {
+      --black:       #1A1208;
+      --rust:        #B85C2C;
+      --rust-light:  #D4743E;
+      --gold:        #D4A843;
+      --gold-light:  #E8C870;
+      --cream:       #FAF6EE;
+      --cream-dark:  #F0E8D4;
+      --brown:       #6B3D1E;
+      --brown-dark:  #3D1C02;
+      --forest:      #2D5A1B;
+      --forest-light:#4A7D30;
+      --white:       #FFFFFF;
+      --gray-light:  #F2EDE4;
+      --gray-mid:    #C4B49A;
+      --gray-text:   #5A4A38;
+
+      --font-serif:  'Playfair Display', Georgia, serif;
+      --font-sans:   'Inter', system-ui, sans-serif;
+      --font-script: 'Dancing Script', cursive;
+
+      --radius:      12px;
+      --radius-lg:   24px;
+      --shadow-sm:   0 2px 8px rgba(26,18,8,0.08);
+      --shadow-md:   0 8px 32px rgba(26,18,8,0.14);
+      --shadow-lg:   0 20px 60px rgba(26,18,8,0.20);
+
+      --transition:  0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--cream);
+      color: var(--black);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 28px; height: 28px;
+      background: var(--rust);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: multiply;
+    }
+    .cursor-trail {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.4s ease;
+      mix-blend-mode: multiply;
+    }
+    body:hover .cursor { opacity: 1; }
+
+    /* Scroll progress bar */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--rust), var(--gold));
+      z-index: 10000;
+      width: 0%;
+      transition: width 0.1s linear;
+      border-radius: 0 2px 2px 0;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 clamp(1rem, 4vw, 3rem);
+    }
+
+    /* ============================================================
+       SCROLL REVEAL ANIMATIONS
+       ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ============================================================
+       NAVIGATION
+       ============================================================ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 1.2rem 0;
+      transition: background var(--transition), padding var(--transition), box-shadow var(--transition);
+    }
+    #navbar.scrolled {
+      background: rgba(26,18,8,0.95);
+      backdrop-filter: blur(12px);
+      padding: 0.8rem 0;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-logo .paw { font-size: 1.3rem; }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.85);
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 26px; height: 2px;
+      background: var(--white);
+      transition: var(--transition);
+    }
+
+    /* ============================================================
+       HERO SECTION
+       ============================================================ */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--brown-dark);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 60% 40%, rgba(184,92,44,0.35) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(45,90,27,0.25) 0%, transparent 50%),
+        linear-gradient(135deg, #1A1208 0%, #3D1C02 40%, #1A1208 100%);
+    }
+
+    /* Animated paw prints background */
+    .paw-field {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .paw-print {
+      position: absolute;
+      opacity: 0;
+      animation: pawFloat 8s ease-in-out infinite;
+    }
+    .paw-print svg { fill: rgba(255,255,255,0.06); }
+
+    @keyframes pawFloat {
+      0%   { opacity: 0; transform: translateY(0) rotate(0deg) scale(0.5); }
+      20%  { opacity: 1; }
+      80%  { opacity: 0.5; }
+      100% { opacity: 0; transform: translateY(-120px) rotate(20deg) scale(1.2); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem;
+      max-width: 900px;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-script);
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.3s forwards;
+    }
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.55s forwards;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--rust-light);
+    }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.8s forwards;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--rust);
+      color: var(--white);
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 8px 30px rgba(184,92,44,0.5);
+      opacity: 0;
+      animation: fadeUp 1s ease 1s forwards;
+    }
+    .hero-cta:hover {
+      background: var(--rust-light);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(184,92,44,0.6);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.4s forwards;
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================================
+       STATS BAR
+       ============================================================ */
+    #stats {
+      background: var(--black);
+      padding: 2.5rem 0;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-value {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .stat-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    /* ============================================================
+       SECTION HEADERS
+       ============================================================ */
+    .section-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--rust);
+      background: rgba(184,92,44,0.1);
+      border: 1px solid rgba(184,92,44,0.25);
+      padding: 0.35rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--gray-text);
+      line-height: 1.8;
+      max-width: 600px;
+    }
+    .divider {
+      width: 60px; height: 4px;
+      background: linear-gradient(90deg, var(--rust), var(--gold));
+      border-radius: 2px;
+      margin: 1.2rem 0;
+    }
+
+    /* ============================================================
+       ABOUT SECTION
+       ============================================================ */
+    #about {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      background: var(--cream);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .about-image-wrapper {
+      position: relative;
+    }
+    .about-image-frame {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      aspect-ratio: 4/5;
+      background: var(--brown-dark);
+    }
+    .about-image-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+    .about-image-frame:hover img { transform: scale(1.04); }
+    .about-badge {
+      position: absolute;
+      bottom: -1.5rem;
+      right: -1.5rem;
+      background: var(--rust);
+      color: var(--white);
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      border: 4px solid var(--cream);
+    }
+    .about-badge .badge-num {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .about-badge .badge-text {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.85;
+    }
+    .about-accent-box {
+      position: absolute;
+      top: -1.5rem; left: -1.5rem;
+      width: 80px; height: 80px;
+      background: var(--gold);
+      border-radius: 12px;
+      opacity: 0.7;
+      z-index: -1;
+    }
+    .about-text p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--gray-text);
+      margin-bottom: 1.2rem;
+    }
+    .about-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+    .feature-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--cream-dark);
+      border: 1px solid var(--gray-mid);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .feature-pill:hover {
+      background: var(--rust);
+      color: var(--white);
+      transform: translateY(-2px);
+      border-color: var(--rust);
+    }
+    .feature-pill .pill-icon { font-size: 1rem; }
+
+    /* ============================================================
+       HISTORY SECTION
+       ============================================================ */
+    #history {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+    }
+    #history::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 80% 20%, rgba(184,92,44,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 10% 80%, rgba(45,90,27,0.15) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .history-header { color: var(--white); margin-bottom: 4rem; }
+    .history-header .section-tag { color: var(--gold-light); background: rgba(212,168,67,0.1); border-color: rgba(212,168,67,0.25); }
+    .history-header .section-title { color: var(--white); }
+    .history-header .section-subtitle { color: rgba(255,255,255,0.6); }
+    .history-header .divider { background: linear-gradient(90deg, var(--gold), var(--rust)); }
+
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--rust), var(--gold), var(--forest-light));
+      transform: translateX(-50%);
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      gap: 0;
+      margin-bottom: 3rem;
+      align-items: center;
+    }
+    .timeline-item:nth-child(even) .timeline-content { grid-column: 3; }
+    .timeline-item:nth-child(even) .timeline-spacer { grid-column: 1; grid-row: 1; }
+    .timeline-item:nth-child(odd)  .timeline-content { grid-column: 1; text-align: right; }
+    .timeline-item:nth-child(odd)  .timeline-spacer  { grid-column: 3; grid-row: 1; }
+    .timeline-dot {
+      grid-column: 2;
+      grid-row: 1;
+      width: 18px; height: 18px;
+      background: var(--rust);
+      border-radius: 50%;
+      margin: 0 auto;
+      border: 3px solid var(--gold);
+      box-shadow: 0 0 0 6px rgba(212,168,67,0.15);
+      z-index: 1;
+    }
+    .timeline-content {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      backdrop-filter: blur(8px);
+      transition: background var(--transition), transform var(--transition);
+    }
+    .timeline-content:hover {
+      background: rgba(255,255,255,0.07);
+      transform: translateY(-4px);
+    }
+    .timeline-year {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .timeline-event {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .timeline-desc {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.65;
+    }
+
+    /* ============================================================
+       TEMPERAMENT SECTION
+       ============================================================ */
+    #temperament {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      background: var(--cream);
+    }
+    .traits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+    .trait-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(196,180,154,0.3);
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+      cursor: default;
+    }
+    .trait-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      background: var(--black);
+    }
+    .trait-card:hover .trait-title { color: var(--gold); }
+    .trait-card:hover .trait-desc { color: rgba(255,255,255,0.6); }
+    .trait-icon-wrap {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, var(--rust), var(--gold));
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2rem;
+      transition: transform var(--transition);
+    }
+    .trait-card:hover .trait-icon-wrap { transform: rotate(-8deg) scale(1.1); }
+    .trait-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      transition: color var(--transition);
+    }
+    .trait-desc {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--gray-text);
+      transition: color var(--transition);
+    }
+
+    /* ============================================================
+       COAT & APPEARANCE SECTION
+       ============================================================ */
+    #appearance {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      background: linear-gradient(135deg, var(--brown-dark) 0%, #2A1A08 100%);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    #appearance::before {
+      content: 'BERNER';
+      position: absolute;
+      font-family: var(--font-serif);
+      font-size: 20vw;
+      font-weight: 900;
+      color: rgba(255,255,255,0.03);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: 0.05em;
+    }
+    .appearance-header .section-tag { color: var(--gold-light); background: rgba(212,168,67,0.1); border-color: rgba(212,168,67,0.25); }
+    .appearance-header .section-title { color: var(--white); }
+    .appearance-header .section-subtitle { color: rgba(255,255,255,0.6); max-width: 700px; }
+
+    .coat-diagram {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 4rem;
+      align-items: start;
+    }
+    .coat-visual {
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .color-swatches {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .swatch-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .swatch {
+      width: 50px; height: 50px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      border: 2px solid rgba(255,255,255,0.1);
+    }
+    .swatch-black  { background: #1A1A1A; }
+    .swatch-white  { background: #F5F0E8; border-color: rgba(255,255,255,0.4); }
+    .swatch-rust   { background: #B85C2C; }
+    .swatch-info h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .swatch-info p  { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+
+    .size-bars { display: flex; flex-direction: column; gap: 1.5rem; }
+    .size-bar-item label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0.5rem;
+    }
+    .size-bar-track {
+      height: 8px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .size-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--rust), var(--gold));
+      width: 0;
+      transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .physical-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .physical-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+    }
+    .physical-list li::before {
+      content: '◆';
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+
+    /* ============================================================
+       GALLERY SECTION
+       ============================================================ */
+    #gallery {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      background: var(--cream-dark);
+    }
+    .gallery-header { margin-bottom: 3rem; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 280px);
+      gap: 1rem;
+    }
+    .gallery-item {
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: var(--brown-dark);
+    }
+    .gallery-item:first-child {
+      grid-row: 1 / 3;
+      grid-column: 1;
+    }
+    .gallery-item:nth-child(4) {
+      grid-row: 1 / 3;
+      grid-column: 3;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease, filter 0.6s ease;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.08);
+      filter: brightness(0.7);
+    }
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,18,8,0.8) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity var(--transition);
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay-text {
+      color: var(--white);
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    /* Loading skeleton */
+    .gallery-skeleton {
+      background: linear-gradient(90deg, #d5c9b5 0%, #ede4d2 50%, #d5c9b5 100%);
+      background-size: 200% 100%;
+      animation: skeleton 1.5s ease infinite;
+    }
+    @keyframes skeleton {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ============================================================
+       HEALTH SECTION
+       ============================================================ */
+    #health {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      background: var(--white);
+    }
+    .health-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 3.5rem;
+    }
+    .health-card {
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .health-card-concern {
+      background: linear-gradient(135deg, #FFF5F0, #FFE8D8);
+      border: 1px solid rgba(184,92,44,0.2);
+    }
+    .health-card-care {
+      background: linear-gradient(135deg, #F0FFF4, #D8F5E0);
+      border: 1px solid rgba(45,90,27,0.2);
+    }
+    .health-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .health-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+    .health-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--gray-text);
+    }
+    .health-list li .hicon {
+      flex-shrink: 0;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      margin-top: 0.1rem;
+    }
+    .health-card-concern .hicon { background: rgba(184,92,44,0.15); color: var(--rust); }
+    .health-card-care .hicon    { background: rgba(45,90,27,0.15); color: var(--forest); }
+    .lifespan-visual {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .lifespan-bar {
+      position: relative;
+      height: 48px;
+      background: rgba(0,0,0,0.06);
+      border-radius: 24px;
+      overflow: hidden;
+      margin-top: 0.75rem;
+    }
+    .lifespan-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--rust), var(--gold));
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 1rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--white);
+      width: 0;
+      transition: width 1.5s ease 0.3s;
+    }
+
+    /* ============================================================
+       FUN FACTS SECTION
+       ============================================================ */
+    #funfacts {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      background: var(--cream);
+    }
+    .facts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+    .fact-card {
+      perspective: 800px;
+      height: 220px;
+      cursor: pointer;
+    }
+    .fact-inner {
+      position: relative;
+      width: 100%; height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .fact-card:hover .fact-inner { transform: rotateY(180deg); }
+    .fact-front, .fact-back {
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .fact-front {
+      background: var(--white);
+      border: 1px solid rgba(196,180,154,0.3);
+      box-shadow: var(--shadow-sm);
+    }
+    .fact-back {
+      background: linear-gradient(135deg, var(--rust), var(--brown));
+      color: var(--white);
+      transform: rotateY(180deg);
+    }
+    .fact-num {
+      font-family: var(--font-serif);
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .fact-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray-mid);
+      font-weight: 500;
+    }
+    .fact-back p {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      opacity: 0.9;
+    }
+    .fact-hint {
+      font-size: 0.7rem;
+      color: var(--gray-mid);
+      margin-top: 0.75rem;
+      opacity: 0.7;
+    }
+
+    /* ============================================================
+       CELEBRITY SECTION
+       ============================================================ */
+    #celebrities {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      background: var(--black);
+      color: var(--white);
+    }
+    .celebrities-header .section-tag { color: var(--gold-light); background: rgba(212,168,67,0.1); border-color: rgba(212,168,67,0.25); }
+    .celebrities-header .section-title { color: var(--white); }
+    .celebrities-header .section-subtitle { color: rgba(255,255,255,0.55); }
+    .celebrities-header .divider { background: linear-gradient(90deg, var(--gold), var(--rust)); }
+    .celeb-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 3.5rem;
+    }
+    .celeb-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      transition: background var(--transition), transform var(--transition), border-color var(--transition);
+    }
+    .celeb-card:hover {
+      background: rgba(212,168,67,0.1);
+      border-color: rgba(212,168,67,0.3);
+      transform: translateY(-5px);
+    }
+    .celeb-emoji {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+    .celeb-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--white);
+      margin-bottom: 0.25rem;
+    }
+    .celeb-role {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+    .celeb-dog {
+      font-size: 0.8rem;
+      color: var(--gold-light);
+      margin-top: 0.4rem;
+      font-style: italic;
+    }
+
+    /* ============================================================
+       IDEAL OWNER SECTION
+       ============================================================ */
+    #ideal {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      background: var(--cream-dark);
+    }
+    .ideal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+    .ideal-card {
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      border: 2px solid transparent;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .ideal-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+    .ideal-yes {
+      background: linear-gradient(135deg, #F5FFF8, #E8F5EA);
+      border-color: rgba(45,90,27,0.25);
+    }
+    .ideal-no {
+      background: linear-gradient(135deg, #FFF5F0, #FFF0EA);
+      border-color: rgba(184,92,44,0.25);
+    }
+    .ideal-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .ideal-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .ideal-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.925rem;
+      line-height: 1.5;
+    }
+    .ideal-yes .ideal-list li::before { content: '✓'; color: var(--forest); font-weight: 700; }
+    .ideal-no  .ideal-list li::before { content: '✗'; color: var(--rust); font-weight: 700; }
+
+    /* ============================================================
+       QUOTE BANNER
+       ============================================================ */
+    #quote {
+      background: var(--rust);
+      padding: 5rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #quote::before {
+      content: '"';
+      position: absolute;
+      font-family: var(--font-serif);
+      font-size: 30rem;
+      color: rgba(255,255,255,0.05);
+      top: -8rem;
+      left: 2rem;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .quote-text {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-style: italic;
+      color: var(--white);
+      max-width: 800px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.45;
+      position: relative;
+    }
+    .quote-author {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    footer {
+      background: var(--brown-dark);
+      color: rgba(255,255,255,0.6);
+      padding: 3rem 0 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--rust), var(--gold), var(--forest-light));
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 2.5rem;
+    }
+    .footer-brand .nav-logo { font-size: 1.3rem; color: var(--white); margin-bottom: 1rem; }
+    .footer-brand p { font-size: 0.875rem; line-height: 1.75; max-width: 300px; }
+    .footer-col h4 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.5);
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--gold-light); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+    }
+    .footer-paws {
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+      opacity: 0.3;
+    }
+
+    /* Back to top */
+    #back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px; height: 50px;
+      background: var(--rust);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity var(--transition), transform var(--transition), background var(--transition);
+      z-index: 500;
+      border: none;
+    }
+    #back-to-top.visible { opacity: 1; transform: translateY(0); }
+    #back-to-top:hover { background: var(--gold); }
+
+    /* ============================================================
+       LIGHTBOX
+       ============================================================ */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 5000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 2rem;
+    }
+    .lightbox.active { opacity: 1; pointer-events: all; }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    .lightbox.active img { transform: scale(1); }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: var(--white);
+      font-size: 1.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-close:hover { background: var(--rust); }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 1024px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-image-wrapper { max-width: 480px; margin: 0 auto; }
+      .coat-diagram { grid-template-columns: 1fr; }
+      .traits-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 220px); }
+      .gallery-item:first-child, .gallery-item:nth-child(4) { grid-row: auto; grid-column: auto; }
+      .health-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        background: rgba(26,18,8,0.97);
+        padding: 1.5rem;
+        gap: 1.2rem;
+      }
+      .nav-hamburger { display: flex; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .stat-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.08); }
+      .traits-grid { grid-template-columns: 1fr; }
+      .timeline::before { left: 20px; }
+      .timeline-item { grid-template-columns: 36px 1fr; }
+      .timeline-item:nth-child(odd) .timeline-content { grid-column: 2; text-align: left; }
+      .timeline-item:nth-child(even) .timeline-content { grid-column: 2; }
+      .timeline-item .timeline-spacer { display: none; }
+      .timeline-dot { grid-column: 1; }
+      .facts-grid { grid-template-columns: repeat(2, 1fr); }
+      .ideal-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; grid-template-rows: none; }
+      .gallery-item { height: 240px; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.75rem; text-align: center; }
+      body { cursor: auto; }
+      .cursor, .cursor-trail { display: none; }
+    }
+    @media (max-width: 480px) {
+      .facts-grid { grid-template-columns: 1fr; }
+      .celeb-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+
+  <!-- Scroll Progress -->
+  <div id="scroll-progress"></div>
+
+  <!-- Back to Top -->
+  <button id="back-to-top" aria-label="Back to top">↑</button>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close">✕</button>
+    <img id="lightbox-img" src="" alt="Bernese Mountain Dog" />
+  </div>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <nav id="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="paw">🐾</span> Bernese Mountain Dog
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#history">History</a></li>
+        <li><a href="#temperament">Temperament</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#health">Health</a></li>
+        <li><a href="#funfacts">Fun Facts</a></li>
+      </ul>
+      <div class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="paw-field" id="paw-field"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Born in the Swiss Alps</p>
+      <h1 class="hero-title">
+        The <em>Gentle Giant</em><br>of the Alps
+      </h1>
+      <p class="hero-subtitle">
+        Loyal beyond measure. Gentle by nature. Majestic in every sense.
+        Meet the Bernese Mountain Dog — a tri-colored treasure from the heart of Switzerland.
+      </p>
+      <a href="#about" class="hero-cta">
+        <span>Discover the Berner</span>
+        <span>↓</span>
+      </a>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ===================== STATS BAR ===================== -->
+  <section id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item reveal">
+          <span class="stat-icon">⚖️</span>
+          <div class="stat-value"><span class="counter" data-target="115">0</span> lbs</div>
+          <div class="stat-label">Max Weight</div>
+        </div>
+        <div class="stat-item reveal" style="transition-delay:0.1s">
+          <span class="stat-icon">📏</span>
+          <div class="stat-value"><span class="counter" data-target="27">0</span>"</div>
+          <div class="stat-label">Max Height</div>
+        </div>
+        <div class="stat-item reveal" style="transition-delay:0.2s">
+          <span class="stat-icon">🎂</span>
+          <div class="stat-value"><span class="counter" data-target="10">0</span> yrs</div>
+          <div class="stat-label">Max Lifespan</div>
+        </div>
+        <div class="stat-item reveal" style="transition-delay:0.3s">
+          <span class="stat-icon">🏆</span>
+          <div class="stat-value">#<span class="counter" data-target="22">0</span></div>
+          <div class="stat-label">AKC Popularity</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image-wrapper reveal-left">
+          <div class="about-accent-box"></div>
+          <div class="about-image-frame">
+            <img
+              id="about-img"
+              src="https://placehold.co/600x750/3D1C02/D4A843?text=🐾+Berner"
+              alt="Bernese Mountain Dog portrait"
+              onerror="this.src='https://placehold.co/600x750/3D1C02/D4A843?text=Bernese+Mountain+Dog'"
+            />
+          </div>
+          <div class="about-badge">
+            <span class="badge-num">4</span>
+            <span class="badge-text">Swiss Sennenhund Breeds</span>
+          </div>
+        </div>
+
+        <div class="about-text reveal-right">
+          <span class="section-tag">About the Breed</span>
+          <h2 class="section-title">A Dog Unlike<br>Any Other</h2>
+          <div class="divider"></div>
+          <p>
+            The Bernese Mountain Dog — <em>Berner Sennenhund</em> in German — is one of Switzerland's
+            greatest gifts to the world. Bred high in the Bernese Oberland, these magnificent dogs
+            served as versatile farm hands: guarding estates, herding cattle, and pulling carts
+            loaded with dairy goods across the Alps.
+          </p>
+          <p>
+            Instantly recognizable by their striking tri-colored coat of jet black, crisp white,
+            and warm rust, the Berner is both a working powerhouse and a devoted family companion.
+            Their calm, patient temperament makes them extraordinary with children, while their
+            impressive size commands respect.
+          </p>
+          <p>
+            Often described as having a "Berner grin" — that unmistakable look of gentle happiness —
+            these dogs have a way of becoming the emotional center of every household they join.
+          </p>
+          <div class="about-features">
+            <span class="feature-pill"><span class="pill-icon">🏔️</span> Swiss Alpine Heritage</span>
+            <span class="feature-pill"><span class="pill-icon">👨‍👩‍👧‍�</span> Family Dog</span>
+            <span class="feature-pill"><span class="pill-icon">🛡️</span> Natural Guardian</span>
+            <span class="feature-pill"><span class="pill-icon">🧠</span> Highly Intelligent</span>
+            <span class="feature-pill"><span class="pill-icon">🌨️</span> Loves Cold Weather</span>
+            <span class="feature-pill"><span class="pill-icon">💪</span> Working Dog</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HISTORY / TIMELINE ===================== -->
+  <section id="history">
+    <div class="container">
+      <div class="history-header reveal">
+        <span class="section-tag">Swiss Origins</span>
+        <h2 class="section-title">2,000 Years<br>in the Making</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">
+          From Roman mastiffs crossing the Alps to beloved family dogs in living rooms worldwide —
+          the Bernese Mountain Dog's story is as rich as the land that shaped them.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-content reveal-left">
+            <div class="timeline-year">~50 BCE</div>
+            <div class="timeline-event">Roman Armies Cross the Alps</div>
+            <div class="timeline-desc">Roman legions bring large mastiff-type dogs through the Swiss Alps. These dogs breed with local farm dogs, creating the ancestral stock for all four Swiss Sennenhund breeds.</div>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-spacer"></div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-spacer"></div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content reveal-right">
+            <div class="timeline-year">1800s</div>
+            <div class="timeline-event">The Age of the Cheese Dog</div>
+            <div class="timeline-desc">Farmers in the Bernese Oberland rely on Berners to transport carts of milk and cheese to market — earning them the nickname "Cheese Dogs." They pull loads up to 10× their own weight.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content reveal-left">
+            <div class="timeline-year">1892</div>
+            <div class="timeline-event">Near Extinction</div>
+            <div class="timeline-desc">The rise of mechanized transport nearly wipes out the breed. The Swiss dog population dwindles dangerously low as their working purpose diminishes.</div>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-spacer"></div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-spacer"></div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content reveal-right">
+            <div class="timeline-year">1907</div>
+            <div class="timeline-event">The Breed is Saved</div>
+            <div class="timeline-desc">Professor Albert Heim, a geologist and dog lover, helps found the first Bernese Mountain Dog club in Burgdorf, Switzerland, officially naming and preserving the breed.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content reveal-left">
+            <div class="timeline-year">1926</div>
+            <div class="timeline-event">Arrives in America</div>
+            <div class="timeline-desc">Kansas farmer Isaac Scheiss imports the first Berners to the United States from Switzerland, beginning the breed's American journey.</div>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-spacer"></div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-spacer"></div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content reveal-right">
+            <div class="timeline-year">1937</div>
+            <div class="timeline-event">AKC Recognition</div>
+            <div class="timeline-desc">The American Kennel Club officially recognizes the Bernese Mountain Dog, placing it in the Working Group. The breed's popularity in North America begins to soar.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content reveal-left">
+            <div class="timeline-year">Today</div>
+            <div class="timeline-event">Top 25 Most Popular Breed</div>
+            <div class="timeline-desc">Consistently ranked in the top 25 most popular AKC breeds, the Bernese Mountain Dog has become one of the world's most beloved family companions, appearing in celebrity homes and social media feeds worldwide.</div>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-spacer"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TEMPERAMENT ===================== -->
+  <section id="temperament">
+    <div class="container">
+      <div class="reveal" style="text-align:center">
+        <span class="section-tag">Personality</span>
+        <h2 class="section-title">The Berner Spirit</h2>
+        <div class="divider" style="margin:1.2rem auto"></div>
+        <p class="section-subtitle" style="margin:0 auto">
+          No dog breed wears its heart more openly. Berners bring a rare combination of
+          intelligence, warmth, and gentle humor that captures everyone they meet.
+        </p>
+      </div>
+
+      <div class="traits-grid">
+        <div class="trait-card reveal" style="transition-delay:0.05s">
+          <div class="trait-icon-wrap">🤗</div>
+          <h3 class="trait-title">Deeply Affectionate</h3>
+          <p class="trait-desc">Berners form profound bonds with their family. They thrive on closeness and are notorious "velcro dogs" — always wanting to be in the same room as their people.</p>
+        </div>
+        <div class="trait-card reveal" style="transition-delay:0.1s">
+          <div class="trait-icon-wrap">🧒</div>
+          <h3 class="trait-title">Extraordinary with Children</h3>
+          <p class="trait-desc">Gentle by nature, Berners seem to instinctively understand children. Their patient, calm disposition makes them ideal playmates for even the youngest family members.</p>
+        </div>
+        <div class="trait-card reveal" style="transition-delay:0.15s">
+          <div class="trait-icon-wrap">🧠</div>
+          <h3 class="trait-title">Alert & Intelligent</h3>
+          <p class="trait-desc">Quick learners who respond beautifully to positive reinforcement. They excel in obedience, agility, and even therapy work, bringing comfort wherever they go.</p>
+        </div>
+        <div class="trait-card reveal" style="transition-delay:0.2s">
+          <div class="trait-icon-wrap">😄</div>
+          <h3 class="trait-title">The Berner Chuckle</h3>
+          <p class="trait-desc">Owners famously describe a unique "Berner sense of humor" — a goofy, playful side that emerges in the most unexpected moments, often making their owners laugh out loud.</p>
+        </div>
+        <div class="trait-card reveal" style="transition-delay:0.25s">
+          <div class="trait-icon-wrap">🛡️</div>
+          <h3 class="trait-title">Naturally Protective</h3>
+          <p class="trait-desc">Without aggression, Berners are quietly watchful. Their imposing size and calm confidence make them natural guardians who are reserved but never threatening toward strangers.</p>
+        </div>
+        <div class="trait-card reveal" style="transition-delay:0.3s">
+          <div class="trait-icon-wrap">🌿</div>
+          <h3 class="trait-title">Serene & Adaptable</h3>
+          <p class="trait-desc">Despite their farm-dog heritage, Berners adapt well to various living situations when properly exercised. They carry a tranquil, grounding energy that makes any space feel like home.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== APPEARANCE ===================== -->
+  <section id="appearance">
+    <div class="container">
+      <div class="appearance-header reveal">
+        <span class="section-tag">Physical Profile</span>
+        <h2 class="section-title">Dressed by<br>Nature Herself</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">
+          The Bernese Mountain Dog's tri-color coat is one of nature's most striking designs —
+          a living canvas of black, white, and rust that is both functional and breathtakingly beautiful.
+        </p>
+      </div>
+
+      <div class="coat-diagram">
+        <div class="coat-visual reveal-left">
+          <h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--white);margin-bottom:1.5rem">The Tri-Color Palette</h3>
+          <div class="color-swatches">
+            <div class="swatch-row">
+              <div class="swatch swatch-black"></div>
+              <div class="swatch-info">
+                <h4>Jet Black</h4>
+                <p>The dominant base coat — dense, glossy, and weather-resistant</p>
+              </div>
+            </div>
+            <div class="swatch-row">
+              <div class="swatch swatch-white"></div>
+              <div class="swatch-info">
+                <h4>Swiss White</h4>
+                <p>Classic blaze on face, chest cross, and paw tips</p>
+              </div>
+            </div>
+            <div class="swatch-row">
+              <div class="swatch swatch-rust"></div>
+              <div class="swatch-info">
+                <h4>Rich Rust</h4>
+                <p>Warm markings above eyes, cheeks, legs, and under tail</p>
+              </div>
+            </div>
+          </div>
+
+          <ul class="physical-list" style="margin-top:1rem">
+            <li>Long, silky outer coat with a dense, woolly undercoat</li>
+            <li>The only Sennenhund breed with a long coat</li>
+            <li>Broad, flat skull with a defined stop</li>
+            <li>Medium-sized, dark brown, almond-shaped eyes</li>
+            <li>Bushy tail that hangs low when relaxed, raised when alert</li>
+            <li>Strong, muscular neck and deep, broad chest</li>
+          </ul>
+        </div>
+
+        <div class="reveal-right">
+          <div class="coat-visual" style="margin-bottom:1.5rem">
+            <h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--white);margin-bottom:1.5rem">Size Comparison</h3>
+            <div class="size-bars">
+              <div class="size-bar-item">
+                <label><span>Height (Males)</span><span>25–27.5 in</span></label>
+                <div class="size-bar-track"><div class="size-bar-fill" data-width="82"></div></div>
+              </div>
+              <div class="size-bar-item">
+                <label><span>Height (Females)</span><span>23–26 in</span></label>
+                <div class="size-bar-track"><div class="size-bar-fill" data-width="76"></div></div>
+              </div>
+              <div class="size-bar-item">
+                <label><span>Weight (Males)</span><span>80–115 lbs</span></label>
+                <div class="size-bar-track"><div class="size-bar-fill" data-width="72"></div></div>
+              </div>
+              <div class="size-bar-item">
+                <label><span>Weight (Females)</span><span>70–95 lbs</span></label>
+                <div class="size-bar-track"><div class="size-bar-fill" data-width="62"></div></div>
+              </div>
+              <div class="size-bar-item">
+                <label><span>Cart Pulling Capacity</span><span>~1,000 lbs</span></label>
+                <div class="size-bar-track"><div class="size-bar-fill" data-width="95"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="coat-visual">
+            <h3 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--white);margin-bottom:1rem">Energy Level Profile</h3>
+            <div class="size-bars">
+              <div class="size-bar-item">
+                <label><span>Playfulness</span><span>High</span></label>
+                <div class="size-bar-track"><div class="size-bar-fill" data-width="85"></div></div>
+              </div>
+              <div class="size-bar-item">
+                <label><span>Trainability</span><span>Very High</span></label>
+                <div class="size-bar-track"><div class="size-bar-fill" data-width="88"></div></div>
+              </div>
+              <div class="size-bar-item">
+                <label><span>Affection Level</span><span>Maximum</span></label>
+                <div class="size-bar-track"><div class="size-bar-fill" data-width="98"></div></div>
+              </div>
+              <div class="size-bar-item">
+                <label><span>Exercise Needs</span><span>Moderate</span></label>
+                <div class="size-bar-track"><div class="size-bar-fill" data-width="65"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== GALLERY ===================== -->
+  <section id="gallery">
+    <div class="container">
+      <div class="gallery-header reveal">
+        <span class="section-tag">Photo Gallery</span>
+        <h2 class="section-title">See the Beauty</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">Every angle, every season — the Berner is endlessly photogenic.</p>
+      </div>
+      <div class="gallery-grid" id="gallery-grid">
+        <!-- Populated by JS -->
+        <div class="gallery-item gallery-skeleton"></div>
+        <div class="gallery-item gallery-skeleton"></div>
+        <div class="gallery-item gallery-skeleton"></div>
+        <div class="gallery-item gallery-skeleton"></div>
+        <div class="gallery-item gallery-skeleton"></div>
+        <div class="gallery-item gallery-skeleton"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HEALTH ===================== -->
+  <section id="health">
+    <div class="container">
+      <div class="reveal" style="text-align:center;margin-bottom:1rem">
+        <span class="section-tag">Wellness Guide</span>
+        <h2 class="section-title">Caring for Your Berner</h2>
+        <div class="divider" style="margin:1.2rem auto"></div>
+        <p class="section-subtitle" style="margin:0 auto">
+          A well-cared-for Berner is a happy Berner. Understanding their unique health
+          needs is the greatest act of love an owner can offer.
+        </p>
+      </div>
+
+      <div class="health-grid">
+        <div class="health-card health-card-concern reveal-left">
+          <h3>⚠️ Health Considerations</h3>
+          <ul class="health-list">
+            <li><span class="hicon">!</span><strong>Cancer:</strong> Berners have a higher-than-average cancer rate — the leading cause of death in the breed. Annual vet checks are essential.</li>
+            <li><span class="hicon">!</span><strong>Hip & Elbow Dysplasia:</strong> Common in large breeds. Choose breeders who health-test their dogs with OFA or PennHIP certifications.</li>
+            <li><span class="hicon">!</span><strong>Bloat (GDV):</strong> The deep chest makes Berners susceptible to gastric dilatation-volvulus — a life-threatening emergency. Avoid exercise right after meals.</li>
+            <li><span class="hicon">!</span><strong>Degenerative Myelopathy:</strong> A progressive neurological disease that can affect mobility. DNA testing can identify carriers.</li>
+            <li><span class="hicon">!</span><strong>Heat Intolerance:</strong> That gorgeous double coat traps heat. Berners suffer in hot, humid climates and need shade, water, and AC in summer.</li>
+          </ul>
+          <div class="lifespan-visual">
+            <div style="font-size:0.85rem;color:var(--gray-text);font-weight:500">Average Lifespan vs. Large Dog Average</div>
+            <div class="lifespan-bar" style="margin-top:0.5rem">
+              <div class="lifespan-fill" data-width="70" style="background:linear-gradient(90deg,var(--rust),#e8944a)">7–10 yrs</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="health-card health-card-care reveal-right">
+          <h3>✅ Care & Wellbeing</h3>
+          <ul class="health-list">
+            <li><span class="hicon">✓</span><strong>Brushing:</strong> 2–3 times weekly (daily during heavy shedding seasons). A slicker brush and metal comb are essential tools.</li>
+            <li><span class="hicon">✓</span><strong>Exercise:</strong> 30–60 minutes of daily activity. They love hiking, swimming, and carting — activities that honor their working heritage.</li>
+            <li><span class="hicon">✓</span><strong>Mental Stimulation:</strong> Puzzle toys, obedience training, and scent work keep their sharp minds engaged and prevent boredom.</li>
+            <li><span class="hicon">✓</span><strong>Diet:</strong> High-quality large-breed food fed in two portions daily. Avoid overfeeding — obesity stresses their joints significantly.</li>
+            <li><span class="hicon">✓</span><strong>Socialization:</strong> Expose puppies early and often to people, animals, sounds, and environments. A well-socialized Berner is a confident Berner.</li>
+            <li><span class="hicon">✓</span><strong>Vet Schedule:</strong> Twice-yearly checkups recommended for this breed. Early detection is key to managing breed-specific conditions.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUOTE ===================== -->
+  <section id="quote">
+    <div class="container">
+      <p class="quote-text reveal">
+        "The Bernese Mountain Dog is the kind of dog that doesn't just live in your house —
+        they live in your heart. Every year with a Berner is worth ten with any other."
+      </p>
+      <p class="quote-author reveal">— Berner Sennenhund Club of America</p>
+    </div>
+  </section>
+
+  <!-- ===================== FUN FACTS ===================== -->
+  <section id="funfacts">
+    <div class="container">
+      <div class="reveal" style="text-align:center">
+        <span class="section-tag">Did You Know?</span>
+        <h2 class="section-title">Berner Superlatives</h2>
+        <div class="divider" style="margin:1.2rem auto"></div>
+        <p class="section-subtitle" style="margin:0 auto">
+          Hover over each card to reveal an amazing fact. Berners are full of surprises.
+        </p>
+      </div>
+
+      <div class="facts-grid">
+        <div class="fact-card reveal" style="transition-delay:0.05s">
+          <div class="fact-inner">
+            <div class="fact-front">
+              <div class="fact-num">10×</div>
+              <div class="fact-label">Body Weight</div>
+              <p class="fact-hint">Hover to reveal →</p>
+            </div>
+            <div class="fact-back">
+              <p>Bernese Mountain Dogs could pull carts weighing up to 10 times their own body weight — roughly 1,000 lbs — making them one of the strongest draft breeds relative to size.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="fact-card reveal" style="transition-delay:0.1s">
+          <div class="fact-inner">
+            <div class="fact-front">
+              <div class="fact-num">4</div>
+              <div class="fact-label">Swiss Cousins</div>
+              <p class="fact-hint">Hover to reveal →</p>
+            </div>
+            <div class="fact-back">
+              <p>There are four Sennenhund breeds: the Bernese, Greater Swiss Mountain Dog, Appenzeller, and Entlebucher. The Berner is the only one with a long coat.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="fact-card reveal" style="transition-delay:0.15s">
+          <div class="fact-inner">
+            <div class="fact-front">
+              <div class="fact-num">3</div>
+              <div class="fact-label">Years to Mature</div>
+              <p class="fact-hint">Hover to reveal →</p>
+            </div>
+            <div class="fact-back">
+              <p>Berners are famously slow to mature mentally — they often remain "puppy-brained" for 2–3 years. Many owners say this extended puppyhood is one of the most endearing parts of the breed.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="fact-card reveal" style="transition-delay:0.2s">
+          <div class="fact-inner">
+            <div class="fact-front">
+              <div class="fact-num">2000</div>
+              <div class="fact-label">Years of History</div>
+              <p class="fact-hint">Hover to reveal →</p>
+            </div>
+            <div class="fact-back">
+              <p>The Berner's ancestors arrived with Roman legions crossing the Alps around 50 BCE, making this breed nearly 2,000 years in the making.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="fact-card reveal" style="transition-delay:0.25s">
+          <div class="fact-inner">
+            <div class="fact-front">
+              <div class="fact-num">#1</div>
+              <div class="fact-label">Velcro Dog</div>
+              <p class="fact-hint">Hover to reveal →</p>
+            </div>
+            <div class="fact-back">
+              <p>Berners are known as the ultimate "velcro dogs" — they'll follow their favorite person from room to room, always needing to maintain visual or physical contact.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="fact-card reveal" style="transition-delay:0.3s">
+          <div class="fact-inner">
+            <div class="fact-front">
+              <div class="fact-num">🏔️</div>
+              <div class="fact-label">Alpine Origin</div>
+              <p class="fact-hint">Hover to reveal →</p>
+            </div>
+            <div class="fact-back">
+              <p>Berners are built for cold mountain weather. Their double coat, which sheds in vast quantities, can keep them comfortable in temperatures well below freezing — making snow their happy place.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CELEBRITIES ===================== -->
+  <section id="celebrities">
+    <div class="container">
+      <div class="celebrities-header reveal">
+        <span class="section-tag">Famous Berner Families</span>
+        <h2 class="section-title">In Good Company</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">
+          From Hollywood to the White House, Berners have charmed their way into
+          the homes and hearts of the world's most discerning dog lovers.
+        </p>
+      </div>
+
+      <div class="celeb-grid">
+        <div class="celeb-card reveal" style="transition-delay:0.05s">
+          <span class="celeb-emoji">🎬</span>
+          <div class="celeb-name">Goldie Hawn & Kurt Russell</div>
+          <div class="celeb-role">Hollywood Royalty</div>
+          <div class="celeb-dog">Two beloved Berners</div>
+        </div>
+        <div class="celeb-card reveal" style="transition-delay:0.1s">
+          <span class="celeb-emoji">🎵</span>
+          <div class="celeb-name">Selena Gomez</div>
+          <div class="celeb-role">Pop Star</div>
+          <div class="celeb-dog">Winnie the Berner</div>
+        </div>
+        <div class="celeb-card reveal" style="transition-delay:0.15s">
+          <span class="celeb-emoji">📺</span>
+          <div class="celeb-name">Courteney Cox</div>
+          <div class="celeb-role">Actress</div>
+          <div class="celeb-dog">Proud Berner owner</div>
+        </div>
+        <div class="celeb-card reveal" style="transition-delay:0.2s">
+          <span class="celeb-emoji">🎤</span>
+          <div class="celeb-name">Hilary Duff</div>
+          <div class="celeb-role">Singer/Actress</div>
+          <div class="celeb-dog">Family Berner</div>
+        </div>
+        <div class="celeb-card reveal" style="transition-delay:0.25s">
+          <span class="celeb-emoji">🏈</span>
+          <div class="celeb-name">Ben Roethlisberger</div>
+          <div class="celeb-role">NFL Quarterback</div>
+          <div class="celeb-dog">Hercules</div>
+        </div>
+        <div class="celeb-card reveal" style="transition-delay:0.3s">
+          <span class="celeb-emoji">🇮🇪</span>
+          <div class="celeb-name">President Michael Higgins</div>
+          <div class="celeb-role">Irish President</div>
+          <div class="celeb-dog">Bród, Sioda & Misneach</div>
+        </div>
+        <div class="celeb-card reveal" style="transition-delay:0.35s">
+          <span class="celeb-emoji">👑</span>
+          <div class="celeb-name">Prince Harry & Meghan</div>
+          <div class="celeb-role">Duke & Duchess</div>
+          <div class="celeb-dog">Met Ireland's Presidential Berners</div>
+        </div>
+        <div class="celeb-card reveal" style="transition-delay:0.4s">
+          <span class="celeb-emoji">🌐</span>
+          <div class="celeb-name">@BeautifulBerners</div>
+          <div class="celeb-role">Social Media</div>
+          <div class="celeb-dog">Millions of fans worldwide</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== IDEAL OWNER ===================== -->
+  <section id="ideal">
+    <div class="container">
+      <div class="reveal" style="text-align:center">
+        <span class="section-tag">Is a Berner Right for You?</span>
+        <h2 class="section-title">The Perfect Match</h2>
+        <div class="divider" style="margin:1.2rem auto"></div>
+        <p class="section-subtitle" style="margin:0 auto">
+          Every Berner deserves a home where they can truly thrive.
+          Honest self-assessment is the first step to responsible ownership.
+        </p>
+      </div>
+
+      <div class="ideal-grid">
+        <div class="ideal-card ideal-yes reveal-left">
+          <h3>💚 Perfect For You If...</h3>
+          <ul class="ideal-list">
+            <li>You have an active lifestyle — hiking, walking, outdoor adventures</li>
+            <li>You live in a cooler climate or have climate-controlled indoor space</li>
+            <li>You have children who want a gentle, protective companion</li>
+            <li>You can commit to daily grooming (especially during shedding seasons)</li>
+            <li>You're home frequently — Berners dislike long periods alone</li>
+            <li>You have a yard or access to open space for exercise</li>
+            <li>You want a dog who will shadow your every move with love</li>
+            <li>You're prepared for the financial reality of a large breed's health costs</li>
+          </ul>
+        </div>
+
+        <div class="ideal-card ideal-no reveal-right">
+          <h3>❤️ Reconsider If...</h3>
+          <ul class="ideal-list">
+            <li>You live in a hot, humid climate without AC or shade</li>
+            <li>You travel frequently and cannot provide a consistent caregiver</li>
+            <li>You require a hypoallergenic dog (Berners are heavy shedders)</li>
+            <li>You prefer a low-maintenance coat (daily/weekly grooming is real)</li>
+            <li>You live in a very small apartment with no outdoor access</li>
+            <li>You're not prepared for the emotional weight of a short lifespan</li>
+            <li>You want an independent dog that does well alone for 8+ hours</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="nav-logo"><span class="paw">🐾</span> Bernese Mountain Dog</div>
+          <p>Celebrating the majestic Bernese Mountain Dog — a breed of extraordinary beauty, loyalty, and heart. Rooted in the Swiss Alps, beloved worldwide.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul class="footer-links">
+            <li><a href="#about">About the Breed</a></li>
+            <li><a href="#history">History & Origins</a></li>
+            <li><a href="#temperament">Temperament</a></li>
+            <li><a href="#appearance">Appearance</a></li>
+            <li><a href="#gallery">Photo Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul class="footer-links">
+            <li><a href="#health">Health & Care</a></li>
+            <li><a href="#funfacts">Fun Facts</a></li>
+            <li><a href="#ideal">Is It Right for Me?</a></li>
+            <li><a href="https://bmdca.org" target="_blank" rel="noopener">BMDCA.org ↗</a></li>
+            <li><a href="https://www.akc.org/dog-breeds/bernese-mountain-dog/" target="_blank" rel="noopener">AKC Profile ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Bernese Mountain Dog Tribute Page. Built with love for the breed.</span>
+        <span class="footer-paws">🐾 🐾 🐾 🐾 🐾</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== JAVASCRIPT ===================== -->
+  <script>
+    /* -------------------------------------------------- */
+    /* Custom Cursor                                       */
+    /* -------------------------------------------------- */
+    const cursor = document.getElementById('cursor');
+    const trail  = document.getElementById('cursorTrail');
+    let mouseX = 0, mouseY = 0;
+    let trailX = 0, trailY = 0;
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top  = mouseY + 'px';
+    });
+
+    function animateTrail() {
+      trailX += (mouseX - trailX) * 0.12;
+      trailY += (mouseY - trailY) * 0.12;
+      trail.style.left = trailX + 'px';
+      trail.style.top  = trailY + 'px';
+      requestAnimationFrame(animateTrail);
+    }
+    animateTrail();
+
+    document.querySelectorAll('a, button, .trait-card, .fact-card, .gallery-item').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.width  = '48px';
+        cursor.style.height = '48px';
+        cursor.style.background = 'var(--gold)';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.width  = '28px';
+        cursor.style.height = '28px';
+        cursor.style.background = 'var(--rust)';
+      });
+    });
+
+    /* -------------------------------------------------- */
+    /* Scroll Progress                                     */
+    /* -------------------------------------------------- */
+    const progressBar = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (scrolled / total * 100) + '%';
+    });
+
+    /* -------------------------------------------------- */
+    /* Navbar Scroll Effect                               */
+    /* -------------------------------------------------- */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    /* -------------------------------------------------- */
+    /* Hamburger Menu                                     */
+    /* -------------------------------------------------- */
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('nav-links');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    /* -------------------------------------------------- */
+    /* Back to Top                                        */
+    /* -------------------------------------------------- */
+    const btt = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      btt.classList.toggle('visible', window.scrollY > 500);
+    });
+    btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    /* -------------------------------------------------- */
+    /* Scroll Reveal (IntersectionObserver)               */
+    /* -------------------------------------------------- */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          // Trigger size bars if within appearance section
+          e.target.querySelectorAll('.size-bar-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width + '%';
+          });
+          // Trigger lifespan bars
+          e.target.querySelectorAll('.lifespan-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width + '%';
+          });
+          // Trigger counters
+          e.target.querySelectorAll('.counter').forEach(startCounter);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+    // Also observe the appearance section itself for bars
+    document.querySelectorAll('#appearance').forEach(sec => {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            sec.querySelectorAll('.size-bar-fill').forEach(bar => {
+              bar.style.width = bar.dataset.width + '%';
+            });
+            sec.querySelectorAll('.lifespan-fill').forEach(bar => {
+              bar.style.width = bar.dataset.width + '%';
+            });
+          }
+        });
+      }, { threshold: 0.1 });
+      io.observe(sec);
+    });
+
+    document.querySelectorAll('#health').forEach(sec => {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            sec.querySelectorAll('.lifespan-fill').forEach(bar => {
+              bar.style.width = bar.dataset.width + '%';
+            });
+          }
+        });
+      }, { threshold: 0.1 });
+      io.observe(sec);
+    });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+      observer.observe(el);
+    });
+
+    /* -------------------------------------------------- */
+    /* Counter Animation                                  */
+    /* -------------------------------------------------- */
+    function startCounter(el) {
+      if (el.dataset.counted) return;
+      el.dataset.counted = true;
+      const target = parseInt(el.dataset.target, 10);
+      let current = 0;
+      const step = target / 60;
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = Math.floor(current);
+        if (current >= target) {
+          el.textContent = target;
+          clearInterval(timer);
+        }
+      }, 20);
+    }
+
+    /* -------------------------------------------------- */
+    /* Animated Paw Prints                                */
+    /* -------------------------------------------------- */
+    const pawField = document.getElementById('paw-field');
+    const pawSVG = `<svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="70" rx="28" ry="22"/>
+      <ellipse cx="24" cy="42" rx="12" ry="16" transform="rotate(-15,24,42)"/>
+      <ellipse cx="43" cy="30" rx="12" ry="15" transform="rotate(-5,43,30)"/>
+      <ellipse cx="63" cy="30" rx="12" ry="15" transform="rotate(5,63,30)"/>
+      <ellipse cx="78" cy="42" rx="12" ry="16" transform="rotate(15,78,42)"/>
+    </svg>`;
+
+    function spawnPaw() {
+      const p = document.createElement('div');
+      p.className = 'paw-print';
+      p.innerHTML = pawSVG;
+      const size = 30 + Math.random() * 60;
+      p.querySelector('svg').style.width  = size + 'px';
+      p.querySelector('svg').style.height = size + 'px';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.bottom = -80 + 'px';
+      p.style.animationDuration = (6 + Math.random() * 8) + 's';
+      p.style.animationDelay    = (Math.random() * 3) + 's';
+      pawField.appendChild(p);
+      setTimeout(() => p.remove(), 16000);
+    }
+
+    for (let i = 0; i < 12; i++) setTimeout(spawnPaw, i * 800);
+    setInterval(spawnPaw, 1200);
+
+    /* -------------------------------------------------- */
+    /* Gallery — Dog CEO API                              */
+    /* -------------------------------------------------- */
+    async function loadGallery() {
+      const grid = document.getElementById('gallery-grid');
+      const captions = [
+        'Pure joy in every step',
+        'The quintessential Swiss beauty',
+        'Eyes that speak to the soul',
+        'Mountain-born magnificence',
+        'A gentle giant at rest',
+        'That famous tri-color coat'
+      ];
+
+      try {
+        const res  = await fetch('https://dog.ceo/api/breed/mountain/bernese/images/random/6');
+        const data = await res.json();
+        if (data.status !== 'success') throw new Error();
+
+        grid.innerHTML = '';
+        data.message.forEach((url, i) => {
+          const item = document.createElement('div');
+          item.className = 'gallery-item';
+          item.innerHTML = `
+            <img src="${url}" alt="${captions[i]}" loading="lazy" />
+            <div class="gallery-overlay">
+              <div class="gallery-overlay-text">${captions[i]}</div>
+            </div>`;
+          item.addEventListener('click', () => openLightbox(url));
+          grid.appendChild(item);
+        });
+      } catch {
+        // Fallback: use known stable Wikimedia Berner images
+        const fallbacks = [
+          ['https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Bernese_Mountain_Dog_600.jpg/600px-Bernese_Mountain_Dog_600.jpg', 'Classic Berner portrait'],
+          ['https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Berner_Sennenhund_600.jpg/600px-Berner_Sennenhund_600.jpg', 'Berner in the Alps'],
+          ['https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/BernerSennenhund.jpg/600px-BernerSennenhund.jpg', 'Majestic tri-color coat'],
+          ['https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Dog_Breeds_3.jpg/600px-Dog_Breeds_3.jpg', 'Swiss heritage'],
+          ['https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bernese_mountain_dog_on_snow.jpg/600px-Bernese_mountain_dog_on_snow.jpg', 'In their element — snow'],
+          ['https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Berner_Sennen_Hund.jpg/600px-Berner_Sennen_Hund.jpg', 'Gentle giant']
+        ];
+
+        grid.innerHTML = '';
+        fallbacks.forEach(([url, cap]) => {
+          const item = document.createElement('div');
+          item.className = 'gallery-item';
+          item.innerHTML = `
+            <img src="${url}" alt="${cap}" loading="lazy"
+              onerror="this.closest('.gallery-item').style.background='linear-gradient(135deg,#3D1C02,#6B3D1E)';this.style.display='none'" />
+            <div class="gallery-overlay">
+              <div class="gallery-overlay-text">${cap}</div>
+            </div>`;
+          item.addEventListener('click', () => openLightbox(url));
+          grid.appendChild(item);
+        });
+      }
+    }
+
+    loadGallery();
+
+    /* -------------------------------------------------- */
+    /* Lightbox                                           */
+    /* -------------------------------------------------- */
+    const lightbox      = document.getElementById('lightbox');
+    const lightboxImg   = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    function openLightbox(src) {
+      lightboxImg.src = src;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    /* -------------------------------------------------- */
+    /* Load a real Berner hero image via Dog CEO API      */
+    /* -------------------------------------------------- */
+    async function loadHeroImg() {
+      try {
+        const res  = await fetch('https://dog.ceo/api/breed/mountain/bernese/images/random/1');
+        const data = await res.json();
+        if (data.status === 'success') {
+          const aboutImg = document.getElementById('about-img');
+          const img = new Image();
+          img.onload = () => { aboutImg.src = data.message[0]; };
+          img.src = data.message[0];
+        }
+      } catch { /* keep placeholder */ }
+    }
+    loadHeroImg();
+
+    /* -------------------------------------------------- */
+    /* Smooth section active state in nav                 */
+    /* -------------------------------------------------- */
+    const sections = document.querySelectorAll('section[id]');
+    const navItems = document.querySelectorAll('.nav-links a');
+
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navItems.forEach(a => a.style.color = '');
+          const link = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+          if (link) link.style.color = 'var(--gold)';
+        }
+      });
+    }, { threshold: 0.5 });
+
+    sections.forEach(s => sectionObserver.observe(s));
+  </script>
+</body>
+</html>
