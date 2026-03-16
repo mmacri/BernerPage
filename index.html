@@ -3584,7 +3584,7 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
     /* -------------------------------------------------- */
-    /* Gallery — live Dog CEO API + shuffled fallback pool */
+    /* Gallery — Wikimedia Commons API + hardcoded fallback */
     /* -------------------------------------------------- */
     const GALLERY_CAPTIONS = [
       'Pure joy in every step',
@@ -3594,8 +3594,33 @@
       'A gentle giant at rest'
     ];
 
-    // Cache of verified image URLs fetched from the API — grows over time
-    let bernerImageCache = [];
+    // Verified Bernese Mountain Dog photos from Wikimedia Commons (CC licensed)
+    const WIKIMEDIA_POOL = [
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/0.2014_Hundeausstellung_in_Sanok.JPG/960px-0.2014_Hundeausstellung_in_Sanok.JPG',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/1-BerneseMountainDogInGrass.jpg/960px-1-BerneseMountainDogInGrass.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/2-BerneseMountainDogInGrass.jpg/960px-2-BerneseMountainDogInGrass.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/20140930_123139620_iOS.jpg/960px-20140930_123139620_iOS.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/3-BerneseMountainDogInGrass.jpg/960px-3-BerneseMountainDogInGrass.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/A_bench_vs_Miruku_%288113006533%29.jpg/960px-A_bench_vs_Miruku_%288113006533%29.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/A_photo_frame_of_bernese_mountain_dog_%2811018600043%29.jpg/960px-A_photo_frame_of_bernese_mountain_dog_%2811018600043%29.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Are_you_giving_me_that_snack%3F_%287184941882%29.jpg/960px-Are_you_giving_me_that_snack%3F_%287184941882%29.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Bensk%C3%BD_sala%C5%A1nick%C3%BD_pes.JPG/960px-Bensk%C3%BD_sala%C5%A1nick%C3%BD_pes.JPG',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Bernaise_Mountain_Dog_at_the_Byward_Market_%2835463428200%29.jpg/960px-Bernaise_Mountain_Dog_at_the_Byward_Market_%2835463428200%29.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Bernenczyk01.JPG/960px-Bernenczyk01.JPG',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Berner_Sennen_Jpg_%28108305135%29.jpeg/960px-Berner_Sennen_Jpg_%28108305135%29.jpeg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Berner_Sennen.jpg/960px-Berner_Sennen.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Berner_Sennenhund_R%C3%BCde.JPG/960px-Berner_Sennenhund_R%C3%BCde.JPG',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Berner_Sennenhund_Sprung.JPG/960px-Berner_Sennenhund_Sprung.JPG',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Berner_sennenhund.jpg/960px-Berner_sennenhund.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Berner_Sennenhund.jpg/960px-Berner_Sennenhund.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Bernese_Bountain_Dog_Boni.jpg/960px-Bernese_Bountain_Dog_Boni.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Bernese_Dog_10m..jpg/960px-Bernese_Dog_10m..jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Bernese_Mountain_Dog_%283346689641%29.jpg/960px-Bernese_Mountain_Dog_%283346689641%29.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Bernese_Mountain_Dog_%284513769952%29.jpg/960px-Bernese_Mountain_Dog_%284513769952%29.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Bernese_Mountain_Dog_%2852946255171%29.jpg/960px-Bernese_Mountain_Dog_%2852946255171%29.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Bernese_Mountain_Dog_-_9_months.JPG/960px-Bernese_Mountain_Dog_-_9_months.JPG',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Bernese_Mountain_Dog_-_Boyero_de_Berna_3_Months.jpg/960px-Bernese_Mountain_Dog_-_Boyero_de_Berna_3_Months.jpg'
+    ];
 
     function shuffled(arr) {
       const a = [...arr];
@@ -3614,8 +3639,7 @@
         const cap  = GALLERY_CAPTIONS[i];
         const item = document.createElement('div');
         item.className = 'gallery-item';
-        // Use a placeholder in onerror that's guaranteed to work
-        const fallbackUrl = `https://placehold.co/600x800/3D1C02/D4A843?text=Berner+${i + 1}`;
+        const fallbackUrl = shuffled(WIKIMEDIA_POOL).find(u => u !== url) || WIKIMEDIA_POOL[0];
         item.innerHTML = `
           <img src="${url}" alt="${cap}"
             onerror="this.src='${fallbackUrl}';this.onerror=null;" />
@@ -3628,6 +3652,9 @@
       if (label) label.textContent = sourceLabel;
     }
 
+    // Cache of URLs from a successful Wikimedia API call (enables richer refresh variety)
+    let wikiImageCache = [];
+
     async function loadGallery() {
       const btn = document.getElementById('gallery-refresh');
       const label = document.getElementById('gallery-label');
@@ -3635,35 +3662,25 @@
       if (label) label.textContent = 'Loading…';
 
       try {
-        // Primary: fetch 5 fresh random Berner images
-        const res  = await fetch('https://dog.ceo/api/breed/mountain/bernese/images/random/5');
+        // Primary: Wikimedia Commons category API — fresh randomised selection every call
+        const apiUrl = 'https://commons.wikimedia.org/w/api.php?action=query' +
+          '&generator=categorymembers&gcmtitle=Category:Bernese_Mountain_Dog' +
+          '&gcmtype=file&gcmlimit=30&prop=imageinfo&iiprop=url&iiurlwidth=800' +
+          '&format=json&origin=*';
+        const res  = await fetch(apiUrl);
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
-        if (data.status !== 'success' || !Array.isArray(data.message) || !data.message.length) throw new Error('bad data');
-        // Add to cache so we have a growing pool of verified URLs
-        bernerImageCache.push(...data.message);
-        buildGalleryItems(data.message, 'Live photos via Dog CEO API — refreshes every visit');
+        if (!data.query || !data.query.pages) throw new Error('no pages');
+        const urls = Object.values(data.query.pages)
+          .filter(p => p.imageinfo && p.imageinfo[0] && p.imageinfo[0].thumburl)
+          .map(p => p.imageinfo[0].thumburl);
+        if (urls.length < 5) throw new Error('not enough images');
+        wikiImageCache = urls;
+        buildGalleryItems(shuffled(urls).slice(0, 5), 'Live photos from Wikimedia Commons — click Refresh for new ones');
       } catch {
-        // Secondary: use any previously cached images
-        if (bernerImageCache.length >= 5) {
-          buildGalleryItems(shuffled(bernerImageCache).slice(0, 5), 'Cached Berner photos — click Refresh to try live');
-        } else {
-          // Tertiary: fetch the full breed image list and pick from it
-          try {
-            const res2  = await fetch('https://dog.ceo/api/breed/mountain/bernese/images');
-            if (!res2.ok) throw new Error('HTTP ' + res2.status);
-            const data2 = await res2.json();
-            if (data2.status !== 'success' || !Array.isArray(data2.message) || !data2.message.length) throw new Error('bad data');
-            bernerImageCache = data2.message;
-            buildGalleryItems(shuffled(bernerImageCache).slice(0, 5), 'Berner photo collection');
-          } catch {
-            // Final fallback: solid-color placeholders (no emoji to avoid encoding issues)
-            buildGalleryItems(
-              [1, 2, 3, 4, 5].map(n => `https://placehold.co/600x800/3D1C02/D4A843?text=Berner+${n}`),
-              'Gallery temporarily unavailable — try Refresh'
-            );
-          }
-        }
+        // Fallback: shuffle the hardcoded verified pool — always works, gives variety on each refresh
+        const pool = wikiImageCache.length >= 5 ? wikiImageCache : WIKIMEDIA_POOL;
+        buildGalleryItems(shuffled(pool).slice(0, 5), 'Curated Berner photos from Wikimedia Commons');
       } finally {
         if (btn) btn.disabled = false;
       }
@@ -3674,19 +3691,17 @@
     loadGallery();
 
     /* -------------------------------------------------- */
-    /* Load a real Berner hero image via Dog CEO API      */
+    /* Load a real Berner hero image (about section)      */
     /* -------------------------------------------------- */
-    async function loadHeroImg() {
-      try {
-        const res  = await fetch('https://dog.ceo/api/breed/mountain/bernese/images/random/1');
-        const data = await res.json();
-        if (data.status === 'success') {
-          const aboutImg = document.getElementById('about-img');
-          const img = new Image();
-          img.onload = () => { aboutImg.src = data.message[0]; };
-          img.src = data.message[0];
-        }
-      } catch { /* keep placeholder */ }
+    function loadHeroImg() {
+      const aboutImg = document.getElementById('about-img');
+      if (!aboutImg) return;
+      // Pick a random image from the verified pool for the about section
+      const src = WIKIMEDIA_POOL[Math.floor(Math.random() * WIKIMEDIA_POOL.length)];
+      const img = new Image();
+      img.onload = () => { aboutImg.src = src; };
+      img.onerror = () => { /* keep placeholder */ };
+      img.src = src;
     }
     loadHeroImg();
 
