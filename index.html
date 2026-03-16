@@ -1315,6 +1315,235 @@
       .facts-grid { grid-template-columns: 1fr; }
       .celeb-grid { grid-template-columns: repeat(2, 1fr); }
     }
+
+    /* ============================================================
+       SOCIAL STARS
+       ============================================================ */
+    #socialstars { padding: clamp(5rem,10vw,9rem) 0; background: var(--cream); }
+    .stars-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; margin-top: 3.5rem; }
+    .star-card { background: var(--white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid rgba(196,180,154,0.3); transition: transform var(--transition), box-shadow var(--transition); }
+    .star-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+    .star-card-banner { height: 110px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; position: relative; overflow: hidden; }
+    .star-card-body { padding: 1.5rem; }
+    .star-handle { font-size: 0.72rem; color: var(--rust); font-weight: 700; letter-spacing: 0.04em; margin-bottom: 0.25rem; }
+    .star-name { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .star-desc { font-size: 0.85rem; color: var(--gray-text); line-height: 1.65; margin-bottom: 1rem; }
+    .star-stats { display: flex; gap: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--cream-dark); margin-bottom: 1rem; }
+    .star-stat-val { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 900; color: var(--rust); }
+    .star-stat-lbl { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-mid); }
+    .star-follow-btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1.2rem; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; border: 2px solid var(--rust); color: var(--rust); transition: all var(--transition); background: transparent; font-family: var(--font-sans); cursor: pointer; }
+    .star-follow-btn:hover { background: var(--rust); color: var(--white); }
+
+    /* ============================================================
+       BREED COMPARISON
+       ============================================================ */
+    #compare { padding: clamp(5rem,10vw,9rem) 0; background: var(--white); }
+    .compare-controls { display: flex; align-items: center; gap: 1.25rem; margin: 3rem 0 2.5rem; flex-wrap: wrap; }
+    .compare-select { flex: 1; min-width: 220px; max-width: 380px; padding: 0.85rem 2.5rem 0.85rem 1.25rem; border: 2px solid var(--cream-dark); border-radius: var(--radius); background: var(--white); font-family: var(--font-sans); font-size: 0.95rem; color: var(--black); cursor: pointer; transition: border-color var(--transition); appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23B85C2C' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-color: var(--white); }
+    .compare-select:focus { outline: none; border-color: var(--rust); }
+    .compare-btn { padding: 0.85rem 2rem; background: var(--rust); color: var(--white); border: none; border-radius: var(--radius); font-family: var(--font-sans); font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all var(--transition); }
+    .compare-btn:hover { background: var(--rust-light); transform: translateY(-2px); }
+    .compare-grid { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 1.5rem; align-items: start; }
+    .compare-column { background: var(--cream); border-radius: var(--radius-lg); padding: 2rem; border: 2px solid transparent; }
+    .compare-column.berner-col { border-color: var(--rust); }
+    .compare-column.other-col { border-color: var(--gold); }
+    .compare-col-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--cream-dark); }
+    .compare-col-badge { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .berner-col .compare-col-badge { background: var(--rust); }
+    .other-col .compare-col-badge { background: var(--gold); }
+    .compare-col-name { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; }
+    .compare-vs { display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-size: 1.5rem; font-weight: 900; color: var(--gray-mid); padding-top: 3rem; }
+    .compare-stat { margin-bottom: 1.2rem; }
+    .compare-stat-row { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--gray-text); margin-bottom: 0.4rem; font-weight: 500; }
+    .compare-bar-track { height: 10px; background: var(--cream-dark); border-radius: 5px; overflow: hidden; }
+    .compare-bar-fill { height: 100%; border-radius: 5px; transition: width 1s ease; width: 0; }
+    .berner-col .compare-bar-fill { background: linear-gradient(90deg, var(--rust), var(--gold)); }
+    .other-col .compare-bar-fill { background: linear-gradient(90deg, var(--gold), var(--forest-light)); }
+    .compare-placeholder { grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--gray-mid); font-style: italic; }
+
+    /* ============================================================
+       NAME GENERATOR
+       ============================================================ */
+    #namegen { padding: clamp(5rem,10vw,9rem) 0; background: var(--black); position: relative; overflow: hidden; }
+    #namegen::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(184,92,44,0.2) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(212,168,67,0.1) 0%, transparent 60%); pointer-events: none; }
+    .namegen-header .section-tag { color: var(--gold-light); background: rgba(212,168,67,0.1); border-color: rgba(212,168,67,0.25); }
+    .namegen-header .section-title { color: var(--white); }
+    .namegen-header .section-subtitle { color: rgba(255,255,255,0.6); }
+    .namegen-header .divider { background: linear-gradient(90deg, var(--gold), var(--rust)); }
+    .namegen-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: 4rem; margin-top: 3.5rem; align-items: start; }
+    .namegen-cat-btn { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius); color: rgba(255,255,255,0.6); cursor: pointer; transition: all var(--transition); font-family: var(--font-sans); font-size: 0.9rem; text-align: left; width: 100%; margin-bottom: 0.6rem; }
+    .namegen-cat-btn:hover, .namegen-cat-btn.active { background: rgba(184,92,44,0.2); border-color: var(--rust); color: var(--white); }
+    .namegen-cat-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .namegen-cat-info h4 { font-weight: 600; margin-bottom: 0.15rem; }
+    .namegen-cat-info p { font-size: 0.72rem; opacity: 0.55; }
+    .name-slot { background: rgba(255,255,255,0.04); border: 2px solid rgba(184,92,44,0.4); border-radius: var(--radius-lg); padding: 3rem 2rem; margin-bottom: 2rem; min-height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+    .name-slot-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.75rem; }
+    .name-slot-name { font-family: var(--font-serif); font-size: clamp(2.5rem,5vw,4rem); font-weight: 900; color: var(--white); line-height: 1; transition: all 0.2s ease; }
+    .name-slot-name.spinning { animation: nameBlur 0.4s ease infinite alternate; }
+    @keyframes nameBlur { from { opacity: 0.2; transform: scale(0.93); } to { opacity: 0.7; transform: scale(1.04); } }
+    .name-slot-meaning { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin-top: 0.75rem; font-style: italic; }
+    .namegen-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .namegen-btn { padding: 0.9rem 2rem; border-radius: 50px; font-family: var(--font-sans); font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all var(--transition); border: none; }
+    .namegen-btn-primary { background: var(--rust); color: var(--white); box-shadow: 0 8px 25px rgba(184,92,44,0.4); }
+    .namegen-btn-primary:hover { background: var(--rust-light); transform: translateY(-3px); }
+    .namegen-btn-secondary { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.15); }
+    .namegen-btn-secondary:hover { background: rgba(255,255,255,0.12); color: var(--white); }
+    .namegen-recently h4 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 0.75rem; }
+    .recent-names { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .recent-name-tag { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 0.3rem 0.85rem; border-radius: 50px; font-size: 0.78rem; color: rgba(255,255,255,0.55); }
+
+    /* ============================================================
+       MEMORY CARD GAME
+       ============================================================ */
+    #game { padding: clamp(5rem,10vw,9rem) 0; background: linear-gradient(135deg,#0E0A04 0%,#1A1208 50%,#0E0A04 100%); }
+    .game-header .section-tag { color: var(--gold-light); background: rgba(212,168,67,0.1); border-color: rgba(212,168,67,0.25); }
+    .game-header .section-title { color: var(--white); }
+    .game-header .section-subtitle { color: rgba(255,255,255,0.6); }
+    .game-header .divider { background: linear-gradient(90deg, var(--gold), var(--rust)); }
+    .game-scoreboard { display: flex; justify-content: center; gap: 2rem; margin: 2.5rem 0; flex-wrap: wrap; }
+    .game-score-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); padding: 1rem 2rem; text-align: center; min-width: 110px; }
+    .game-score-val { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; color: var(--gold); line-height: 1; }
+    .game-score-lbl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-top: 0.3rem; }
+    .game-controls { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+    .game-btn { padding: 0.75rem 1.75rem; border-radius: 50px; font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all var(--transition); border: none; }
+    .game-btn-start { background: var(--rust); color: var(--white); }
+    .game-btn-start:hover { background: var(--rust-light); transform: translateY(-2px); }
+    .game-btn-reset { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.15); }
+    .game-btn-reset:hover { background: rgba(255,255,255,0.12); }
+    .game-board { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.85rem; max-width: 680px; margin: 0 auto; }
+    .game-card { aspect-ratio: 3/4; perspective: 800px; cursor: pointer; }
+    .game-card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); border-radius: var(--radius); }
+    .game-card.flipped .game-card-inner, .game-card.matched .game-card-inner { transform: rotateY(180deg); }
+    .game-card-front, .game-card-back { position: absolute; inset: 0; border-radius: var(--radius); backface-visibility: hidden; }
+    .game-card-front { background: linear-gradient(135deg,var(--brown-dark),#2A1A08); border: 2px solid rgba(212,168,67,0.2); display: flex; align-items: center; justify-content: center; }
+    .game-card-front svg { width: 45%; height: 45%; fill: rgba(212,168,67,0.18); }
+    .game-card-back { transform: rotateY(180deg); overflow: hidden; border: 2px solid var(--gold); }
+    .game-card-back img { width: 100%; height: 100%; object-fit: cover; }
+    .game-card.matched .game-card-back { border-color: var(--forest-light); box-shadow: 0 0 20px rgba(74,125,48,0.5); }
+    .game-card.no-match { animation: cardShake 0.4s ease; }
+    @keyframes cardShake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+    .game-win-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 4000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 2rem; }
+    .game-win-overlay.active { opacity: 1; pointer-events: all; }
+    .game-win-card { background: linear-gradient(135deg,var(--brown-dark),#2A1A08); border: 2px solid var(--gold); border-radius: var(--radius-lg); padding: 3rem; text-align: center; max-width: 420px; box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(212,168,67,0.2); }
+    .game-win-emoji { font-size: 4rem; margin-bottom: 1rem; display: block; }
+    .game-win-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; color: var(--gold); margin-bottom: 0.5rem; }
+    .game-win-sub { font-size: 0.9rem; color: rgba(255,255,255,0.55); margin-bottom: 1.5rem; }
+    .game-win-stats { display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; }
+    .game-win-stat-val { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; color: var(--rust-light); }
+    .game-win-stat-lbl { font-size: 0.72rem; color: rgba(255,255,255,0.45); }
+    .game-win-btn { margin-top: 1rem; padding: 1rem 2.5rem; background: var(--rust); color: var(--white); border: none; border-radius: 50px; font-family: var(--font-sans); font-weight: 700; font-size: 1rem; cursor: pointer; transition: all var(--transition); }
+    .game-win-btn:hover { background: var(--rust-light); transform: translateY(-3px); }
+    .game-idle-msg { text-align: center; color: rgba(255,255,255,0.4); padding: 3rem; font-style: italic; }
+
+    /* ============================================================
+       PERSONALITY QUIZ
+       ============================================================ */
+    #quiz { padding: clamp(5rem,10vw,9rem) 0; background: var(--cream); }
+    .quiz-container { max-width: 780px; margin: 3.5rem auto 0; }
+    .quiz-progress-wrap { margin-bottom: 2.5rem; }
+    .quiz-progress-info { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--gray-text); margin-bottom: 0.5rem; font-weight: 500; }
+    .quiz-progress-track { height: 6px; background: var(--cream-dark); border-radius: 3px; overflow: hidden; }
+    .quiz-progress-fill { height: 100%; background: linear-gradient(90deg,var(--rust),var(--gold)); border-radius: 3px; transition: width 0.5s ease; }
+    .quiz-card { background: var(--white); border-radius: var(--radius-lg); padding: 2.5rem; box-shadow: var(--shadow-md); border: 1px solid rgba(196,180,154,0.3); animation: qSlide 0.4s ease; }
+    @keyframes qSlide { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:translateX(0)} }
+    .quiz-q-num { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--rust); font-weight: 700; margin-bottom: 0.75rem; }
+    .quiz-q-text { font-family: var(--font-serif); font-size: clamp(1.15rem,2.5vw,1.5rem); font-weight: 700; line-height: 1.4; margin-bottom: 2rem; }
+    .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    .quiz-option { padding: 1rem 1.25rem; background: var(--cream); border: 2px solid var(--cream-dark); border-radius: var(--radius); cursor: pointer; font-size: 0.88rem; font-family: var(--font-sans); line-height: 1.5; transition: all var(--transition); text-align: left; color: var(--black); }
+    .quiz-option:hover { border-color: var(--rust); background: rgba(184,92,44,0.05); transform: translateY(-2px); }
+    .quiz-option.selected { border-color: var(--rust); background: var(--rust); color: var(--white); }
+    .quiz-screen { text-align: center; padding: 3rem 2rem; background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid rgba(196,180,154,0.3); }
+    .quiz-screen-icon { font-size: 4rem; margin-bottom: 1.5rem; display: block; }
+    .quiz-screen-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; margin-bottom: 0.75rem; }
+    .quiz-screen-desc { color: var(--gray-text); line-height: 1.75; max-width: 500px; margin: 0 auto 2rem; font-size: 0.95rem; }
+    .quiz-action-btn { padding: 1rem 2.5rem; background: var(--rust); color: var(--white); border: none; border-radius: 50px; font-family: var(--font-sans); font-size: 1rem; font-weight: 700; cursor: pointer; transition: all var(--transition); box-shadow: 0 8px 25px rgba(184,92,44,0.4); }
+    .quiz-action-btn:hover { background: var(--rust-light); transform: translateY(-3px); }
+    .result-badge { width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg,var(--rust),var(--gold)); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.5rem; box-shadow: 0 15px 40px rgba(184,92,44,0.4); }
+    .result-type { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 900; color: var(--rust); margin-bottom: 0.5rem; }
+    .result-score-label { font-size: 0.8rem; color: var(--gray-mid); margin-bottom: 1.25rem; }
+    .result-meter { max-width: 280px; margin: 0 auto 1.5rem; }
+    .result-meter-bar { height: 10px; background: var(--cream-dark); border-radius: 5px; overflow: hidden; margin-top: 0.4rem; }
+    .result-meter-fill { height: 100%; background: linear-gradient(90deg,var(--rust),var(--gold)); border-radius: 5px; transition: width 1s ease 0.4s; }
+
+    /* ============================================================
+       VIDEO WALL
+       ============================================================ */
+    #videos { padding: clamp(5rem,10vw,9rem) 0; background: var(--brown-dark); position: relative; overflow: hidden; }
+    #videos::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(184,92,44,0.2) 0%, transparent 60%); pointer-events: none; }
+    .videos-header .section-tag { color: var(--gold-light); background: rgba(212,168,67,0.1); border-color: rgba(212,168,67,0.25); }
+    .videos-header .section-title { color: var(--white); }
+    .videos-header .section-subtitle { color: rgba(255,255,255,0.6); }
+    .videos-header .divider { background: linear-gradient(90deg,var(--gold),var(--rust)); }
+    .videos-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3.5rem; }
+    .video-card { border-radius: var(--radius-lg); overflow: hidden; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); transition: transform var(--transition), box-shadow var(--transition); cursor: pointer; text-decoration: none; display: block; }
+    .video-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .video-thumb { position: relative; aspect-ratio: 16/9; overflow: hidden; }
+    .video-thumb-bg { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+    .video-thumb-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); transition: background var(--transition); }
+    .video-card:hover .video-thumb-overlay { background: rgba(0,0,0,0.5); }
+    .video-play-btn { width: 56px; height: 56px; background: var(--rust); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform var(--transition), background var(--transition); box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
+    .video-card:hover .video-play-btn { transform: scale(1.15); background: var(--rust-light); }
+    .video-play-btn svg { width: 20px; height: 20px; fill: var(--white); margin-left: 3px; }
+    .video-info { padding: 1.25rem; }
+    .video-tag { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold-light); font-weight: 600; margin-bottom: 0.4rem; }
+    .video-title { font-weight: 700; font-size: 0.9rem; color: var(--white); line-height: 1.45; margin-bottom: 0.4rem; }
+    .video-desc { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.55; }
+
+    /* ============================================================
+       RESCUE FINDER
+       ============================================================ */
+    #rescue { padding: clamp(5rem,10vw,9rem) 0; background: var(--white); }
+    .rescue-tabs { display: flex; gap: 0.5rem; margin: 3rem 0 2.5rem; flex-wrap: wrap; }
+    .rescue-tab { padding: 0.55rem 1.2rem; border-radius: 50px; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; transition: all var(--transition); border: 2px solid var(--cream-dark); background: var(--white); color: var(--gray-text); font-family: var(--font-sans); }
+    .rescue-tab.active, .rescue-tab:hover { background: var(--rust); border-color: var(--rust); color: var(--white); }
+    .rescue-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .rescue-card { border-radius: var(--radius-lg); padding: 1.75rem; border: 2px solid var(--cream-dark); background: var(--cream); transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition); display: flex; flex-direction: column; }
+    .rescue-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--rust); }
+    .rescue-card[data-hidden="true"] { display: none; }
+    .rescue-card-top { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+    .rescue-icon { width: 46px; height: 46px; background: linear-gradient(135deg,var(--rust),var(--gold)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .rescue-org-name { font-family: var(--font-serif); font-size: 0.95rem; font-weight: 700; color: var(--black); line-height: 1.3; }
+    .rescue-region-tag { display: inline-block; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; background: rgba(184,92,44,0.1); color: var(--rust); border: 1px solid rgba(184,92,44,0.2); padding: 0.2rem 0.6rem; border-radius: 50px; margin-top: 0.3rem; }
+    .rescue-desc { font-size: 0.84rem; color: var(--gray-text); line-height: 1.65; flex: 1; margin-bottom: 1.25rem; }
+    .rescue-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; font-weight: 700; color: var(--rust); text-transform: uppercase; letter-spacing: 0.06em; transition: gap var(--transition); }
+    .rescue-link:hover { gap: 0.65rem; }
+
+    /* ============================================================
+       RESOURCES HUB
+       ============================================================ */
+    #resources { padding: clamp(5rem,10vw,9rem) 0; background: var(--cream-dark); }
+    .resources-filter { display: flex; gap: 0.5rem; margin: 3rem 0 2.5rem; flex-wrap: wrap; }
+    .res-filter-btn { padding: 0.55rem 1.2rem; border-radius: 50px; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; transition: all var(--transition); border: 2px solid var(--gray-mid); background: transparent; color: var(--gray-text); font-family: var(--font-sans); }
+    .res-filter-btn.active, .res-filter-btn:hover { background: var(--black); border-color: var(--black); color: var(--white); }
+    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(270px,1fr)); gap: 1.25rem; }
+    .resource-card { background: var(--white); border-radius: var(--radius-lg); padding: 1.5rem; border: 1px solid rgba(196,180,154,0.3); display: flex; align-items: flex-start; gap: 1rem; transition: transform var(--transition), box-shadow var(--transition); text-decoration: none; color: inherit; }
+    .resource-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .resource-card[data-hidden="true"] { display: none; }
+    .res-icon-box { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .res-name { font-weight: 700; font-size: 0.9rem; color: var(--black); margin-bottom: 0.2rem; }
+    .res-cat { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--rust); font-weight: 700; margin-bottom: 0.4rem; }
+    .res-desc { font-size: 0.78rem; color: var(--gray-text); line-height: 1.55; }
+    .res-arrow { margin-left: auto; color: var(--gray-mid); flex-shrink: 0; margin-top: 0.1rem; transition: transform var(--transition), color var(--transition); }
+    .resource-card:hover .res-arrow { transform: translateX(4px); color: var(--rust); }
+
+    /* ============================================================
+       RESPONSIVE — NEW SECTIONS
+       ============================================================ */
+    @media (max-width: 1024px) {
+      .stars-grid { grid-template-columns: repeat(2,1fr); }
+      .compare-grid { grid-template-columns: 1fr; }
+      .compare-vs { padding-top: 0; }
+      .namegen-layout { grid-template-columns: 1fr; }
+      .videos-grid { grid-template-columns: repeat(2,1fr); }
+      .rescue-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 768px) {
+      .stars-grid { grid-template-columns: 1fr; }
+      .game-board { grid-template-columns: repeat(3,1fr); }
+      .quiz-options { grid-template-columns: 1fr; }
+      .videos-grid { grid-template-columns: 1fr; }
+      .rescue-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -1344,10 +1573,13 @@
       <ul class="nav-links" id="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#history">History</a></li>
-        <li><a href="#temperament">Temperament</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#health">Health</a></li>
-        <li><a href="#funfacts">Fun Facts</a></li>
+        <li><a href="#compare">Compare</a></li>
+        <li><a href="#game">🎮 Game</a></li>
+        <li><a href="#quiz">Quiz</a></li>
+        <li><a href="#rescue">Rescue</a></li>
+        <li><a href="#resources">Resources</a></li>
       </ul>
       <div class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
         <span></span><span></span><span></span>
@@ -1982,6 +2214,658 @@
     </div>
   </section>
 
+  <!-- ===================== SOCIAL STARS ===================== -->
+  <section id="socialstars">
+    <div class="container">
+      <div class="reveal" style="text-align:center">
+        <span class="section-tag">Berner Celebrities</span>
+        <h2 class="section-title">Famous Berners<br>of the Internet</h2>
+        <div class="divider" style="margin:1.2rem auto"></div>
+        <p class="section-subtitle" style="margin:0 auto">
+          These four-legged stars have built massive followings — proving the Berner's
+          magnetic charm translates perfectly to every screen.
+        </p>
+      </div>
+
+      <div class="stars-grid">
+        <div class="star-card reveal" style="transition-delay:0.05s">
+          <div class="star-card-banner" style="background:linear-gradient(135deg,#1a3a5c,#2d5a8e)">🔬</div>
+          <div class="star-card-body">
+            <div class="star-handle">@bunsenbernerbmd</div>
+            <div class="star-name">Bunsen Berner</div>
+            <p class="star-desc">The internet's most scientifically inclined Berner. Known for "experiments" involving treats and physics, Bunsen has amassed a devoted following with his lab-coat persona and irresistible charm.</p>
+            <div class="star-stats">
+              <div class="star-stat">
+                <div class="star-stat-val">100K+</div>
+                <div class="star-stat-lbl">Instagram</div>
+              </div>
+              <div class="star-stat">
+                <div class="star-stat-val">Science</div>
+                <div class="star-stat-lbl">Specialty</div>
+              </div>
+            </div>
+            <a href="https://bunsenbernerbmd.com" target="_blank" rel="noopener" class="star-follow-btn">🌐 Visit Website</a>
+          </div>
+        </div>
+
+        <div class="star-card reveal" style="transition-delay:0.1s">
+          <div class="star-card-banner" style="background:linear-gradient(135deg,#8B3A1A,#C85C2C)">⭐</div>
+          <div class="star-card-body">
+            <div class="star-handle">@itskevintheberner</div>
+            <div class="star-name">Kevin the Berner</div>
+            <p class="star-desc">One of the most recognized Bernese Mountain Dogs online. Kevin's adventures, expressive face, and undeniable Berner personality have made him a social media icon across Instagram, TikTok, and Facebook.</p>
+            <div class="star-stats">
+              <div class="star-stat">
+                <div class="star-stat-val">500K+</div>
+                <div class="star-stat-lbl">Followers</div>
+              </div>
+              <div class="star-stat">
+                <div class="star-stat-val">Multi</div>
+                <div class="star-stat-lbl">Platform</div>
+              </div>
+            </div>
+            <a href="https://www.instagram.com/itskevintheberner" target="_blank" rel="noopener" class="star-follow-btn">📸 Instagram</a>
+          </div>
+        </div>
+
+        <div class="star-card reveal" style="transition-delay:0.15s">
+          <div class="star-card-banner" style="background:linear-gradient(135deg,#2D5A1B,#4A7D30)">🌿</div>
+          <div class="star-card-body">
+            <div class="star-handle">@bakedbeandoggo</div>
+            <div class="star-name">Bean</div>
+            <p class="star-desc">TikTok's beloved Berner sensation with over 19 million views. Bean's wholesome content — from zoomies to cuddle sessions — showcases every endearing quality that makes Berners so special.</p>
+            <div class="star-stats">
+              <div class="star-stat">
+                <div class="star-stat-val">19M+</div>
+                <div class="star-stat-lbl">TikTok Views</div>
+              </div>
+              <div class="star-stat">
+                <div class="star-stat-val">TikTok</div>
+                <div class="star-stat-lbl">Platform</div>
+              </div>
+            </div>
+            <a href="https://www.tiktok.com/@bakedbeandoggo" target="_blank" rel="noopener" class="star-follow-btn">🎵 TikTok</a>
+          </div>
+        </div>
+
+        <div class="star-card reveal" style="transition-delay:0.2s">
+          <div class="star-card-banner" style="background:linear-gradient(135deg,#3D1C02,#6B3D1E)">🇮🇪</div>
+          <div class="star-card-body">
+            <div class="star-handle">Áras an Uachtaráin</div>
+            <div class="star-name">Misneach, Bród & Sioda</div>
+            <p class="star-desc">The Presidential Berners of Ireland! The dogs of President Michael D. Higgins became international news when Misneach "confronted" President Biden during a 2023 state visit — an unforgettable diplomatic moment.</p>
+            <div class="star-stats">
+              <div class="star-stat">
+                <div class="star-stat-val">Global</div>
+                <div class="star-stat-lbl">Fame</div>
+              </div>
+              <div class="star-stat">
+                <div class="star-stat-val">Official</div>
+                <div class="star-stat-lbl">Status</div>
+              </div>
+            </div>
+            <a href="https://president.ie" target="_blank" rel="noopener" class="star-follow-btn">🌐 Presidential Site</a>
+          </div>
+        </div>
+
+        <div class="star-card reveal" style="transition-delay:0.25s">
+          <div class="star-card-banner" style="background:linear-gradient(135deg,#4a2060,#7B3FAD)">🎬</div>
+          <div class="star-card-body">
+            <div class="star-handle">Hollywood Berners</div>
+            <div class="star-name">Celebrity Pack</div>
+            <p class="star-desc">Selena Gomez, Courteney Cox, Hilary Duff, and Goldie Hawn & Kurt Russell all share their lives with Bernese Mountain Dogs — proving that when you achieve success, the next step is obviously getting a Berner.</p>
+            <div class="star-stats">
+              <div class="star-stat">
+                <div class="star-stat-val">5+</div>
+                <div class="star-stat-lbl">A-Listers</div>
+              </div>
+              <div class="star-stat">
+                <div class="star-stat-val">Elite</div>
+                <div class="star-stat-lbl">Taste</div>
+              </div>
+            </div>
+            <a href="https://www.akc.org/dog-breeds/bernese-mountain-dog/" target="_blank" rel="noopener" class="star-follow-btn">🏆 AKC Profile</a>
+          </div>
+        </div>
+
+        <div class="star-card reveal" style="transition-delay:0.3s">
+          <div class="star-card-banner" style="background:linear-gradient(135deg,#8B1A1A,#C83232)">📻</div>
+          <div class="star-card-body">
+            <div class="star-handle">Apple Podcasts</div>
+            <div class="star-name">The Berner Podcast</div>
+            <p class="star-desc">"The One About Bernese Mountain Dogs" featuring Kevin the Berner is a delightful podcast that dives deep into life with a Berner — covering everything from health to hilarious personality quirks owners know too well.</p>
+            <div class="star-stats">
+              <div class="star-stat">
+                <div class="star-stat-val">Audio</div>
+                <div class="star-stat-lbl">Format</div>
+              </div>
+              <div class="star-stat">
+                <div class="star-stat-val">Free</div>
+                <div class="star-stat-lbl">To Listen</div>
+              </div>
+            </div>
+            <a href="https://podcasts.apple.com/us/podcast/the-one-about-bernese-mountain-dogs-ft-itskevintheberner/id1505839388" target="_blank" rel="noopener" class="star-follow-btn">🎙️ Listen Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BREED COMPARISON ===================== -->
+  <section id="compare">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-tag">How Do We Stack Up?</span>
+        <h2 class="section-title">Breed Comparison</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">
+          See how the Bernese Mountain Dog compares to over 200 other breeds.
+          Select any breed from the live database to get an instant side-by-side breakdown.
+        </p>
+      </div>
+
+      <div class="compare-controls reveal">
+        <label class="compare-label" for="breed-select">Compare Berner with:</label>
+        <select class="compare-select" id="breed-select">
+          <option value="">Loading breeds…</option>
+        </select>
+        <button class="compare-btn" id="compare-go-btn">Compare ↗</button>
+      </div>
+
+      <div class="compare-grid reveal" id="compare-grid">
+        <div class="compare-placeholder">Select a breed above and click Compare to see the results.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== NAME GENERATOR ===================== -->
+  <section id="namegen">
+    <div class="container">
+      <div class="namegen-header reveal">
+        <span class="section-tag">Name Your Berner</span>
+        <h2 class="section-title">The Perfect<br>Name Generator</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">
+          Find the ideal name for your Bernese Mountain Dog — inspired by Swiss heritage,
+          Alpine peaks, and the breed's legendary charm.
+        </p>
+      </div>
+
+      <div class="namegen-layout">
+        <div class="reveal-left">
+          <button class="namegen-cat-btn active" data-cat="swiss">
+            <span class="namegen-cat-icon">🇨🇭</span>
+            <div class="namegen-cat-info"><h4>Swiss Heritage</h4><p>Traditional Swiss names for a breed born in Bern</p></div>
+          </button>
+          <button class="namegen-cat-btn" data-cat="mountain">
+            <span class="namegen-cat-icon">🏔️</span>
+            <div class="namegen-cat-info"><h4>Mountain Names</h4><p>Inspired by Alpine peaks, glaciers and snow</p></div>
+          </button>
+          <button class="namegen-cat-btn" data-cat="nature">
+            <span class="namegen-cat-icon">🌿</span>
+            <div class="namegen-cat-info"><h4>Nature Names</h4><p>From forests, seasons, and the great outdoors</p></div>
+          </button>
+          <button class="namegen-cat-btn" data-cat="personality">
+            <span class="namegen-cat-icon">😄</span>
+            <div class="namegen-cat-info"><h4>Personality Names</h4><p>Matching the Berner's legendary gentle character</p></div>
+          </button>
+          <button class="namegen-cat-btn" data-cat="food">
+            <span class="namegen-cat-icon">🧀</span>
+            <div class="namegen-cat-info"><h4>Swiss Food Names</h4><p>Cheese dogs deserve delicious names</p></div>
+          </button>
+        </div>
+
+        <div class="reveal-right">
+          <div class="name-slot" id="name-slot">
+            <div class="name-slot-label">Your Berner's Name</div>
+            <div class="name-slot-name" id="name-display">Click Generate</div>
+            <div class="name-slot-meaning" id="name-meaning">Choose a category and generate a name</div>
+          </div>
+          <div class="namegen-actions">
+            <button class="namegen-btn namegen-btn-primary" id="gen-btn">✨ Generate Name</button>
+            <button class="namegen-btn namegen-btn-secondary" id="copy-btn">📋 Copy Name</button>
+          </div>
+          <div class="namegen-recently">
+            <h4>Recent Names</h4>
+            <div class="recent-names" id="recent-names"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MEMORY CARD GAME ===================== -->
+  <section id="game">
+    <div class="container">
+      <div class="game-header reveal" style="text-align:center">
+        <span class="section-tag">Interactive</span>
+        <h2 class="section-title">Berner Memory Game</h2>
+        <div class="divider" style="margin:1.2rem auto"></div>
+        <p class="section-subtitle" style="margin:0 auto">
+          Match all the Berner pairs to win! Real photos loaded fresh from the Berner image library.
+          How few moves can you do it in?
+        </p>
+      </div>
+
+      <div class="game-scoreboard">
+        <div class="game-score-item">
+          <div class="game-score-val" id="g-moves">0</div>
+          <div class="game-score-lbl">Moves</div>
+        </div>
+        <div class="game-score-item">
+          <div class="game-score-val" id="g-pairs">0/6</div>
+          <div class="game-score-lbl">Pairs Found</div>
+        </div>
+        <div class="game-score-item">
+          <div class="game-score-val" id="g-timer">0:00</div>
+          <div class="game-score-lbl">Time</div>
+        </div>
+      </div>
+
+      <div class="game-controls">
+        <button class="game-btn game-btn-start" id="game-start-btn">🎮 New Game</button>
+        <button class="game-btn game-btn-reset" id="game-reset-btn">↺ Reset</button>
+      </div>
+
+      <div class="game-board" id="game-board">
+        <div class="game-idle-msg" style="grid-column:1/-1">Press "New Game" to load Berner photos and start playing! 🐾</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Win overlay -->
+  <div class="game-win-overlay" id="game-win-overlay">
+    <div class="game-win-card">
+      <span class="game-win-emoji">🐾</span>
+      <div class="game-win-title">You Found All the Berners!</div>
+      <div class="game-win-sub">Every Berner matched — just like in real life, they're impossible to ignore.</div>
+      <div class="game-win-stats">
+        <div>
+          <div class="game-win-stat-val" id="win-moves">—</div>
+          <div class="game-win-stat-lbl">Moves</div>
+        </div>
+        <div>
+          <div class="game-win-stat-val" id="win-time">—</div>
+          <div class="game-win-stat-lbl">Time</div>
+        </div>
+      </div>
+      <button class="game-win-btn" id="game-win-close">Play Again 🎮</button>
+    </div>
+  </div>
+
+  <!-- ===================== PERSONALITY QUIZ ===================== -->
+  <section id="quiz">
+    <div class="container">
+      <div class="reveal" style="text-align:center">
+        <span class="section-tag">Self-Discovery</span>
+        <h2 class="section-title">Are You a<br>Berner Person?</h2>
+        <div class="divider" style="margin:1.2rem auto"></div>
+        <p class="section-subtitle" style="margin:0 auto">
+          8 questions. Honest answers. Find out if the Bernese Mountain Dog
+          is truly your perfect match — or if you might need a goldfish.
+        </p>
+      </div>
+
+      <div class="quiz-container">
+        <div id="quiz-area">
+          <!-- Populated by JS -->
+          <div class="quiz-screen" id="quiz-start-screen">
+            <span class="quiz-screen-icon">🐾</span>
+            <div class="quiz-screen-title">Ready to Find Out?</div>
+            <p class="quiz-screen-desc">Answer 8 quick questions and discover how Berner-compatible you really are. No judgment — we promise.</p>
+            <button class="quiz-action-btn" id="quiz-start-btn">Start the Quiz →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== VIDEO WALL ===================== -->
+  <section id="videos">
+    <div class="container">
+      <div class="videos-header reveal">
+        <span class="section-tag">Watch & Learn</span>
+        <h2 class="section-title">Berner Video<br>Collection</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">
+          From breed guides to puppy diaries — the best Berner content from around the web,
+          curated for every stage of your Berner journey.
+        </p>
+      </div>
+
+      <div class="videos-grid">
+        <a href="https://www.youtube.com/results?search_query=bernese+mountain+dog+breed+guide+akc" target="_blank" rel="noopener" class="video-card reveal" style="transition-delay:0.05s">
+          <div class="video-thumb">
+            <div class="video-thumb-bg" style="background:linear-gradient(135deg,#1A1208,#3D1C02)">🏔️</div>
+            <div class="video-thumb-overlay">
+              <div class="video-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div class="video-tag">Breed Guide</div>
+            <div class="video-title">Bernese Mountain Dog: Complete Breed Overview</div>
+            <div class="video-desc">Everything you need to know about the Berner — history, temperament, care needs and more.</div>
+          </div>
+        </a>
+
+        <a href="https://www.youtube.com/results?search_query=bernese+mountain+dog+puppy+first+week+home" target="_blank" rel="noopener" class="video-card reveal" style="transition-delay:0.1s">
+          <div class="video-thumb">
+            <div class="video-thumb-bg" style="background:linear-gradient(135deg,#B85C2C,#D4A843)">🐶</div>
+            <div class="video-thumb-overlay">
+              <div class="video-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div class="video-tag">Puppy Life</div>
+            <div class="video-title">Berner Puppy's First Week Home</div>
+            <div class="video-desc">Follow along as a Berner puppy explores their new home — guaranteed to make you want one immediately.</div>
+          </div>
+        </a>
+
+        <a href="https://www.youtube.com/results?search_query=bernese+mountain+dog+training+tips+positive" target="_blank" rel="noopener" class="video-card reveal" style="transition-delay:0.15s">
+          <div class="video-thumb">
+            <div class="video-thumb-bg" style="background:linear-gradient(135deg,#2D5A1B,#4A7D30)">🎓</div>
+            <div class="video-thumb-overlay">
+              <div class="video-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div class="video-tag">Training</div>
+            <div class="video-title">Berner Training Masterclass</div>
+            <div class="video-desc">Positive reinforcement techniques specifically suited to the Berner's eager-to-please but sensitive personality.</div>
+          </div>
+        </a>
+
+        <a href="https://www.youtube.com/results?search_query=living+with+bernese+mountain+dog+daily+life" target="_blank" rel="noopener" class="video-card reveal" style="transition-delay:0.2s">
+          <div class="video-thumb">
+            <div class="video-thumb-bg" style="background:linear-gradient(135deg,#1c3a5e,#2d5a8e)">🏡</div>
+            <div class="video-thumb-overlay">
+              <div class="video-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div class="video-tag">Owner Stories</div>
+            <div class="video-title">What It's Actually Like Living with a Berner</div>
+            <div class="video-desc">Real owners share the joys, the fur, the drool, and the unconditional love of life with a Bernese Mountain Dog.</div>
+          </div>
+        </a>
+
+        <a href="https://www.youtube.com/results?search_query=bernese+mountain+dog+health+longevity+cancer" target="_blank" rel="noopener" class="video-card reveal" style="transition-delay:0.25s">
+          <div class="video-thumb">
+            <div class="video-thumb-bg" style="background:linear-gradient(135deg,#5C1A1A,#8B2929)">❤️</div>
+            <div class="video-thumb-overlay">
+              <div class="video-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div class="video-tag">Health & Wellness</div>
+            <div class="video-title">Berner Health & Longevity: What Every Owner Should Know</div>
+            <div class="video-desc">Vet-focused guide to the most common Berner health concerns and how to maximize your dog's lifespan.</div>
+          </div>
+        </a>
+
+        <a href="https://www.youtube.com/results?search_query=bernese+mountain+dog+funny+compilation+cute" target="_blank" rel="noopener" class="video-card reveal" style="transition-delay:0.3s">
+          <div class="video-thumb">
+            <div class="video-thumb-bg" style="background:linear-gradient(135deg,#4a3a00,#8B6914)">😂</div>
+            <div class="video-thumb-overlay">
+              <div class="video-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div class="video-tag">Just for Fun</div>
+            <div class="video-title">Berners Being Ridiculous: The Ultimate Compilation</div>
+            <div class="video-desc">The Berner sense of humor on full display — zoomies, water bowls, and the classic Berner lean.</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RESCUE FINDER ===================== -->
+  <section id="rescue">
+    <div class="container">
+      <div class="reveal" style="text-align:center">
+        <span class="section-tag">Adopt, Don't Shop</span>
+        <h2 class="section-title">Find a Berner<br>Who Needs You</h2>
+        <div class="divider" style="margin:1.2rem auto"></div>
+        <p class="section-subtitle" style="margin:0 auto">
+          Thousands of Berners are looking for their forever home. These dedicated rescue
+          organizations work tirelessly to match every dog with a loving family.
+        </p>
+      </div>
+
+      <div class="rescue-tabs reveal">
+        <button class="rescue-tab active" data-region="all">All Regions</button>
+        <button class="rescue-tab" data-region="national">National</button>
+        <button class="rescue-tab" data-region="northeast">Northeast</button>
+        <button class="rescue-tab" data-region="midwest">Midwest</button>
+        <button class="rescue-tab" data-region="west">West Coast</button>
+        <button class="rescue-tab" data-region="international">International</button>
+      </div>
+
+      <div class="rescue-grid" id="rescue-grid">
+        <div class="rescue-card reveal" data-region="national" style="transition-delay:0.05s">
+          <div class="rescue-card-top">
+            <div class="rescue-icon">🏠</div>
+            <div>
+              <div class="rescue-org-name">BMDCA Rescue Network</div>
+              <span class="rescue-region-tag">National</span>
+            </div>
+          </div>
+          <p class="rescue-desc">The official rescue arm of the Bernese Mountain Dog Club of America. Coordinates a network of foster homes nationwide and maintains a searchable database of Berners in need of homes.</p>
+          <a href="https://www.bmdca.org/rescue" target="_blank" rel="noopener" class="rescue-link">Visit BMDCA Rescue →</a>
+        </div>
+
+        <div class="rescue-card reveal" data-region="national" style="transition-delay:0.1s">
+          <div class="rescue-card-top">
+            <div class="rescue-icon">🌐</div>
+            <div>
+              <div class="rescue-org-name">National BMD Rescue Network</div>
+              <span class="rescue-region-tag">National</span>
+            </div>
+          </div>
+          <p class="rescue-desc">A dedicated national network connecting Berner-specific rescuers, fosters, and adopters across the United States. Features an up-to-date listing of available dogs by region.</p>
+          <a href="https://www.nationalbmdrescuenetwork.org" target="_blank" rel="noopener" class="rescue-link">Browse Available Dogs →</a>
+        </div>
+
+        <div class="rescue-card reveal" data-region="national" style="transition-delay:0.15s">
+          <div class="rescue-card-top">
+            <div class="rescue-icon">🐾</div>
+            <div>
+              <div class="rescue-org-name">Rescue.me — Berners</div>
+              <span class="rescue-region-tag">National</span>
+            </div>
+          </div>
+          <p class="rescue-desc">A live, continuously updated directory of Bernese Mountain Dogs available for adoption across the US. Searchable by state with direct contact information for each listing.</p>
+          <a href="https://bernesemountaindog.rescueme.org" target="_blank" rel="noopener" class="rescue-link">See Live Listings →</a>
+        </div>
+
+        <div class="rescue-card reveal" data-region="northeast" style="transition-delay:0.2s">
+          <div class="rescue-card-top">
+            <div class="rescue-icon">🗽</div>
+            <div>
+              <div class="rescue-org-name">BMDCW Rescue (NJ/Northeast)</div>
+              <span class="rescue-region-tag">Northeast</span>
+            </div>
+          </div>
+          <p class="rescue-desc">The Bernese Mountain Dog Club of Watchung serves the Northeast region with a dedicated rescue program, foster network, and adoption process for Berners in New Jersey and surrounding states.</p>
+          <a href="https://www.bmdcw.org/index.php/rescue" target="_blank" rel="noopener" class="rescue-link">NJ/Northeast Rescue →</a>
+        </div>
+
+        <div class="rescue-card reveal" data-region="midwest" style="transition-delay:0.25s">
+          <div class="rescue-card-top">
+            <div class="rescue-icon">🌾</div>
+            <div>
+              <div class="rescue-org-name">BMDCF Berner Rescue</div>
+              <span class="rescue-region-tag">Midwest</span>
+            </div>
+          </div>
+          <p class="rescue-desc">The Bernese Mountain Dog Club of the Finger Lakes manages a rescue program serving the Midwest and surrounding regions, with an emphasis on responsible rehoming and owner support.</p>
+          <a href="https://www.bmdcf.org/bmdinfo-berner-rescue" target="_blank" rel="noopener" class="rescue-link">Midwest Rescue →</a>
+        </div>
+
+        <div class="rescue-card reveal" data-region="west" style="transition-delay:0.3s">
+          <div class="rescue-card-top">
+            <div class="rescue-icon">🌉</div>
+            <div>
+              <div class="rescue-org-name">NorCal Berner Rescue</div>
+              <span class="rescue-region-tag">West Coast</span>
+            </div>
+          </div>
+          <p class="rescue-desc">Northern California's dedicated Berner rescue organization. Serves the greater Bay Area and Northern California with foster-based care, thorough adoption screenings, and post-adoption support.</p>
+          <a href="http://www.bmdrescueca.org" target="_blank" rel="noopener" class="rescue-link">NorCal Rescue →</a>
+        </div>
+
+        <div class="rescue-card reveal" data-region="international" style="transition-delay:0.35s">
+          <div class="rescue-card-top">
+            <div class="rescue-icon">🇨🇭</div>
+            <div>
+              <div class="rescue-org-name">Berner-Garde Health Database</div>
+              <span class="rescue-region-tag">International</span>
+            </div>
+          </div>
+          <p class="rescue-desc">The world's largest Bernese Mountain Dog health and pedigree database with 220,000+ dogs registered. An invaluable resource for breeders, researchers, and anyone researching a Berner's lineage.</p>
+          <a href="https://bernergarde.org" target="_blank" rel="noopener" class="rescue-link">Search Berner-Garde →</a>
+        </div>
+
+        <div class="rescue-card reveal" data-region="international" style="transition-delay:0.4s">
+          <div class="rescue-card-top">
+            <div class="rescue-icon">🌍</div>
+            <div>
+              <div class="rescue-org-name">BMD Vitality Project</div>
+              <span class="rescue-region-tag">International</span>
+            </div>
+          </div>
+          <p class="rescue-desc">A groundbreaking research initiative dedicated to extending Berner lifespans through genetic health research. Participates in studies that could transform health outcomes for the entire breed.</p>
+          <a href="https://www.bmdvitalityproject.org" target="_blank" rel="noopener" class="rescue-link">Support the Research →</a>
+        </div>
+
+        <div class="rescue-card reveal" data-region="national" style="transition-delay:0.45s">
+          <div class="rescue-card-top">
+            <div class="rescue-icon">🏆</div>
+            <div>
+              <div class="rescue-org-name">AKC Marketplace — Rescue</div>
+              <span class="rescue-region-tag">National</span>
+            </div>
+          </div>
+          <p class="rescue-desc">The AKC's official rehoming and rescue directory connects prospective owners with reputable Berner rescues and responsible breeders across the United States.</p>
+          <a href="https://marketplace.akc.org/rescue-network" target="_blank" rel="noopener" class="rescue-link">AKC Rescue Network →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RESOURCES HUB ===================== -->
+  <section id="resources">
+    <div class="container">
+      <div class="reveal" style="text-align:center">
+        <span class="section-tag">Knowledge Base</span>
+        <h2 class="section-title">The Ultimate<br>Berner Resource Hub</h2>
+        <div class="divider" style="margin:1.2rem auto"></div>
+        <p class="section-subtitle" style="margin:0 auto">
+          Every link, database, community, and tool a Berner owner, admirer,
+          or researcher could ever need — all in one place.
+        </p>
+      </div>
+
+      <div class="resources-filter reveal">
+        <button class="res-filter-btn active" data-cat="all">All Resources</button>
+        <button class="res-filter-btn" data-cat="official">Official Orgs</button>
+        <button class="res-filter-btn" data-cat="health">Health & Research</button>
+        <button class="res-filter-btn" data-cat="community">Community</button>
+        <button class="res-filter-btn" data-cat="tools">Tools & Apps</button>
+        <button class="res-filter-btn" data-cat="social">Social & Media</button>
+      </div>
+
+      <div class="resources-grid" id="resources-grid">
+        <!-- Official -->
+        <a href="https://www.bmdca.org" target="_blank" rel="noopener" class="resource-card reveal" data-cat="official" style="transition-delay:0.03s">
+          <div class="res-icon-box" style="background:#FFF0E8">🏛️</div>
+          <div style="flex:1"><div class="res-cat">Official</div><div class="res-name">BMDCA.org</div><div class="res-desc">The Bernese Mountain Dog Club of America — the breed's official US organization with standards, events, and resources.</div></div>
+          <div class="res-arrow">→</div>
+        </a>
+        <a href="https://www.akc.org/dog-breeds/bernese-mountain-dog/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="official" style="transition-delay:0.06s">
+          <div class="res-icon-box" style="background:#EEF5FF">🏅</div>
+          <div style="flex:1"><div class="res-cat">Official</div><div class="res-name">AKC Breed Profile</div><div class="res-desc">The American Kennel Club's complete Bernese Mountain Dog breed standard, history, and care information.</div></div>
+          <div class="res-arrow">→</div>
+        </a>
+        <a href="https://www.ssk.ch" target="_blank" rel="noopener" class="resource-card reveal" data-cat="official" style="transition-delay:0.09s">
+          <div class="res-icon-box" style="background:#F0FFF4">🇨🇭</div>
+          <div style="flex:1"><div class="res-cat">Official</div><div class="res-name">Swiss Kennel Club (SKG)</div><div class="res-desc">The Swiss Kennel Club — home of the breed's country of origin, maintaining original breed standards since 1907.</div></div>
+          <div class="res-arrow">→</div>
+        </a>
+
+        <!-- Health & Research -->
+        <a href="https://bernergarde.org" target="_blank" rel="noopener" class="resource-card reveal" data-cat="health" style="transition-delay:0.12s">
+          <div class="res-icon-box" style="background:#FFF5E8">🧬</div>
+          <div style="flex:1"><div class="res-cat">Health</div><div class="res-name">Berner-Garde Database</div><div class="res-desc">220,000+ Berner health records, pedigrees and genetic research — the most comprehensive Berner database on earth.</div></div>
+          <div class="res-arrow">→</div>
+        </a>
+        <a href="https://www.bmdvitalityproject.org" target="_blank" rel="noopener" class="resource-card reveal" data-cat="health" style="transition-delay:0.15s">
+          <div class="res-icon-box" style="background:#F0FFF4">🔬</div>
+          <div style="flex:1"><div class="res-cat">Health Research</div><div class="res-name">BMD Vitality Project</div><div class="res-desc">Pioneering research to extend Berner lifespans through genetics and longitudinal health studies.</div></div>
+          <div class="res-arrow">→</div>
+        </a>
+        <a href="https://www.ofa.org/diseases/breed-statistics/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="health" style="transition-delay:0.18s">
+          <div class="res-icon-box" style="background:#FFF0E8">🏥</div>
+          <div style="flex:1"><div class="res-cat">Health</div><div class="res-name">OFA Health Statistics</div><div class="res-desc">Orthopedic Foundation for Animals — hip, elbow, and genetic disease statistics for the Berner breed.</div></div>
+          <div class="res-arrow">→</div>
+        </a>
+
+        <!-- Community -->
+        <a href="https://www.reddit.com/r/BerneseMountainDogs/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="community" style="transition-delay:0.21s">
+          <div class="res-icon-box" style="background:#FFF2E8">🗣️</div>
+          <div style="flex:1"><div class="res-cat">Community</div><div class="res-name">r/BerneseMountainDogs</div><div class="res-desc">Reddit's active Berner community — photos, advice, health questions, and the best Berner memes on the internet.</div></div>
+          <div class="res-arrow">→</div>
+        </a>
+        <a href="https://www.pedigreedatabase.com/bernese_mountain_dog/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="community" style="transition-delay:0.24s">
+          <div class="res-icon-box" style="background:#EEF5FF">📊</div>
+          <div style="flex:1"><div class="res-cat">Community</div><div class="res-name">Pedigree Database</div><div class="res-desc">Search and trace Berner bloodlines, ancestors, and relatives in this massive community-maintained pedigree database.</div></div>
+          <div class="res-arrow">→</div>
+        </a>
+        <a href="https://dogwellnet.com/breeds/pedigree/bernese-mountain-dog-r49/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="community" style="transition-delay:0.27s">
+          <div class="res-icon-box" style="background:#F0FFF4">🌐</div>
+          <div style="flex:1"><div class="res-cat">Community</div><div class="res-name">DogWellNet — Berners</div><div class="res-desc">International breed health network with Berner-specific resources, research papers, and responsible breeding guidelines.</div></div>
+          <div class="res-arrow">→</div>
+        </a>
+
+        <!-- Tools & Apps -->
+        <a href="https://dogapi.dog" target="_blank" rel="noopener" class="resource-card reveal" data-cat="tools" style="transition-delay:0.3s">
+          <div class="res-icon-box" style="background:#F5F0FF">⚙️</div>
+          <div style="flex:1"><div class="res-cat">Tools</div><div class="res-name">Dog API (dogapi.dog)</div><div class="res-desc">Free API with data on 340+ breeds — powers the Breed Comparison tool on this page. Perfect for developers.</div></div>
+          <div class="res-arrow">→</div>
+        </a>
+        <a href="https://dog.ceo/dog-api/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="tools" style="transition-delay:0.33s">
+          <div class="res-icon-box" style="background:#FFF5E8">📸</div>
+          <div style="flex:1"><div class="res-cat">Tools</div><div class="res-name">Dog CEO Image API</div><div class="res-desc">Free Berner photo API powering this page's gallery and memory game. 20,000+ dog images, no key required.</div></div>
+          <div class="res-arrow">→</div>
+        </a>
+        <a href="https://www.wisdompanel.com" target="_blank" rel="noopener" class="resource-card reveal" data-cat="tools" style="transition-delay:0.36s">
+          <div class="res-icon-box" style="background:#EEF5FF">🧪</div>
+          <div style="flex:1"><div class="res-cat">Tools</div><div class="res-name">Wisdom Panel DNA</div><div class="res-desc">Dog DNA testing to confirm breed heritage, health screening, and ancestry — ideal for mixed Berner identification.</div></div>
+          <div class="res-arrow">→</div>
+        </a>
+
+        <!-- Social & Media -->
+        <a href="https://bunsenbernerbmd.com" target="_blank" rel="noopener" class="resource-card reveal" data-cat="social" style="transition-delay:0.39s">
+          <div class="res-icon-box" style="background:#EEF5FF">🔬</div>
+          <div style="flex:1"><div class="res-cat">Social</div><div class="res-name">Bunsen Berner</div><div class="res-desc">The internet's most scientifically enthusiastic Berner — website, merch, and a community of devoted fans.</div></div>
+          <div class="res-arrow">→</div>
+        </a>
+        <a href="https://podcasts.apple.com/us/podcast/the-one-about-bernese-mountain-dogs-ft-itskevintheberner/id1505839388" target="_blank" rel="noopener" class="resource-card reveal" data-cat="social" style="transition-delay:0.42s">
+          <div class="res-icon-box" style="background:#FFF0E8">🎙️</div>
+          <div style="flex:1"><div class="res-cat">Social</div><div class="res-name">The Berner Podcast</div><div class="res-desc">"The One About Bernese Mountain Dogs" — the definitive Berner podcast featuring Kevin the Berner and owner stories.</div></div>
+          <div class="res-arrow">→</div>
+        </a>
+        <a href="https://www.instagram.com/explore/tags/bernesemountaindog/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="social" style="transition-delay:0.45s">
+          <div class="res-icon-box" style="background:#FFF0F5">📱</div>
+          <div style="flex:1"><div class="res-cat">Social</div><div class="res-name">#BerneseMountainDog</div><div class="res-desc">Millions of posts on Instagram under the Berner hashtag — the world's largest community of Berner photo shares.</div></div>
+          <div class="res-arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== FOOTER ===================== -->
   <footer>
     <div class="container">
@@ -1996,18 +2880,20 @@
             <li><a href="#about">About the Breed</a></li>
             <li><a href="#history">History & Origins</a></li>
             <li><a href="#temperament">Temperament</a></li>
-            <li><a href="#appearance">Appearance</a></li>
             <li><a href="#gallery">Photo Gallery</a></li>
+            <li><a href="#health">Health & Care</a></li>
+            <li><a href="#videos">Video Collection</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Resources</h4>
+          <h4>Interactive & Resources</h4>
           <ul class="footer-links">
-            <li><a href="#health">Health & Care</a></li>
-            <li><a href="#funfacts">Fun Facts</a></li>
-            <li><a href="#ideal">Is It Right for Me?</a></li>
-            <li><a href="https://bmdca.org" target="_blank" rel="noopener">BMDCA.org ↗</a></li>
-            <li><a href="https://www.akc.org/dog-breeds/bernese-mountain-dog/" target="_blank" rel="noopener">AKC Profile ↗</a></li>
+            <li><a href="#compare">Breed Comparison</a></li>
+            <li><a href="#namegen">Name Generator</a></li>
+            <li><a href="#game">Memory Game</a></li>
+            <li><a href="#quiz">Personality Quiz</a></li>
+            <li><a href="#rescue">Rescue Finder</a></li>
+            <li><a href="#resources">Resource Hub</a></li>
           </ul>
         </div>
       </div>
@@ -2313,6 +3199,575 @@
     }, { threshold: 0.5 });
 
     sections.forEach(s => sectionObserver.observe(s));
+
+    /* ============================================================
+       RESCUE REGION FILTER
+       ============================================================ */
+    document.querySelectorAll('.rescue-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.rescue-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const region = tab.dataset.region;
+        document.querySelectorAll('.rescue-card').forEach(card => {
+          const match = region === 'all' || card.dataset.region === region;
+          card.dataset.hidden = !match;
+        });
+      });
+    });
+
+    /* ============================================================
+       RESOURCES FILTER
+       ============================================================ */
+    document.querySelectorAll('.res-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.res-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.dataset.cat;
+        document.querySelectorAll('.resource-card').forEach(card => {
+          const match = cat === 'all' || card.dataset.cat === cat;
+          card.dataset.hidden = !match;
+        });
+      });
+    });
+
+    /* ============================================================
+       BREED COMPARISON
+       ============================================================ */
+    const BERNER = {
+      name: 'Bernese Mountain Dog',
+      life_min: 7, life_max: 10,
+      weight_min: 80, weight_max: 115,
+      affection: 95, trainability: 88,
+      energy: 62, shedding: 92, kids: 95
+    };
+
+    async function loadBreeds() {
+      try {
+        const res  = await fetch('https://dogapi.dog/api/v2/breeds?page[size]=200');
+        const data = await res.json();
+        const sel  = document.getElementById('breed-select');
+        sel.innerHTML = '<option value="">— Choose a breed —</option>';
+        data.data.sort((a, b) => a.attributes.name.localeCompare(b.attributes.name))
+          .forEach(breed => {
+            const o = document.createElement('option');
+            o.value = JSON.stringify({
+              name: breed.attributes.name,
+              life_min:   breed.attributes.life?.min || 0,
+              life_max:   breed.attributes.life?.max || 0,
+              weight_min: breed.attributes.male_weight?.min || 0,
+              weight_max: breed.attributes.male_weight?.max || 0
+            });
+            o.textContent = breed.attributes.name;
+            sel.appendChild(o);
+          });
+      } catch {
+        document.getElementById('breed-select').innerHTML = '<option>Failed to load — check connection</option>';
+      }
+    }
+    loadBreeds();
+
+    function renderComparison(other) {
+      const lifeAvgB  = (BERNER.life_min + BERNER.life_max) / 2;
+      const lifeAvgO  = (other.life_min  + other.life_max)  / 2;
+      const wAvgB     = (BERNER.weight_min + BERNER.weight_max) / 2;
+      const wAvgO     = other.weight_min && other.weight_max
+                        ? (other.weight_min + other.weight_max) / 2
+                        : wAvgB;
+      const maxLife   = Math.max(lifeAvgB, lifeAvgO, 1);
+      const maxWeight = Math.max(wAvgB, wAvgO, 1);
+
+      const stats = [
+        { label: 'Avg. Lifespan', bVal: lifeAvgB, oVal: lifeAvgO, bText: `${BERNER.life_min}–${BERNER.life_max} yrs`, oText: `${other.life_min}–${other.life_max} yrs`, max: maxLife },
+        { label: 'Weight (Male)', bVal: wAvgB, oVal: wAvgO, bText: `${BERNER.weight_min}–${BERNER.weight_max} lbs`, oText: other.weight_min ? `${other.weight_min}–${other.weight_max} lbs` : 'N/A', max: maxWeight },
+        { label: 'Affection Level', bVal: BERNER.affection, oVal: 70, bText: 'Very High', oText: 'High', max: 100 },
+        { label: 'Trainability',    bVal: BERNER.trainability, oVal: 75, bText: 'High', oText: 'High', max: 100 },
+        { label: 'Energy Level',    bVal: BERNER.energy, oVal: 72, bText: 'Moderate', oText: 'Moderate–High', max: 100 },
+        { label: 'Shedding Amount', bVal: BERNER.shedding, oVal: 65, bText: 'Very High', oText: 'Moderate', max: 100 },
+      ];
+
+      const makeStat = (label, val, text, max, side) => `
+        <div class="compare-stat">
+          <div class="compare-stat-row"><span>${label}</span><span>${text}</span></div>
+          <div class="compare-bar-track">
+            <div class="compare-bar-fill" data-width="${Math.round(val/max*100)}"></div>
+          </div>
+        </div>`;
+
+      const bStats = stats.map(s => makeStat(s.label, s.bVal, s.bText, s.max, 'b')).join('');
+      const oStats = stats.map(s => makeStat(s.label, s.oVal, s.oText, s.max, 'o')).join('');
+
+      document.getElementById('compare-grid').innerHTML = `
+        <div class="compare-column berner-col">
+          <div class="compare-col-header">
+            <div class="compare-col-badge">🐾</div>
+            <div class="compare-col-name">Bernese Mountain Dog</div>
+          </div>
+          ${bStats}
+        </div>
+        <div class="compare-vs">VS</div>
+        <div class="compare-column other-col">
+          <div class="compare-col-header">
+            <div class="compare-col-badge">🐕</div>
+            <div class="compare-col-name">${other.name}</div>
+          </div>
+          ${oStats}
+        </div>`;
+
+      // Animate bars
+      requestAnimationFrame(() => {
+        document.querySelectorAll('#compare-grid .compare-bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+      });
+    }
+
+    document.getElementById('compare-go-btn').addEventListener('click', () => {
+      const val = document.getElementById('breed-select').value;
+      if (!val) return;
+      renderComparison(JSON.parse(val));
+    });
+
+    /* ============================================================
+       BERNER NAME GENERATOR
+       ============================================================ */
+    const nameData = {
+      swiss: [
+        {name:'Bruno',   meaning:'Brown — the quintessential Swiss dog name'},
+        {name:'Heidi',   meaning:'Of noble birth — classic Swiss heroine'},
+        {name:'Fritz',   meaning:'Peaceful ruler — strong and dependable'},
+        {name:'Greta',   meaning:'Pearl — rare and precious'},
+        {name:'Hans',    meaning:'God is gracious — a timeless classic'},
+        {name:'Liesel',  meaning:'Pledged to God — loyal by nature'},
+        {name:'Max',     meaning:'Greatest — because they truly are'},
+        {name:'Anna',    meaning:'Grace — for an inherently graceful breed'},
+        {name:'Karl',    meaning:'Free man — noble and dignified'},
+        {name:'Klara',   meaning:'Bright and clear — like alpine air'},
+        {name:'Ernst',   meaning:'Serious — for a dog who means business'},
+        {name:'Marta',   meaning:'Lady — for a regal Berner girl'},
+        {name:'Otto',    meaning:'Wealth and fortune — which Berners bring'},
+        {name:'Ida',     meaning:'Industrious — a true working dog name'},
+        {name:'Rudolf',  meaning:'Famous wolf — wild at heart'},
+        {name:'Erna',    meaning:'Earnest — steadfast and devoted'},
+      ],
+      mountain: [
+        {name:'Aspen',   meaning:'The elegant mountain tree'},
+        {name:'Summit',  meaning:'The highest peak — ambition personified'},
+        {name:'Ridge',   meaning:'Where the mountains meet the sky'},
+        {name:'Glacier', meaning:'Ancient, powerful, unstoppable'},
+        {name:'Alpine',  meaning:'Of the high mountains — born for altitude'},
+        {name:'Blizzard',meaning:'A storm of fur and love'},
+        {name:'Powder',  meaning:'Fresh mountain snow — soft and irresistible'},
+        {name:'Storm',   meaning:'Powerful, dynamic, unforgettable'},
+        {name:'Everest', meaning:'The greatest summit of all'},
+        {name:'Tundra',  meaning:'Cold-weather royalty'},
+        {name:'Clover',  meaning:'Mountain meadow luck'},
+        {name:'Birch',   meaning:'The elegant alpine tree'},
+        {name:'Cedar',   meaning:'Strong and aromatic like mountain forests'},
+        {name:'Fjord',   meaning:'Deep waters between mountains'},
+        {name:'Cascade', meaning:'Like a waterfall — flowing and unstoppable'},
+      ],
+      nature: [
+        {name:'Willow',  meaning:'Graceful and gentle, swaying in the breeze'},
+        {name:'Bear',    meaning:'Strong, warm, and fiercely protective'},
+        {name:'River',   meaning:'Free-flowing, always moving forward'},
+        {name:'Maple',   meaning:'Sweet and colorful — autumn personified'},
+        {name:'Sage',    meaning:'Wise and calming, earthy and grounded'},
+        {name:'Ember',   meaning:'Warm glow of the fireplace — comfort itself'},
+        {name:'Frost',   meaning:'Cool and crisp — loves cold mornings'},
+        {name:'Luna',    meaning:'Moon — mystical nighttime beauty'},
+        {name:'Moss',    meaning:'Soft and ancient, rooted in the forest'},
+        {name:'Fern',    meaning:'Delicate but resilient, forest-dwelling'},
+        {name:'Hazel',   meaning:'The warm brown of autumn hazelnuts'},
+        {name:'Ash',     meaning:'Strong and ancient, survivor of storms'},
+        {name:'Robin',   meaning:'Cheerful herald of new seasons'},
+        {name:'Oak',     meaning:'Steadfast strength for generations'},
+      ],
+      personality: [
+        {name:'Gentle',  meaning:'For a dog who is tenderness itself'},
+        {name:'Buddy',   meaning:'Your most loyal companion in the world'},
+        {name:'Charm',   meaning:'Because Berners charm everyone they meet'},
+        {name:'Cozy',    meaning:'The embodiment of comfort and warmth'},
+        {name:'Jolly',   meaning:'That unmistakable Berner happiness'},
+        {name:'Noble',   meaning:'Dignified bearing and quiet confidence'},
+        {name:'Serene',  meaning:'Calm presence that centers a household'},
+        {name:'Bravely', meaning:'Brave but gentle — the Berner paradox'},
+        {name:'Velvet',  meaning:'As soft as their coat, as smooth as silk'},
+        {name:'Dapper',  meaning:'Always looking impeccably put-together'},
+        {name:'Earnest', meaning:'Sincere and wholehearted in everything'},
+        {name:'Loyal',   meaning:'Because no dog is more devoted'},
+      ],
+      food: [
+        {name:'Pretzel',       meaning:'Twisted, salty, and entirely Swiss'},
+        {name:'Cocoa',         meaning:'Rich, warm, and deeply comforting'},
+        {name:'Mocha',         meaning:'The perfect blend of two great things'},
+        {name:'Truffle',       meaning:'Rare, precious, sought after by all'},
+        {name:'Cheddar',       meaning:'Sharp, bold, aged to perfection'},
+        {name:'Butterscotch',  meaning:'Golden, sweet, and impossible to resist'},
+        {name:'Brownie',       meaning:'Dark, rich, and irresistibly good'},
+        {name:'Pumpernickel',  meaning:'Dense, dark German bread — hearty like a Berner'},
+        {name:'Fondue',        meaning:'The quintessential Swiss experience'},
+        {name:'Raclette',      meaning:'Melted Swiss cheese — the ultimate comfort'},
+        {name:'Rösti',         meaning:'Classic Swiss potato dish — humble and satisfying'},
+        {name:'Biscuit',       meaning:'Golden, warm, and always welcome'},
+        {name:'Marzipan',      meaning:'Sweet Swiss confection of the finest quality'},
+        {name:'Strüdel',       meaning:'Layered, rich, and perfectly structured'},
+      ]
+    };
+
+    let currentCat = 'swiss';
+    let recentNames = [];
+
+    document.querySelectorAll('.namegen-cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.namegen-cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCat = btn.dataset.cat;
+      });
+    });
+
+    function generateName() {
+      const list  = nameData[currentCat];
+      const entry = list[Math.floor(Math.random() * list.length)];
+      const nameEl    = document.getElementById('name-display');
+      const meaningEl = document.getElementById('name-meaning');
+
+      nameEl.classList.add('spinning');
+      let count = 0;
+      const spin = setInterval(() => {
+        const rand = list[Math.floor(Math.random() * list.length)];
+        nameEl.textContent = rand.name;
+        count++;
+        if (count > 12) {
+          clearInterval(spin);
+          nameEl.textContent = entry.name;
+          meaningEl.textContent = entry.meaning;
+          nameEl.classList.remove('spinning');
+          addRecentName(entry.name);
+        }
+      }, 60);
+    }
+
+    function addRecentName(name) {
+      if (!recentNames.includes(name)) {
+        recentNames.unshift(name);
+        if (recentNames.length > 8) recentNames.pop();
+      }
+      const container = document.getElementById('recent-names');
+      container.innerHTML = recentNames
+        .map(n => `<span class="recent-name-tag">${n}</span>`)
+        .join('');
+    }
+
+    document.getElementById('gen-btn').addEventListener('click', generateName);
+
+    document.getElementById('copy-btn').addEventListener('click', () => {
+      const name = document.getElementById('name-display').textContent;
+      if (name === 'Click Generate') return;
+      navigator.clipboard.writeText(name).then(() => {
+        const btn = document.getElementById('copy-btn');
+        const orig = btn.textContent;
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => btn.textContent = orig, 2000);
+      });
+    });
+
+    /* ============================================================
+       MEMORY CARD GAME
+       ============================================================ */
+    let gameImages = [];
+    let gameCards  = [];
+    let flipped    = [];
+    let matched    = 0;
+    let moves      = 0;
+    let gameTimer  = null;
+    let gameSeconds= 0;
+    let gameLocked = false;
+
+    function formatTime(s) {
+      return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+    }
+    function updateScoreboard() {
+      document.getElementById('g-moves').textContent = moves;
+      document.getElementById('g-pairs').textContent = `${matched}/6`;
+      document.getElementById('g-timer').textContent = formatTime(gameSeconds);
+    }
+
+    async function startGame() {
+      document.getElementById('game-start-btn').textContent = '⏳ Loading…';
+      document.getElementById('game-start-btn').disabled = true;
+      resetGameState();
+
+      try {
+        const res  = await fetch('https://dog.ceo/api/breed/mountain/bernese/images/random/6');
+        const data = await res.json();
+        if (data.status !== 'success') throw new Error();
+        gameImages = data.message;
+      } catch {
+        gameImages = Array.from({length:6}, (_,i) =>
+          `https://placehold.co/200x270/3D1C02/D4A843?text=Berner+${i+1}`
+        );
+      }
+
+      buildBoard();
+      document.getElementById('game-start-btn').textContent = '🎮 New Game';
+      document.getElementById('game-start-btn').disabled = false;
+      gameTimer = setInterval(() => { gameSeconds++; updateScoreboard(); }, 1000);
+    }
+
+    function resetGameState() {
+      clearInterval(gameTimer);
+      gameSeconds = 0; moves = 0; matched = 0; flipped = []; gameLocked = false;
+      updateScoreboard();
+    }
+
+    function buildBoard() {
+      const pairs = [...gameImages, ...gameImages]
+        .map((img, i) => ({img, id: Math.floor(i/2), uid: Math.random()}))
+        .sort(() => Math.random() - 0.5);
+
+      const board = document.getElementById('game-board');
+      board.innerHTML = '';
+      gameCards = [];
+
+      const pawSVG = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="70" rx="28" ry="22"/><ellipse cx="24" cy="42" rx="12" ry="16" transform="rotate(-15,24,42)"/><ellipse cx="43" cy="30" rx="12" ry="15" transform="rotate(-5,43,30)"/><ellipse cx="63" cy="30" rx="12" ry="15" transform="rotate(5,63,30)"/><ellipse cx="78" cy="42" rx="12" ry="16" transform="rotate(15,78,42)"/></svg>`;
+
+      pairs.forEach((pair, idx) => {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.dataset.pairId = pair.id;
+        card.innerHTML = `
+          <div class="game-card-inner">
+            <div class="game-card-front">${pawSVG}</div>
+            <div class="game-card-back">
+              <img src="${pair.img}" alt="Berner" loading="lazy" />
+            </div>
+          </div>`;
+        card.addEventListener('click', () => handleCardClick(card));
+        board.appendChild(card);
+        gameCards.push(card);
+      });
+    }
+
+    function handleCardClick(card) {
+      if (gameLocked || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+      card.classList.add('flipped');
+      flipped.push(card);
+      if (flipped.length === 2) {
+        moves++;
+        gameLocked = true;
+        updateScoreboard();
+        const [a, b] = flipped;
+        if (a.dataset.pairId === b.dataset.pairId) {
+          a.classList.add('matched'); b.classList.add('matched');
+          matched++;
+          updateScoreboard();
+          flipped = []; gameLocked = false;
+          if (matched === 6) {
+            clearInterval(gameTimer);
+            setTimeout(showWin, 600);
+          }
+        } else {
+          setTimeout(() => {
+            a.classList.remove('flipped'); b.classList.remove('flipped');
+            a.classList.add('no-match');   b.classList.add('no-match');
+            setTimeout(() => { a.classList.remove('no-match'); b.classList.remove('no-match'); }, 400);
+            flipped = []; gameLocked = false;
+          }, 900);
+        }
+      }
+    }
+
+    function showWin() {
+      document.getElementById('win-moves').textContent = moves;
+      document.getElementById('win-time').textContent  = formatTime(gameSeconds);
+      document.getElementById('game-win-overlay').classList.add('active');
+    }
+
+    document.getElementById('game-start-btn').addEventListener('click', startGame);
+    document.getElementById('game-reset-btn').addEventListener('click', () => {
+      document.getElementById('game-win-overlay').classList.remove('active');
+      if (gameImages.length) { resetGameState(); buildBoard(); gameTimer = setInterval(()=>{gameSeconds++;updateScoreboard();},1000); }
+      else startGame();
+    });
+    document.getElementById('game-win-close').addEventListener('click', () => {
+      document.getElementById('game-win-overlay').classList.remove('active');
+      startGame();
+    });
+
+    /* ============================================================
+       PERSONALITY QUIZ
+       ============================================================ */
+    const quizQuestions = [
+      {
+        q: 'Your ideal Saturday looks like:',
+        opts: [
+          {text:'Hiking mountain trails with a big furry companion', pts:3},
+          {text:'A cozy afternoon on the couch with snacks', pts:1},
+          {text:'Exploring a new city neighborhood on foot', pts:2},
+          {text:'Beach day — sun, waves, and minimal effort', pts:1}
+        ]
+      },
+      {
+        q: 'How do you feel about brushing a dog twice a week?',
+        opts: [
+          {text:'Love it — bonding time is the best time', pts:3},
+          {text:'Fine, as long as it\'s not daily', pts:2},
+          {text:'That seems like a lot of work', pts:1},
+          {text:'Hard pass — I prefer low-maintenance', pts:0}
+        ]
+      },
+      {
+        q: 'Dog fur on your sofa, clothes, and car is:',
+        opts: [
+          {text:'The price of true love — absolutely worth it', pts:3},
+          {text:'Manageable with the right tools and attitude', pts:2},
+          {text:'Something I\'d need to really adjust to', pts:1},
+          {text:'An absolute dealbreaker', pts:0}
+        ]
+      },
+      {
+        q: 'Your ideal climate:',
+        opts: [
+          {text:'Cold mountain winters — the colder the better', pts:3},
+          {text:'Four mild seasons with real winters', pts:2},
+          {text:'Warm and sunny most of the year', pts:0},
+          {text:'Tropical heat year-round', pts:0}
+        ]
+      },
+      {
+        q: 'Your living situation:',
+        opts: [
+          {text:'House with a yard — plenty of room to roam', pts:3},
+          {text:'Spacious apartment near parks and trails', pts:2},
+          {text:'Smaller home, outdoor access when needed', pts:1},
+          {text:'Small city apartment, very limited outdoor space', pts:0}
+        ]
+      },
+      {
+        q: 'A dog that follows you from room to room constantly is:',
+        opts: [
+          {text:'The whole reason I want a dog — constant companion', pts:3},
+          {text:'Sweet, but I\'d need some alone time too', pts:2},
+          {text:'Endearing at first, but it might wear on me', pts:1},
+          {text:'Too much — I need my personal space', pts:0}
+        ]
+      },
+      {
+        q: 'You\'re home during the day:',
+        opts: [
+          {text:'Almost always — I work from home or stay home', pts:3},
+          {text:'Someone is always around — family or partner', pts:2},
+          {text:'Evenings and weekends, reliable schedule', pts:1},
+          {text:'Long hours away, often travel for work', pts:0}
+        ]
+      },
+      {
+        q: 'What draws you most to having a dog?',
+        opts: [
+          {text:'Unconditional loyalty and a deep family bond', pts:3},
+          {text:'A gentle giant who\'s amazing with my kids', pts:3},
+          {text:'A low-maintenance companion and conversation starter', pts:0},
+          {text:'Athletic partner for outdoor adventures', pts:1}
+        ]
+      }
+    ];
+
+    const quizResults = [
+      {min:22, emoji:'🐾', type:'Pure Berner Soul', desc:'You were practically born to own a Bernese Mountain Dog. You love the outdoors, crave deep companionship, and have no problem with fur on literally everything. A Berner would absolutely complete you. Start researching breeders and rescues now.'},
+      {min:15, emoji:'🏔️', type:'Alpine Heart',      desc:'You\'re a great Berner match with a few lifestyle tweaks. You appreciate loyalty and nature, and the idea of a big, gentle dog genuinely excites you. With a little preparation, a Berner would thrive in your care.'},
+      {min:8,  emoji:'🏙️', type:'City Pup',          desc:'You\'d love a dog but the Berner might not be your perfect match — yet. Consider a smaller breed that fits your current lifestyle, or make some changes to your routine and revisit this breed when the time is right.'},
+      {min:0,  emoji:'🐱', type:'Honorary Cat Person', desc:'You appreciate animals but your current lifestyle genuinely suits a lower-maintenance companion. A cat, a small dog, or maybe a fish will treat you much better right now. No shame — honesty saves everyone heartache.'}
+    ];
+
+    let quizScore    = 0;
+    let quizCurrent  = 0;
+    let quizAnswered = false;
+
+    function renderQuizProgress() {
+      const total = quizQuestions.length;
+      const pct   = (quizCurrent / total) * 100;
+      return `
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-info">
+            <span>Question ${quizCurrent + 1} of ${total}</span>
+            <span>${Math.round(pct)}% Complete</span>
+          </div>
+          <div class="quiz-progress-track">
+            <div class="quiz-progress-fill" style="width:${pct}%"></div>
+          </div>
+        </div>`;
+    }
+
+    function renderQuestion() {
+      const q = quizQuestions[quizCurrent];
+      const shuffled = [...q.opts].sort(() => Math.random() - 0.5);
+      document.getElementById('quiz-area').innerHTML = `
+        ${renderQuizProgress()}
+        <div class="quiz-card">
+          <div class="quiz-q-num">Question ${quizCurrent + 1}</div>
+          <div class="quiz-q-text">${q.q}</div>
+          <div class="quiz-options">
+            ${shuffled.map((opt, i) => `
+              <button class="quiz-option" data-pts="${opt.pts}" data-idx="${i}">
+                ${opt.text}
+              </button>`).join('')}
+          </div>
+        </div>`;
+
+      document.querySelectorAll('.quiz-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (quizAnswered) return;
+          quizAnswered = true;
+          btn.classList.add('selected');
+          quizScore += parseInt(btn.dataset.pts);
+          setTimeout(() => {
+            quizCurrent++;
+            quizAnswered = false;
+            if (quizCurrent < quizQuestions.length) renderQuestion();
+            else renderResult();
+          }, 500);
+        });
+      });
+    }
+
+    function renderResult() {
+      const result = quizResults.find(r => quizScore >= r.min);
+      const maxScore = quizQuestions.length * 3;
+      const pct = Math.round(quizScore / maxScore * 100);
+      document.getElementById('quiz-area').innerHTML = `
+        <div class="quiz-screen">
+          <div class="result-badge">${result.emoji}</div>
+          <div class="result-type">${result.type}</div>
+          <div class="result-score-label">Your score: ${quizScore} / ${maxScore} — ${pct}% Berner Compatible</div>
+          <div class="result-meter">
+            <div style="font-size:0.75rem;color:var(--gray-text)">Berner Compatibility</div>
+            <div class="result-meter-bar">
+              <div class="result-meter-fill" style="width:0%" id="result-fill"></div>
+            </div>
+          </div>
+          <p class="quiz-screen-desc">${result.desc}</p>
+          <button class="quiz-action-btn" id="quiz-retake-btn">↺ Retake Quiz</button>
+        </div>`;
+
+      setTimeout(() => {
+        const fill = document.getElementById('result-fill');
+        if (fill) fill.style.width = pct + '%';
+      }, 200);
+
+      document.getElementById('quiz-retake-btn').addEventListener('click', () => {
+        quizScore = 0; quizCurrent = 0; quizAnswered = false;
+        document.getElementById('quiz-area').innerHTML = `
+          <div class="quiz-screen" id="quiz-start-screen">
+            <span class="quiz-screen-icon">🐾</span>
+            <div class="quiz-screen-title">Ready to Find Out?</div>
+            <p class="quiz-screen-desc">Answer 8 quick questions and discover how Berner-compatible you really are.</p>
+            <button class="quiz-action-btn" id="quiz-start-btn">Start the Quiz →</button>
+          </div>`;
+        document.getElementById('quiz-start-btn').addEventListener('click', renderQuestion);
+      });
+    }
+
+    document.getElementById('quiz-start-btn').addEventListener('click', renderQuestion);
   </script>
 </body>
 </html>
