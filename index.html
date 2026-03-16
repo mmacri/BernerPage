@@ -1317,6 +1317,431 @@
     }
 
     /* ============================================================
+       DARK MODE
+       ============================================================ */
+    body.dark-mode {
+      --cream:      #1C140A;
+      --cream-dark: #261B0F;
+      --white:      #1E150A;
+      --black:      #F0E8D4;
+      --gray-text:  #C4B49A;
+      --gray-mid:   #8B7355;
+      --gray-light: #2A1E10;
+    }
+    body.dark-mode #about        { background: var(--cream); }
+    body.dark-mode #temperament  { background: var(--cream); }
+    body.dark-mode #funfacts     { background: var(--cream); }
+    body.dark-mode #rescue       { background: var(--cream); }
+    body.dark-mode .about-text p { color: var(--gray-text); }
+    body.dark-mode .feature-pill { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: var(--gray-text); }
+    body.dark-mode .trait-card   { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+    body.dark-mode .quiz-card,
+    body.dark-mode .quiz-screen  { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+    body.dark-mode .quiz-option  { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); color: var(--black); }
+    body.dark-mode .rescue-card  { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.08); }
+    body.dark-mode .rescue-search { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); color: var(--black); }
+    body.dark-mode .resource-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+    body.dark-mode .res-name      { color: var(--black); }
+    body.dark-mode .star-card     { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+    body.dark-mode .star-name     { color: var(--black); }
+    body.dark-mode .compare-column { background: rgba(255,255,255,0.04); }
+    body.dark-mode #resources     { background: var(--cream-dark); }
+    body.dark-mode #ideal         { background: var(--cream-dark); }
+    body.dark-mode #socialstars   { background: var(--cream); }
+
+    .dark-toggle {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.8);
+      border-radius: 50px;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+      font-family: var(--font-sans);
+      letter-spacing: 0.04em;
+    }
+    .dark-toggle:hover { background: rgba(255,255,255,0.15); color: var(--white); }
+
+    /* ============================================================
+       TOAST NOTIFICATION
+       ============================================================ */
+    #toast-container {
+      position: fixed;
+      bottom: 5.5rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 9100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+    .toast {
+      background: var(--black);
+      color: var(--cream);
+      padding: 0.7rem 1.5rem 0.7rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      transform: translateY(16px) scale(0.95);
+      transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      border-left: 4px solid var(--gold);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .toast.show { opacity: 1; transform: translateY(0) scale(1); }
+    .toast.toast-success { border-left-color: var(--forest-light); }
+    .toast.toast-error   { border-left-color: var(--rust); }
+
+    /* ============================================================
+       CONFETTI CANVAS
+       ============================================================ */
+    #confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 9200; }
+
+    /* ============================================================
+       GAME — DIFFICULTY & BEST SCORES
+       ============================================================ */
+    .game-difficulty {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .diff-btn {
+      padding: 0.5rem 1.25rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      border: 2px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.5);
+      font-family: var(--font-sans);
+      transition: all var(--transition);
+    }
+    .diff-btn.active { background: var(--rust); border-color: var(--rust); color: var(--white); }
+    .diff-btn:hover:not(.active) { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.8); }
+    .game-best-row {
+      text-align: center;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 1rem;
+    }
+    .game-best-row span { color: var(--gold); font-weight: 700; }
+
+    /* ============================================================
+       QUIZ — FACT CARD & SHARE
+       ============================================================ */
+    .quiz-fact-banner {
+      background: linear-gradient(135deg, var(--brown-dark), #3D2510);
+      border: 1px solid rgba(212,168,67,0.25);
+      border-radius: var(--radius);
+      padding: 0.9rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      animation: qSlide 0.5s ease;
+    }
+    .qfact-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .qfact-text { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.55; }
+    .qfact-text strong { color: var(--gold-light); }
+    .quiz-share-row {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .quiz-share-btn {
+      padding: 0.65rem 1.5rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid var(--cream-dark);
+      background: var(--white);
+      color: var(--gray-text);
+      font-family: var(--font-sans);
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .quiz-share-btn:hover { border-color: var(--rust); color: var(--rust); transform: translateY(-2px); }
+    .result-alt-breed {
+      margin: 1.25rem auto;
+      max-width: 400px;
+      background: var(--cream);
+      border-radius: var(--radius);
+      padding: 0.9rem 1.25rem;
+      font-size: 0.85rem;
+      color: var(--gray-text);
+      border: 1px solid var(--cream-dark);
+      text-align: left;
+    }
+    .result-alt-breed strong { color: var(--rust); }
+
+    /* ============================================================
+       NAME GENERATOR — GENDER FILTER & FAVORITES
+       ============================================================ */
+    .gender-filter {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      justify-content: center;
+    }
+    .gender-btn {
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      border: 2px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.5);
+      font-family: var(--font-sans);
+      transition: all var(--transition);
+    }
+    .gender-btn.active { background: var(--gold); border-color: var(--gold); color: var(--black); }
+    .fav-heart-btn {
+      position: absolute;
+      top: 0.75rem; right: 0.75rem;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: transform var(--transition);
+      line-height: 1;
+    }
+    .fav-heart-btn:hover { transform: scale(1.3); }
+    .name-slot { position: relative; }
+    .favorites-panel {
+      margin-top: 1.5rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+    .favorites-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .favorites-panel-header h4 {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+    }
+    .fav-clear-btn {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.3);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      transition: color var(--transition);
+    }
+    .fav-clear-btn:hover { color: var(--rust-light); }
+    .favorites-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .fav-tag {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(212,168,67,0.1);
+      border: 1px solid rgba(212,168,67,0.2);
+      padding: 0.28rem 0.7rem;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      color: var(--gold-light);
+    }
+    .fav-x {
+      cursor: pointer;
+      opacity: 0.4;
+      font-size: 0.65rem;
+      transition: opacity var(--transition);
+      line-height: 1;
+    }
+    .fav-x:hover { opacity: 1; }
+    .fav-empty { font-size: 0.78rem; color: rgba(255,255,255,0.25); font-style: italic; }
+    .namegen-share-btn {
+      padding: 0.9rem 1.5rem;
+      border-radius: 50px;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: all var(--transition);
+    }
+    .namegen-share-btn:hover { background: rgba(255,255,255,0.12); color: var(--white); }
+
+    /* ============================================================
+       BREED COMPARISON — RADAR CHART
+       ============================================================ */
+    .radar-section {
+      margin-top: 2.5rem;
+      display: none;
+    }
+    .radar-section.visible { display: block; }
+    .radar-wrap {
+      background: var(--cream);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      border: 1px solid rgba(196,180,154,0.3);
+      text-align: center;
+    }
+    .radar-wrap h3 {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--black);
+    }
+    #radar-svg { display: block; margin: 0 auto; overflow: visible; }
+    .radar-legend {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .radar-leg { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--gray-text); }
+    .radar-leg-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+    /* ============================================================
+       RESCUE — SEARCH & PLEDGE
+       ============================================================ */
+    .rescue-pledge-banner {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      background: linear-gradient(135deg, #F0FFF4, #E0F5E8);
+      border: 2px solid rgba(45,90,27,0.2);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 2rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .pledge-counter-wrap { text-align: center; }
+    .pledge-num {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--forest);
+      line-height: 1;
+    }
+    .pledge-sub { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--forest); opacity: 0.65; margin-top: 0.2rem; }
+    .pledge-body { flex: 1; }
+    .pledge-body p { font-size: 0.9rem; color: var(--gray-text); line-height: 1.65; margin-bottom: 0.75rem; }
+    .pledge-action-btn {
+      padding: 0.7rem 1.75rem;
+      background: var(--forest);
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .pledge-action-btn:hover { background: var(--forest-light); transform: translateY(-2px); }
+    .pledge-action-btn:disabled { opacity: 0.55; cursor: default; transform: none; }
+    .rescue-search-row {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .rescue-search-wrap { position: relative; flex: 1; max-width: 380px; }
+    .rescue-search-wrap::before { content: '🔍'; position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 0.9rem; }
+    .rescue-search {
+      width: 100%;
+      padding: 0.8rem 1rem 0.8rem 2.6rem;
+      border: 2px solid var(--cream-dark);
+      border-radius: var(--radius);
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: var(--black);
+      background: var(--white);
+      transition: border-color var(--transition);
+    }
+    .rescue-search:focus { outline: none; border-color: var(--rust); }
+    .rescue-count-label { font-size: 0.8rem; color: var(--gray-mid); }
+    .rescue-count-label strong { color: var(--rust); }
+
+    /* ============================================================
+       RESOURCES — SEARCH & BOOKMARKS
+       ============================================================ */
+    .resources-top-row {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .res-search-wrap { position: relative; flex: 1; max-width: 360px; }
+    .res-search-wrap::before { content: '🔍'; position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 0.88rem; }
+    .res-search {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.6rem;
+      border: 2px solid var(--gray-mid);
+      border-radius: var(--radius);
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: var(--black);
+      background: var(--white);
+      transition: border-color var(--transition);
+    }
+    .res-search:focus { outline: none; border-color: var(--black); }
+    .res-bookmark-toggle {
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid var(--gray-mid);
+      background: transparent;
+      color: var(--gray-text);
+      font-family: var(--font-sans);
+      transition: all var(--transition);
+    }
+    .res-bookmark-toggle.active { background: var(--black); border-color: var(--black); color: var(--white); }
+    .res-result-count { font-size: 0.78rem; color: var(--gray-mid); margin-left: auto; }
+    .resource-card { position: relative; }
+    .res-bm-btn {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      opacity: 0.35;
+      transition: opacity var(--transition), transform var(--transition);
+      line-height: 1;
+      padding: 0;
+    }
+    .res-bm-btn:hover { opacity: 1; transform: scale(1.2); }
+    .res-bm-btn.bookmarked { opacity: 1; }
+    .resource-card { padding-right: 2.75rem; }
+
+    /* ============================================================
        SOCIAL STARS
        ============================================================ */
     #socialstars { padding: clamp(5rem,10vw,9rem) 0; background: var(--cream); }
@@ -1548,6 +1973,10 @@
 </head>
 <body>
 
+  <!-- Confetti -->
+  <canvas id="confetti-canvas"></canvas>
+  <!-- Toast -->
+  <div id="toast-container"></div>
   <!-- Custom Cursor -->
   <div class="cursor" id="cursor"></div>
   <div class="cursor-trail" id="cursorTrail"></div>
@@ -1581,6 +2010,7 @@
         <li><a href="#rescue">Rescue</a></li>
         <li><a href="#resources">Resources</a></li>
       </ul>
+      <button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode">🌙 Dark</button>
       <div class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </div>
@@ -2375,6 +2805,17 @@
       <div class="compare-grid reveal" id="compare-grid">
         <div class="compare-placeholder">Select a breed above and click Compare to see the results.</div>
       </div>
+
+      <div class="radar-section reveal" id="radar-section">
+        <div class="radar-wrap">
+          <h3>Trait Radar — Berner vs. Comparison Breed</h3>
+          <svg id="radar-svg" width="340" height="320" viewBox="0 0 340 320"></svg>
+          <div class="radar-legend">
+            <div class="radar-leg"><div class="radar-leg-dot" style="background:var(--rust)"></div> Bernese Mountain Dog</div>
+            <div class="radar-leg"><div class="radar-leg-dot" style="background:var(--gold)"></div> <span id="radar-other-label">Comparison Breed</span></div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2416,18 +2857,34 @@
         </div>
 
         <div class="reveal-right">
+          <div class="gender-filter">
+            <button class="gender-btn active" data-gender="any">⚥ Any</button>
+            <button class="gender-btn" data-gender="male">♂ Male</button>
+            <button class="gender-btn" data-gender="female">♀ Female</button>
+          </div>
           <div class="name-slot" id="name-slot">
+            <button class="fav-heart-btn" id="fav-heart-btn" title="Save to favorites">🤍</button>
             <div class="name-slot-label">Your Berner's Name</div>
             <div class="name-slot-name" id="name-display">Click Generate</div>
             <div class="name-slot-meaning" id="name-meaning">Choose a category and generate a name</div>
           </div>
           <div class="namegen-actions">
-            <button class="namegen-btn namegen-btn-primary" id="gen-btn">✨ Generate Name</button>
-            <button class="namegen-btn namegen-btn-secondary" id="copy-btn">📋 Copy Name</button>
+            <button class="namegen-btn namegen-btn-primary" id="gen-btn">✨ Generate</button>
+            <button class="namegen-btn namegen-btn-secondary" id="copy-btn">📋 Copy</button>
+            <button class="namegen-share-btn" id="share-name-btn">↗ Share</button>
           </div>
           <div class="namegen-recently">
             <h4>Recent Names</h4>
             <div class="recent-names" id="recent-names"></div>
+          </div>
+          <div class="favorites-panel" id="favorites-panel">
+            <div class="favorites-panel-header">
+              <h4>❤️ Saved Favorites</h4>
+              <button class="fav-clear-btn" id="fav-clear-btn">Clear All</button>
+            </div>
+            <div class="favorites-list" id="favorites-list">
+              <span class="fav-empty">No favorites yet — heart a name to save it!</span>
+            </div>
           </div>
         </div>
       </div>
@@ -2447,20 +2904,32 @@
         </p>
       </div>
 
+      <div class="game-difficulty">
+        <button class="diff-btn active" data-pairs="4" data-cols="4">🐾 Easy</button>
+        <button class="diff-btn" data-pairs="6" data-cols="4">🏔️ Medium</button>
+        <button class="diff-btn" data-pairs="9" data-cols="6">⚡ Hard</button>
+      </div>
+
       <div class="game-scoreboard">
         <div class="game-score-item">
           <div class="game-score-val" id="g-moves">0</div>
           <div class="game-score-lbl">Moves</div>
         </div>
         <div class="game-score-item">
-          <div class="game-score-val" id="g-pairs">0/6</div>
+          <div class="game-score-val" id="g-pairs">0/4</div>
           <div class="game-score-lbl">Pairs Found</div>
         </div>
         <div class="game-score-item">
           <div class="game-score-val" id="g-timer">0:00</div>
           <div class="game-score-lbl">Time</div>
         </div>
+        <div class="game-score-item">
+          <div class="game-score-val" id="g-best">—</div>
+          <div class="game-score-lbl">Best Moves</div>
+        </div>
       </div>
+
+      <div class="game-best-row" id="game-best-row">No best score yet — start playing!</div>
 
       <div class="game-controls">
         <button class="game-btn game-btn-start" id="game-start-btn">🎮 New Game</button>
@@ -2634,6 +3103,24 @@
         </p>
       </div>
 
+      <div class="rescue-pledge-banner reveal">
+        <div class="pledge-counter-wrap">
+          <div class="pledge-num" id="pledge-num">0</div>
+          <div class="pledge-sub">Pledges Made</div>
+        </div>
+        <div class="pledge-body">
+          <p>Join the Adopt-a-Berner pledge. Every Bernese Mountain Dog deserves a loving home. Sign your name to show you believe in rescue-first adoption — it takes 5 seconds and means the world.</p>
+          <button class="pledge-action-btn" id="pledge-btn">🐾 I Pledge to Adopt, Not Shop</button>
+        </div>
+      </div>
+
+      <div class="rescue-search-row reveal">
+        <div class="rescue-search-wrap">
+          <input class="rescue-search" id="rescue-search" type="text" placeholder="Search organizations…" />
+        </div>
+        <span class="rescue-count-label">Showing <strong id="rescue-count">9</strong> organizations</span>
+      </div>
+
       <div class="rescue-tabs reveal">
         <button class="rescue-tab active" data-region="all">All Regions</button>
         <button class="rescue-tab" data-region="national">National</button>
@@ -2768,6 +3255,14 @@
         </p>
       </div>
 
+      <div class="resources-top-row reveal">
+        <div class="res-search-wrap">
+          <input class="res-search" id="res-search" type="text" placeholder="Search resources…" />
+        </div>
+        <button class="res-bookmark-toggle" id="res-bm-toggle">🔖 Saved Only</button>
+        <span class="res-result-count" id="res-count">15 resources</span>
+      </div>
+
       <div class="resources-filter reveal">
         <button class="res-filter-btn active" data-cat="all">All Resources</button>
         <button class="res-filter-btn" data-cat="official">Official Orgs</button>
@@ -2779,88 +3274,80 @@
 
       <div class="resources-grid" id="resources-grid">
         <!-- Official -->
-        <a href="https://www.bmdca.org" target="_blank" rel="noopener" class="resource-card reveal" data-cat="official" style="transition-delay:0.03s">
+        <a href="https://www.bmdca.org" target="_blank" rel="noopener" class="resource-card reveal" data-cat="official" data-rid="r1" style="transition-delay:0.03s">
           <div class="res-icon-box" style="background:#FFF0E8">🏛️</div>
           <div style="flex:1"><div class="res-cat">Official</div><div class="res-name">BMDCA.org</div><div class="res-desc">The Bernese Mountain Dog Club of America — the breed's official US organization with standards, events, and resources.</div></div>
-          <div class="res-arrow">→</div>
+          <div class="res-arrow">→</div><button class="res-bm-btn" data-rid="r1" title="Bookmark">🔖</button>
         </a>
-        <a href="https://www.akc.org/dog-breeds/bernese-mountain-dog/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="official" style="transition-delay:0.06s">
+        <a href="https://www.akc.org/dog-breeds/bernese-mountain-dog/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="official" data-rid="r2" style="transition-delay:0.06s">
           <div class="res-icon-box" style="background:#EEF5FF">🏅</div>
           <div style="flex:1"><div class="res-cat">Official</div><div class="res-name">AKC Breed Profile</div><div class="res-desc">The American Kennel Club's complete Bernese Mountain Dog breed standard, history, and care information.</div></div>
-          <div class="res-arrow">→</div>
+          <div class="res-arrow">→</div><button class="res-bm-btn" data-rid="r2" title="Bookmark">🔖</button>
         </a>
-        <a href="https://www.ssk.ch" target="_blank" rel="noopener" class="resource-card reveal" data-cat="official" style="transition-delay:0.09s">
+        <a href="https://www.ssk.ch" target="_blank" rel="noopener" class="resource-card reveal" data-cat="official" data-rid="r3" style="transition-delay:0.09s">
           <div class="res-icon-box" style="background:#F0FFF4">🇨🇭</div>
           <div style="flex:1"><div class="res-cat">Official</div><div class="res-name">Swiss Kennel Club (SKG)</div><div class="res-desc">The Swiss Kennel Club — home of the breed's country of origin, maintaining original breed standards since 1907.</div></div>
-          <div class="res-arrow">→</div>
+          <div class="res-arrow">→</div><button class="res-bm-btn" data-rid="r3" title="Bookmark">🔖</button>
         </a>
-
-        <!-- Health & Research -->
-        <a href="https://bernergarde.org" target="_blank" rel="noopener" class="resource-card reveal" data-cat="health" style="transition-delay:0.12s">
+        <a href="https://bernergarde.org" target="_blank" rel="noopener" class="resource-card reveal" data-cat="health" data-rid="r4" style="transition-delay:0.12s">
           <div class="res-icon-box" style="background:#FFF5E8">🧬</div>
           <div style="flex:1"><div class="res-cat">Health</div><div class="res-name">Berner-Garde Database</div><div class="res-desc">220,000+ Berner health records, pedigrees and genetic research — the most comprehensive Berner database on earth.</div></div>
-          <div class="res-arrow">→</div>
+          <div class="res-arrow">→</div><button class="res-bm-btn" data-rid="r4" title="Bookmark">🔖</button>
         </a>
-        <a href="https://www.bmdvitalityproject.org" target="_blank" rel="noopener" class="resource-card reveal" data-cat="health" style="transition-delay:0.15s">
+        <a href="https://www.bmdvitalityproject.org" target="_blank" rel="noopener" class="resource-card reveal" data-cat="health" data-rid="r5" style="transition-delay:0.15s">
           <div class="res-icon-box" style="background:#F0FFF4">🔬</div>
           <div style="flex:1"><div class="res-cat">Health Research</div><div class="res-name">BMD Vitality Project</div><div class="res-desc">Pioneering research to extend Berner lifespans through genetics and longitudinal health studies.</div></div>
-          <div class="res-arrow">→</div>
+          <div class="res-arrow">→</div><button class="res-bm-btn" data-rid="r5" title="Bookmark">🔖</button>
         </a>
-        <a href="https://www.ofa.org/diseases/breed-statistics/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="health" style="transition-delay:0.18s">
+        <a href="https://www.ofa.org/diseases/breed-statistics/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="health" data-rid="r6" style="transition-delay:0.18s">
           <div class="res-icon-box" style="background:#FFF0E8">🏥</div>
           <div style="flex:1"><div class="res-cat">Health</div><div class="res-name">OFA Health Statistics</div><div class="res-desc">Orthopedic Foundation for Animals — hip, elbow, and genetic disease statistics for the Berner breed.</div></div>
-          <div class="res-arrow">→</div>
+          <div class="res-arrow">→</div><button class="res-bm-btn" data-rid="r6" title="Bookmark">🔖</button>
         </a>
-
-        <!-- Community -->
-        <a href="https://www.reddit.com/r/BerneseMountainDogs/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="community" style="transition-delay:0.21s">
+        <a href="https://www.reddit.com/r/BerneseMountainDogs/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="community" data-rid="r7" style="transition-delay:0.21s">
           <div class="res-icon-box" style="background:#FFF2E8">🗣️</div>
           <div style="flex:1"><div class="res-cat">Community</div><div class="res-name">r/BerneseMountainDogs</div><div class="res-desc">Reddit's active Berner community — photos, advice, health questions, and the best Berner memes on the internet.</div></div>
-          <div class="res-arrow">→</div>
+          <div class="res-arrow">→</div><button class="res-bm-btn" data-rid="r7" title="Bookmark">🔖</button>
         </a>
-        <a href="https://www.pedigreedatabase.com/bernese_mountain_dog/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="community" style="transition-delay:0.24s">
+        <a href="https://www.pedigreedatabase.com/bernese_mountain_dog/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="community" data-rid="r8" style="transition-delay:0.24s">
           <div class="res-icon-box" style="background:#EEF5FF">📊</div>
           <div style="flex:1"><div class="res-cat">Community</div><div class="res-name">Pedigree Database</div><div class="res-desc">Search and trace Berner bloodlines, ancestors, and relatives in this massive community-maintained pedigree database.</div></div>
-          <div class="res-arrow">→</div>
+          <div class="res-arrow">→</div><button class="res-bm-btn" data-rid="r8" title="Bookmark">🔖</button>
         </a>
-        <a href="https://dogwellnet.com/breeds/pedigree/bernese-mountain-dog-r49/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="community" style="transition-delay:0.27s">
+        <a href="https://dogwellnet.com/breeds/pedigree/bernese-mountain-dog-r49/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="community" data-rid="r9" style="transition-delay:0.27s">
           <div class="res-icon-box" style="background:#F0FFF4">🌐</div>
           <div style="flex:1"><div class="res-cat">Community</div><div class="res-name">DogWellNet — Berners</div><div class="res-desc">International breed health network with Berner-specific resources, research papers, and responsible breeding guidelines.</div></div>
-          <div class="res-arrow">→</div>
+          <div class="res-arrow">→</div><button class="res-bm-btn" data-rid="r9" title="Bookmark">🔖</button>
         </a>
-
-        <!-- Tools & Apps -->
-        <a href="https://dogapi.dog" target="_blank" rel="noopener" class="resource-card reveal" data-cat="tools" style="transition-delay:0.3s">
+        <a href="https://dogapi.dog" target="_blank" rel="noopener" class="resource-card reveal" data-cat="tools" data-rid="r10" style="transition-delay:0.3s">
           <div class="res-icon-box" style="background:#F5F0FF">⚙️</div>
           <div style="flex:1"><div class="res-cat">Tools</div><div class="res-name">Dog API (dogapi.dog)</div><div class="res-desc">Free API with data on 340+ breeds — powers the Breed Comparison tool on this page. Perfect for developers.</div></div>
-          <div class="res-arrow">→</div>
+          <div class="res-arrow">→</div><button class="res-bm-btn" data-rid="r10" title="Bookmark">🔖</button>
         </a>
-        <a href="https://dog.ceo/dog-api/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="tools" style="transition-delay:0.33s">
+        <a href="https://dog.ceo/dog-api/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="tools" data-rid="r11" style="transition-delay:0.33s">
           <div class="res-icon-box" style="background:#FFF5E8">📸</div>
           <div style="flex:1"><div class="res-cat">Tools</div><div class="res-name">Dog CEO Image API</div><div class="res-desc">Free Berner photo API powering this page's gallery and memory game. 20,000+ dog images, no key required.</div></div>
-          <div class="res-arrow">→</div>
+          <div class="res-arrow">→</div><button class="res-bm-btn" data-rid="r11" title="Bookmark">🔖</button>
         </a>
-        <a href="https://www.wisdompanel.com" target="_blank" rel="noopener" class="resource-card reveal" data-cat="tools" style="transition-delay:0.36s">
+        <a href="https://www.wisdompanel.com" target="_blank" rel="noopener" class="resource-card reveal" data-cat="tools" data-rid="r12" style="transition-delay:0.36s">
           <div class="res-icon-box" style="background:#EEF5FF">🧪</div>
           <div style="flex:1"><div class="res-cat">Tools</div><div class="res-name">Wisdom Panel DNA</div><div class="res-desc">Dog DNA testing to confirm breed heritage, health screening, and ancestry — ideal for mixed Berner identification.</div></div>
-          <div class="res-arrow">→</div>
+          <div class="res-arrow">→</div><button class="res-bm-btn" data-rid="r12" title="Bookmark">🔖</button>
         </a>
-
-        <!-- Social & Media -->
-        <a href="https://bunsenbernerbmd.com" target="_blank" rel="noopener" class="resource-card reveal" data-cat="social" style="transition-delay:0.39s">
+        <a href="https://bunsenbernerbmd.com" target="_blank" rel="noopener" class="resource-card reveal" data-cat="social" data-rid="r13" style="transition-delay:0.39s">
           <div class="res-icon-box" style="background:#EEF5FF">🔬</div>
           <div style="flex:1"><div class="res-cat">Social</div><div class="res-name">Bunsen Berner</div><div class="res-desc">The internet's most scientifically enthusiastic Berner — website, merch, and a community of devoted fans.</div></div>
-          <div class="res-arrow">→</div>
+          <div class="res-arrow">→</div><button class="res-bm-btn" data-rid="r13" title="Bookmark">🔖</button>
         </a>
-        <a href="https://podcasts.apple.com/us/podcast/the-one-about-bernese-mountain-dogs-ft-itskevintheberner/id1505839388" target="_blank" rel="noopener" class="resource-card reveal" data-cat="social" style="transition-delay:0.42s">
+        <a href="https://podcasts.apple.com/us/podcast/the-one-about-bernese-mountain-dogs-ft-itskevintheberner/id1505839388" target="_blank" rel="noopener" class="resource-card reveal" data-cat="social" data-rid="r14" style="transition-delay:0.42s">
           <div class="res-icon-box" style="background:#FFF0E8">🎙️</div>
           <div style="flex:1"><div class="res-cat">Social</div><div class="res-name">The Berner Podcast</div><div class="res-desc">"The One About Bernese Mountain Dogs" — the definitive Berner podcast featuring Kevin the Berner and owner stories.</div></div>
-          <div class="res-arrow">→</div>
+          <div class="res-arrow">→</div><button class="res-bm-btn" data-rid="r14" title="Bookmark">🔖</button>
         </a>
-        <a href="https://www.instagram.com/explore/tags/bernesemountaindog/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="social" style="transition-delay:0.45s">
+        <a href="https://www.instagram.com/explore/tags/bernesemountaindog/" target="_blank" rel="noopener" class="resource-card reveal" data-cat="social" data-rid="r15" style="transition-delay:0.45s">
           <div class="res-icon-box" style="background:#FFF0F5">📱</div>
           <div style="flex:1"><div class="res-cat">Social</div><div class="res-name">#BerneseMountainDog</div><div class="res-desc">Millions of posts on Instagram under the Berner hashtag — the world's largest community of Berner photo shares.</div></div>
-          <div class="res-arrow">→</div>
+          <div class="res-arrow">→</div><button class="res-bm-btn" data-rid="r15" title="Bookmark">🔖</button>
         </a>
       </div>
     </div>
@@ -3201,32 +3688,236 @@
     sections.forEach(s => sectionObserver.observe(s));
 
     /* ============================================================
-       RESCUE REGION FILTER
+       DARK MODE TOGGLE
        ============================================================ */
+    const darkBtn = document.getElementById('dark-toggle');
+    const isDark  = localStorage.getItem('bernerDark') === '1';
+    if (isDark) { document.body.classList.add('dark-mode'); darkBtn.textContent = '☀️ Light'; }
+    darkBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      const on = document.body.classList.contains('dark-mode');
+      darkBtn.textContent = on ? '☀️ Light' : '🌙 Dark';
+      localStorage.setItem('bernerDark', on ? '1' : '0');
+    });
+
+    /* ============================================================
+       TOAST NOTIFICATION SYSTEM
+       ============================================================ */
+    function showToast(msg, type = '') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast${type ? ' toast-'+type : ''}`;
+      toast.textContent = msg;
+      container.appendChild(toast);
+      requestAnimationFrame(() => { requestAnimationFrame(() => toast.classList.add('show')); });
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 350);
+      }, 2800);
+    }
+
+    /* ============================================================
+       CONFETTI SYSTEM
+       ============================================================ */
+    const confCanvas = document.getElementById('confetti-canvas');
+    const confCtx    = confCanvas.getContext('2d');
+    let confParticles = [];
+    let confRunning   = false;
+
+    function resizeConf() {
+      confCanvas.width  = window.innerWidth;
+      confCanvas.height = window.innerHeight;
+    }
+    resizeConf();
+    window.addEventListener('resize', resizeConf);
+
+    function launchConfetti() {
+      const colors = ['#B85C2C','#D4A843','#E8C870','#FAF6EE','#2D5A1B','#1A1208','#C8661A'];
+      for (let i = 0; i < 140; i++) {
+        confParticles.push({
+          x: Math.random() * confCanvas.width,
+          y: -10 - Math.random() * 200,
+          w: 8 + Math.random() * 8,
+          h: 5 + Math.random() * 5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rot: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 8,
+          vx: (Math.random() - 0.5) * 4,
+          vy: 2 + Math.random() * 4,
+          alpha: 1
+        });
+      }
+      if (!confRunning) animateConf();
+    }
+
+    function animateConf() {
+      confRunning = true;
+      confCtx.clearRect(0, 0, confCanvas.width, confCanvas.height);
+      confParticles = confParticles.filter(p => p.alpha > 0.05);
+      confParticles.forEach(p => {
+        p.x  += p.vx;
+        p.y  += p.vy;
+        p.vy *= 1.015;
+        p.rot += p.rotSpeed;
+        if (p.y > confCanvas.height * 0.7) p.alpha -= 0.025;
+        confCtx.save();
+        confCtx.globalAlpha = p.alpha;
+        confCtx.translate(p.x, p.y);
+        confCtx.rotate(p.rot * Math.PI / 180);
+        confCtx.fillStyle = p.color;
+        confCtx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        confCtx.restore();
+      });
+      if (confParticles.length > 0) requestAnimationFrame(animateConf);
+      else { confRunning = false; confCtx.clearRect(0,0,confCanvas.width,confCanvas.height); }
+    }
+
+    /* ============================================================
+       RESCUE — REGION FILTER + SEARCH + PLEDGE
+       ============================================================ */
+    let rescueRegion = 'all';
+    let rescueQuery  = '';
+
+    function applyRescueFilters() {
+      let count = 0;
+      document.querySelectorAll('.rescue-card').forEach(card => {
+        const regionMatch = rescueRegion === 'all' || card.dataset.region === rescueRegion;
+        const name = (card.querySelector('.rescue-org-name')?.textContent || '').toLowerCase();
+        const desc = (card.querySelector('.rescue-desc')?.textContent || '').toLowerCase();
+        const queryMatch = !rescueQuery || name.includes(rescueQuery) || desc.includes(rescueQuery);
+        const show = regionMatch && queryMatch;
+        card.dataset.hidden = !show;
+        if (show) count++;
+      });
+      const countEl = document.getElementById('rescue-count');
+      if (countEl) countEl.textContent = count;
+    }
+
     document.querySelectorAll('.rescue-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.rescue-tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        const region = tab.dataset.region;
-        document.querySelectorAll('.rescue-card').forEach(card => {
-          const match = region === 'all' || card.dataset.region === region;
-          card.dataset.hidden = !match;
-        });
+        rescueRegion = tab.dataset.region;
+        applyRescueFilters();
       });
     });
 
+    const rescueSearchEl = document.getElementById('rescue-search');
+    if (rescueSearchEl) {
+      rescueSearchEl.addEventListener('input', () => {
+        rescueQuery = rescueSearchEl.value.trim().toLowerCase();
+        applyRescueFilters();
+      });
+    }
+
+    // Pledge counter
+    let pledgeCount = parseInt(localStorage.getItem('bernerPledgeCount') || '2847');
+    const pledgeNumEl = document.getElementById('pledge-num');
+    if (pledgeNumEl) {
+      // Animate count up on page load
+      let current = pledgeCount - 47;
+      const pledgeTimer = setInterval(() => {
+        current += 3;
+        if (current >= pledgeCount) { current = pledgeCount; clearInterval(pledgeTimer); }
+        pledgeNumEl.textContent = current.toLocaleString();
+      }, 20);
+    }
+
+    const pledgeBtn = document.getElementById('pledge-btn');
+    if (pledgeBtn) {
+      if (localStorage.getItem('bernerPledged') === '1') {
+        pledgeBtn.textContent = '✅ You\'ve Pledged!';
+        pledgeBtn.disabled = true;
+      }
+      pledgeBtn.addEventListener('click', () => {
+        if (localStorage.getItem('bernerPledged') === '1') return;
+        pledgeCount++;
+        localStorage.setItem('bernerPledgeCount', pledgeCount);
+        localStorage.setItem('bernerPledged', '1');
+        pledgeNumEl.textContent = pledgeCount.toLocaleString();
+        pledgeBtn.textContent = '✅ You\'ve Pledged!';
+        pledgeBtn.disabled = true;
+        showToast('🐾 Thank you for pledging to adopt, not shop!', 'success');
+        launchConfetti();
+      });
+    }
+
     /* ============================================================
-       RESOURCES FILTER
+       RESOURCES — FILTER + SEARCH + BOOKMARKS
        ============================================================ */
+    let resCat      = 'all';
+    let resQuery    = '';
+    let resShowSaved= false;
+    let resBookmarks= new Set(JSON.parse(localStorage.getItem('bernerBookmarks') || '[]'));
+
+    function applyResFilters() {
+      let count = 0;
+      document.querySelectorAll('.resource-card').forEach(card => {
+        const rid   = card.dataset.rid;
+        const catOk = resCat === 'all' || card.dataset.cat === resCat;
+        const name  = (card.querySelector('.res-name')?.textContent || '').toLowerCase();
+        const desc  = (card.querySelector('.res-desc')?.textContent || '').toLowerCase();
+        const qOk   = !resQuery || name.includes(resQuery) || desc.includes(resQuery);
+        const bmOk  = !resShowSaved || resBookmarks.has(rid);
+        const show  = catOk && qOk && bmOk;
+        card.dataset.hidden = !show;
+        if (show) count++;
+      });
+      const countEl = document.getElementById('res-count');
+      if (countEl) countEl.textContent = count + ' resource' + (count !== 1 ? 's' : '');
+    }
+
+    function syncBookmarkBtns() {
+      document.querySelectorAll('.res-bm-btn').forEach(btn => {
+        const rid = btn.dataset.rid;
+        btn.classList.toggle('bookmarked', resBookmarks.has(rid));
+        btn.textContent = resBookmarks.has(rid) ? '🔖' : '🔖';
+        btn.style.opacity = resBookmarks.has(rid) ? '1' : '0.3';
+      });
+    }
+    syncBookmarkBtns();
+
     document.querySelectorAll('.res-filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.res-filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        const cat = btn.dataset.cat;
-        document.querySelectorAll('.resource-card').forEach(card => {
-          const match = cat === 'all' || card.dataset.cat === cat;
-          card.dataset.hidden = !match;
-        });
+        resCat = btn.dataset.cat;
+        applyResFilters();
+      });
+    });
+
+    const resSearchEl = document.getElementById('res-search');
+    if (resSearchEl) {
+      resSearchEl.addEventListener('input', () => {
+        resQuery = resSearchEl.value.trim().toLowerCase();
+        applyResFilters();
+      });
+    }
+
+    const resBmToggle = document.getElementById('res-bm-toggle');
+    if (resBmToggle) {
+      resBmToggle.addEventListener('click', () => {
+        resShowSaved = !resShowSaved;
+        resBmToggle.classList.toggle('active', resShowSaved);
+        resBmToggle.textContent = resShowSaved ? '🔖 All Resources' : '🔖 Saved Only';
+        applyResFilters();
+      });
+    }
+
+    document.querySelectorAll('.res-bm-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault(); e.stopPropagation();
+        const rid = btn.dataset.rid;
+        if (resBookmarks.has(rid)) {
+          resBookmarks.delete(rid);
+          showToast('Bookmark removed', '');
+        } else {
+          resBookmarks.add(rid);
+          showToast('🔖 Resource bookmarked!', 'success');
+        }
+        localStorage.setItem('bernerBookmarks', JSON.stringify([...resBookmarks]));
+        syncBookmarkBtns();
+        if (resShowSaved) applyResFilters();
       });
     });
 
@@ -3321,10 +4012,56 @@
       });
     }
 
+    function drawRadar(bernerVals, otherVals, labels, otherName) {
+      const svg    = document.getElementById('radar-svg');
+      const cx = 170, cy = 160, r = 120;
+      const n  = labels.length;
+      const angleStep = (2 * Math.PI) / n;
+
+      function ptX(i, pct) { return cx + r * pct * Math.cos(angleStep * i - Math.PI / 2); }
+      function ptY(i, pct) { return cy + r * pct * Math.sin(angleStep * i - Math.PI / 2); }
+
+      let html = '';
+      // Grid rings
+      [0.25, 0.5, 0.75, 1].forEach(ring => {
+        const pts = labels.map((_, i) => `${ptX(i,ring)},${ptY(i,ring)}`).join(' ');
+        html += `<polygon points="${pts}" fill="none" stroke="rgba(100,80,60,0.2)" stroke-width="1"/>`;
+      });
+      // Axes
+      labels.forEach((_, i) => {
+        html += `<line x1="${cx}" y1="${cy}" x2="${ptX(i,1)}" y2="${ptY(i,1)}" stroke="rgba(100,80,60,0.2)" stroke-width="1"/>`;
+      });
+      // Berner shape
+      const bPts = labels.map((_, i) => `${ptX(i, bernerVals[i]/100)},${ptY(i, bernerVals[i]/100)}`).join(' ');
+      html += `<polygon points="${bPts}" fill="rgba(184,92,44,0.25)" stroke="#B85C2C" stroke-width="2.5" stroke-linejoin="round"/>`;
+      // Other shape
+      const oPts = labels.map((_, i) => `${ptX(i, otherVals[i]/100)},${ptY(i, otherVals[i]/100)}`).join(' ');
+      html += `<polygon points="${oPts}" fill="rgba(212,168,67,0.2)" stroke="#D4A843" stroke-width="2.5" stroke-linejoin="round"/>`;
+      // Dots & labels
+      labels.forEach((lbl, i) => {
+        html += `<circle cx="${ptX(i, bernerVals[i]/100)}" cy="${ptY(i, bernerVals[i]/100)}" r="4" fill="#B85C2C"/>`;
+        html += `<circle cx="${ptX(i, otherVals[i]/100)}" cy="${ptY(i, otherVals[i]/100)}" r="4" fill="#D4A843"/>`;
+        const lx = ptX(i, 1.22), ly = ptY(i, 1.22);
+        const anchor = lx < cx - 10 ? 'end' : lx > cx + 10 ? 'start' : 'middle';
+        html += `<text x="${lx}" y="${ly}" text-anchor="${anchor}" font-size="11" fill="#5A4A38" font-family="Inter,sans-serif" dominant-baseline="middle">${lbl}</text>`;
+      });
+      svg.innerHTML = html;
+      document.getElementById('radar-other-label').textContent = otherName;
+      document.getElementById('radar-section').classList.add('visible');
+    }
+
     document.getElementById('compare-go-btn').addEventListener('click', () => {
       const val = document.getElementById('breed-select').value;
       if (!val) return;
-      renderComparison(JSON.parse(val));
+      const other = JSON.parse(val);
+      renderComparison(other);
+
+      // Draw radar
+      const radarLabels = ['Affection','Trainability','Energy','Shedding','Kid-Friendly','Lifespan'];
+      const lifeNorm = v => Math.round(Math.min(v / 15 * 100, 100));
+      const bernerR  = [95, 88, 62, 92, 95, lifeNorm((BERNER.life_min+BERNER.life_max)/2)];
+      const otherR   = [70, 75, 72, 65, 78, lifeNorm((other.life_min+other.life_max)/2 || 10)];
+      drawRadar(bernerR, otherR, radarLabels, other.name);
     });
 
     /* ============================================================
@@ -3414,8 +4151,42 @@
       ]
     };
 
-    let currentCat = 'swiss';
-    let recentNames = [];
+    // Augment names with gender tags
+    Object.keys(nameData).forEach(cat => {
+      nameData[cat] = nameData[cat].map(n => ({
+        ...n,
+        gender: n.gender || (
+          ['Bruno','Fritz','Hans','Karl','Ernst','Otto','Rudolf','Max','Bear','Ridge','Storm','Everest','Fjord','Ash','Robin','Oak','Buddy','Noble'].includes(n.name) ? 'male' :
+          ['Heidi','Greta','Liesel','Anna','Klara','Erna','Marta','Ida','Willow','Maple','Fern','Hazel','Luna','Sage','Ember','Frost','Clover','Velvet','Serene'].includes(n.name) ? 'female' : 'any'
+        )
+      }));
+    });
+
+    let currentCat    = 'swiss';
+    let currentGender = 'any';
+    let recentNames   = [];
+    let nameBookmarks = JSON.parse(localStorage.getItem('bernerNameFavs') || '[]');
+    let lastGenerated = null;
+
+    function renderFavorites() {
+      const list = document.getElementById('favorites-list');
+      if (!list) return;
+      if (nameBookmarks.length === 0) {
+        list.innerHTML = '<span class="fav-empty">No favorites yet — heart a name to save it!</span>';
+        return;
+      }
+      list.innerHTML = nameBookmarks.map(n =>
+        `<span class="fav-tag">${n}<span class="fav-x" data-name="${n}">✕</span></span>`
+      ).join('');
+      list.querySelectorAll('.fav-x').forEach(x => {
+        x.addEventListener('click', () => {
+          nameBookmarks = nameBookmarks.filter(f => f !== x.dataset.name);
+          localStorage.setItem('bernerNameFavs', JSON.stringify(nameBookmarks));
+          renderFavorites();
+        });
+      });
+    }
+    renderFavorites();
 
     document.querySelectorAll('.namegen-cat-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -3425,92 +4196,180 @@
       });
     });
 
+    document.querySelectorAll('.gender-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentGender = btn.dataset.gender;
+      });
+    });
+
     function generateName() {
-      const list  = nameData[currentCat];
-      const entry = list[Math.floor(Math.random() * list.length)];
+      let list = nameData[currentCat];
+      if (currentGender !== 'any') {
+        const filtered = list.filter(n => n.gender === currentGender || n.gender === 'any');
+        list = filtered.length > 0 ? filtered : list;
+      }
+      const entry  = list[Math.floor(Math.random() * list.length)];
+      lastGenerated = entry.name;
       const nameEl    = document.getElementById('name-display');
       const meaningEl = document.getElementById('name-meaning');
+      const heartBtn  = document.getElementById('fav-heart-btn');
 
       nameEl.classList.add('spinning');
       let count = 0;
       const spin = setInterval(() => {
-        const rand = list[Math.floor(Math.random() * list.length)];
-        nameEl.textContent = rand.name;
+        nameEl.textContent = list[Math.floor(Math.random() * list.length)].name;
         count++;
-        if (count > 12) {
+        if (count > 14) {
           clearInterval(spin);
-          nameEl.textContent = entry.name;
+          nameEl.textContent    = entry.name;
           meaningEl.textContent = entry.meaning;
           nameEl.classList.remove('spinning');
           addRecentName(entry.name);
+          if (heartBtn) heartBtn.textContent = nameBookmarks.includes(entry.name) ? '❤️' : '🤍';
         }
-      }, 60);
+      }, 55);
     }
 
     function addRecentName(name) {
       if (!recentNames.includes(name)) {
         recentNames.unshift(name);
-        if (recentNames.length > 8) recentNames.pop();
+        if (recentNames.length > 10) recentNames.pop();
       }
       const container = document.getElementById('recent-names');
-      container.innerHTML = recentNames
+      if (container) container.innerHTML = recentNames
         .map(n => `<span class="recent-name-tag">${n}</span>`)
         .join('');
     }
 
     document.getElementById('gen-btn').addEventListener('click', generateName);
 
+    document.getElementById('fav-heart-btn')?.addEventListener('click', () => {
+      if (!lastGenerated) return;
+      const heartBtn = document.getElementById('fav-heart-btn');
+      if (nameBookmarks.includes(lastGenerated)) {
+        nameBookmarks = nameBookmarks.filter(n => n !== lastGenerated);
+        heartBtn.textContent = '🤍';
+        showToast('Removed from favorites');
+      } else {
+        nameBookmarks.push(lastGenerated);
+        heartBtn.textContent = '❤️';
+        showToast(`❤️ "${lastGenerated}" saved to favorites!`, 'success');
+      }
+      localStorage.setItem('bernerNameFavs', JSON.stringify(nameBookmarks));
+      renderFavorites();
+    });
+
+    document.getElementById('fav-clear-btn')?.addEventListener('click', () => {
+      nameBookmarks = [];
+      localStorage.removeItem('bernerNameFavs');
+      renderFavorites();
+      showToast('Favorites cleared');
+    });
+
     document.getElementById('copy-btn').addEventListener('click', () => {
       const name = document.getElementById('name-display').textContent;
       if (name === 'Click Generate') return;
       navigator.clipboard.writeText(name).then(() => {
+        showToast(`📋 "${name}" copied!`, 'success');
         const btn = document.getElementById('copy-btn');
-        const orig = btn.textContent;
         btn.textContent = '✅ Copied!';
-        setTimeout(() => btn.textContent = orig, 2000);
+        setTimeout(() => btn.textContent = '📋 Copy', 2000);
       });
+    });
+
+    document.getElementById('share-name-btn')?.addEventListener('click', () => {
+      const name = document.getElementById('name-display').textContent;
+      if (name === 'Click Generate') return;
+      const text = `I just named my Bernese Mountain Dog "${name}" using the Berner Name Generator! 🐾`;
+      if (navigator.share) {
+        navigator.share({ title: 'Berner Name Generator', text }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(text).then(() => showToast('↗ Shared text copied!', 'success'));
+      }
     });
 
     /* ============================================================
        MEMORY CARD GAME
        ============================================================ */
-    let gameImages = [];
-    let gameCards  = [];
-    let flipped    = [];
-    let matched    = 0;
-    let moves      = 0;
-    let gameTimer  = null;
-    let gameSeconds= 0;
-    let gameLocked = false;
+    let gameImages  = [];
+    let gameCards   = [];
+    let flipped     = [];
+    let matched     = 0;
+    let moves       = 0;
+    let gamePairs   = 4;
+    let gameCols    = 4;
+    let gameTimer   = null;
+    let gameSeconds = 0;
+    let gameLocked  = false;
 
-    function formatTime(s) {
-      return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+    const pawSVG = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="70" rx="28" ry="22"/><ellipse cx="24" cy="42" rx="12" ry="16" transform="rotate(-15,24,42)"/><ellipse cx="43" cy="30" rx="12" ry="15" transform="rotate(-5,43,30)"/><ellipse cx="63" cy="30" rx="12" ry="15" transform="rotate(5,63,30)"/><ellipse cx="78" cy="42" rx="12" ry="16" transform="rotate(15,78,42)"/></svg>`;
+
+    function formatTime(s) { return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; }
+
+    function getBestKey() { return `bernerBest_${gamePairs}`; }
+    function getBest()    { return localStorage.getItem(getBestKey()); }
+    function saveBest(m)  {
+      const prev = getBest();
+      if (!prev || m < parseInt(prev)) {
+        localStorage.setItem(getBestKey(), m);
+        return true;
+      }
+      return false;
     }
+
+    function updateBestRow() {
+      const best = getBest();
+      const row  = document.getElementById('game-best-row');
+      const el   = document.getElementById('g-best');
+      if (best) {
+        if (el) el.textContent = best;
+        if (row) row.innerHTML = `🏆 Best for ${gamePairs}-pair game: <span>${best} moves</span>`;
+      } else {
+        if (el) el.textContent = '—';
+        if (row) row.textContent = 'No best score yet for this difficulty.';
+      }
+    }
+
     function updateScoreboard() {
       document.getElementById('g-moves').textContent = moves;
-      document.getElementById('g-pairs').textContent = `${matched}/6`;
+      document.getElementById('g-pairs').textContent = `${matched}/${gamePairs}`;
       document.getElementById('g-timer').textContent = formatTime(gameSeconds);
     }
 
+    // Difficulty buttons
+    document.querySelectorAll('.diff-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        gamePairs = parseInt(btn.dataset.pairs);
+        gameCols  = parseInt(btn.dataset.cols);
+        updateBestRow();
+      });
+    });
+    updateBestRow();
+
     async function startGame() {
-      document.getElementById('game-start-btn').textContent = '⏳ Loading…';
-      document.getElementById('game-start-btn').disabled = true;
+      const startBtn = document.getElementById('game-start-btn');
+      startBtn.textContent = '⏳ Loading…';
+      startBtn.disabled    = true;
       resetGameState();
 
       try {
-        const res  = await fetch('https://dog.ceo/api/breed/mountain/bernese/images/random/6');
+        const res  = await fetch(`https://dog.ceo/api/breed/mountain/bernese/images/random/${gamePairs}`);
         const data = await res.json();
         if (data.status !== 'success') throw new Error();
         gameImages = data.message;
       } catch {
-        gameImages = Array.from({length:6}, (_,i) =>
-          `https://placehold.co/200x270/3D1C02/D4A843?text=Berner+${i+1}`
+        gameImages = Array.from({length: gamePairs}, (_,i) =>
+          `https://placehold.co/200x280/3D1C02/D4A843?text=Berner+${i+1}`
         );
       }
 
       buildBoard();
-      document.getElementById('game-start-btn').textContent = '🎮 New Game';
-      document.getElementById('game-start-btn').disabled = false;
+      startBtn.textContent = '🎮 New Game';
+      startBtn.disabled    = false;
       gameTimer = setInterval(() => { gameSeconds++; updateScoreboard(); }, 1000);
     }
 
@@ -3521,26 +4380,22 @@
     }
 
     function buildBoard() {
-      const pairs = [...gameImages, ...gameImages]
-        .map((img, i) => ({img, id: Math.floor(i/2), uid: Math.random()}))
+      const board  = document.getElementById('game-board');
+      board.style.gridTemplateColumns = `repeat(${gameCols}, 1fr)`;
+      const pairs  = [...gameImages, ...gameImages]
+        .map((img, i) => ({img, id: Math.floor(i/2)}))
         .sort(() => Math.random() - 0.5);
 
-      const board = document.getElementById('game-board');
       board.innerHTML = '';
       gameCards = [];
-
-      const pawSVG = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="70" rx="28" ry="22"/><ellipse cx="24" cy="42" rx="12" ry="16" transform="rotate(-15,24,42)"/><ellipse cx="43" cy="30" rx="12" ry="15" transform="rotate(-5,43,30)"/><ellipse cx="63" cy="30" rx="12" ry="15" transform="rotate(5,63,30)"/><ellipse cx="78" cy="42" rx="12" ry="16" transform="rotate(15,78,42)"/></svg>`;
-
-      pairs.forEach((pair, idx) => {
+      pairs.forEach(pair => {
         const card = document.createElement('div');
-        card.className = 'game-card';
+        card.className    = 'game-card';
         card.dataset.pairId = pair.id;
-        card.innerHTML = `
+        card.innerHTML    = `
           <div class="game-card-inner">
             <div class="game-card-front">${pawSVG}</div>
-            <div class="game-card-back">
-              <img src="${pair.img}" alt="Berner" loading="lazy" />
-            </div>
+            <div class="game-card-back"><img src="${pair.img}" alt="Berner" loading="lazy" /></div>
           </div>`;
         card.addEventListener('click', () => handleCardClick(card));
         board.appendChild(card);
@@ -3562,10 +4417,7 @@
           matched++;
           updateScoreboard();
           flipped = []; gameLocked = false;
-          if (matched === 6) {
-            clearInterval(gameTimer);
-            setTimeout(showWin, 600);
-          }
+          if (matched === gamePairs) { clearInterval(gameTimer); setTimeout(showWin, 700); }
         } else {
           setTimeout(() => {
             a.classList.remove('flipped'); b.classList.remove('flipped');
@@ -3578,9 +4430,19 @@
     }
 
     function showWin() {
+      const isNewBest = saveBest(moves);
       document.getElementById('win-moves').textContent = moves;
       document.getElementById('win-time').textContent  = formatTime(gameSeconds);
+      const winTitle = document.querySelector('.game-win-title');
+      if (winTitle) winTitle.textContent = isNewBest ? '🏆 New Best Score!' : 'You Found All the Berners!';
+      const winSub = document.querySelector('.game-win-sub');
+      if (winSub) winSub.textContent = isNewBest
+        ? `New personal best for ${gamePairs}-pair game — ${moves} moves!`
+        : 'Every Berner matched — impossible to ignore, just like in real life.';
       document.getElementById('game-win-overlay').classList.add('active');
+      launchConfetti();
+      updateBestRow();
+      showToast(isNewBest ? '🏆 New personal best!' : '🎉 Puzzle complete!', 'success');
     }
 
     document.getElementById('game-start-btn').addEventListener('click', startGame);
@@ -3679,6 +4541,23 @@
       {min:0,  emoji:'🐱', type:'Honorary Cat Person', desc:'You appreciate animals but your current lifestyle genuinely suits a lower-maintenance companion. A cat, a small dog, or maybe a fish will treat you much better right now. No shame — honesty saves everyone heartache.'}
     ];
 
+    const bernerFacts = [
+      {icon:'🏋️', text:'Berners could pull carts weighing up to <strong>1,000 lbs</strong> — roughly 10× their own body weight.'},
+      {icon:'🇨🇭', text:'The breed originates from the <strong>canton of Bern, Switzerland</strong> and nearly went extinct in the late 1800s.'},
+      {icon:'🐾', text:'Berners are the <strong>only Sennenhund</strong> with a long coat among the four Swiss mountain dog breeds.'},
+      {icon:'😄', text:'Owners describe a unique <strong>"Berner chuckle"</strong> — a goofy, playful side that appears at the most unexpected moments.'},
+      {icon:'❄️', text:'Their double coat keeps them warm well <strong>below freezing</strong> — snow is genuinely their happy place.'},
+      {icon:'⏳', text:'Berners are <strong>famously slow to mature</strong> — many act like puppies until age 3, which owners find absolutely endearing.'},
+      {icon:'📅', text:'The first Berner breed club was founded in <strong>1907 in Burgdorf, Switzerland</strong>, saving the breed from extinction.'},
+      {icon:'🏅', text:'The AKC officially recognized Berners in <strong>1937</strong>, and they\'ve been climbing the popularity ranks ever since.'},
+    ];
+
+    const altBreeds = [
+      {min:15, breed:'Golden Retriever',  why:'A similarly loving, family-oriented breed who may suit a warmer climate or slightly more active lifestyle.'},
+      {min:8,  breed:'Labrador Retriever',why:'An adaptable, easy-going companion — great for families who want loyalty without the heavy grooming commitment.'},
+      {min:0,  breed:'Cavalier King Charles Spaniel', why:'A gentle, low-maintenance lap dog that brings big love in a small, apartment-friendly package.'},
+    ];
+
     let quizScore    = 0;
     let quizCurrent  = 0;
     let quizAnswered = false;
@@ -3699,16 +4578,24 @@
     }
 
     function renderQuestion() {
-      const q = quizQuestions[quizCurrent];
-      const shuffled = [...q.opts].sort(() => Math.random() - 0.5);
+      const q       = quizQuestions[quizCurrent];
+      const shuffled= [...q.opts].sort(() => Math.random() - 0.5);
+      const fact    = bernerFacts[quizCurrent % bernerFacts.length];
+      const factHtml= quizCurrent > 0 ? `
+        <div class="quiz-fact-banner">
+          <span class="qfact-icon">${fact.icon}</span>
+          <div class="qfact-text">🐾 <strong>Berner Fact:</strong> ${fact.text}</div>
+        </div>` : '';
+
       document.getElementById('quiz-area').innerHTML = `
         ${renderQuizProgress()}
+        ${factHtml}
         <div class="quiz-card">
-          <div class="quiz-q-num">Question ${quizCurrent + 1}</div>
+          <div class="quiz-q-num">Question ${quizCurrent + 1} of ${quizQuestions.length}</div>
           <div class="quiz-q-text">${q.q}</div>
           <div class="quiz-options">
             ${shuffled.map((opt, i) => `
-              <button class="quiz-option" data-pts="${opt.pts}" data-idx="${i}">
+              <button class="quiz-option" data-pts="${opt.pts}">
                 ${opt.text}
               </button>`).join('')}
           </div>
@@ -3731,9 +4618,16 @@
     }
 
     function renderResult() {
-      const result = quizResults.find(r => quizScore >= r.min);
+      const result   = quizResults.find(r => quizScore >= r.min);
       const maxScore = quizQuestions.length * 3;
-      const pct = Math.round(quizScore / maxScore * 100);
+      const pct      = Math.round(quizScore / maxScore * 100);
+      const alt      = altBreeds.find(a => quizScore >= a.min);
+      const altHtml  = quizScore < 15 ? `
+        <div class="result-alt-breed">
+          💡 <strong>Alternative match:</strong> Consider a <strong>${alt.breed}</strong> — ${alt.why}
+        </div>` : '';
+      const shareText= `I scored ${pct}% Berner Compatible — "${result.type}" on the Berner Personality Quiz! 🐾`;
+
       document.getElementById('quiz-area').innerHTML = `
         <div class="quiz-screen">
           <div class="result-badge">${result.emoji}</div>
@@ -3746,7 +4640,11 @@
             </div>
           </div>
           <p class="quiz-screen-desc">${result.desc}</p>
-          <button class="quiz-action-btn" id="quiz-retake-btn">↺ Retake Quiz</button>
+          ${altHtml}
+          <div class="quiz-share-row">
+            <button class="quiz-action-btn" id="quiz-retake-btn">↺ Retake Quiz</button>
+            <button class="quiz-share-btn" id="quiz-share-btn">📋 Copy Result</button>
+          </div>
         </div>`;
 
       setTimeout(() => {
@@ -3765,6 +4663,22 @@
           </div>`;
         document.getElementById('quiz-start-btn').addEventListener('click', renderQuestion);
       });
+
+      const shareBtn = document.getElementById('quiz-share-btn');
+      if (shareBtn) {
+        shareBtn.addEventListener('click', () => {
+          if (navigator.share) {
+            navigator.share({ title: 'Berner Compatibility Quiz', text: shareText })
+              .catch(() => {});
+          } else {
+            navigator.clipboard.writeText(shareText).then(() => {
+              showToast('📋 Result copied to clipboard!', 'success');
+              shareBtn.textContent = '✅ Copied!';
+            });
+          }
+        });
+      }
+      if (pct >= 70) { launchConfetti(); showToast(`${result.emoji} ${result.type}!`, 'success'); }
     }
 
     document.getElementById('quiz-start-btn').addEventListener('click', renderQuestion);
