@@ -114,28 +114,29 @@
 
     /* ============================================================
        SCROLL REVEAL ANIMATIONS
+       Content is visible by default (no-JS safe).
+       .js-anim class (added by JS) enables animation.
        ============================================================ */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
+    .reveal, .reveal-left, .reveal-right {
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
+    /* Animated state — only when JS has run */
+    .js-anim .reveal          { opacity: 0; transform: translateY(40px); }
+    .js-anim .reveal.visible  { opacity: 1; transform: translateY(0); }
+    .js-anim .reveal-left         { opacity: 0; transform: translateX(-50px); }
+    .js-anim .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .js-anim .reveal-right         { opacity: 0; transform: translateX(50px); }
+    .js-anim .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* Respect reduced-motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-eyebrow, .hero-title, .hero-subtitle, .hero-cta, .hero-scroll {
+        opacity: 1 !important; animation: none !important;
+      }
+      .js-anim .reveal, .js-anim .reveal-left, .js-anim .reveal-right {
+        opacity: 1 !important; transform: none !important;
+      }
     }
-    .reveal-left {
-      opacity: 0;
-      transform: translateX(-50px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal-left.visible { opacity: 1; transform: translateX(0); }
-    .reveal-right {
-      opacity: 0;
-      transform: translateX(50px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal-right.visible { opacity: 1; transform: translateX(0); }
 
     /* ============================================================
        NAVIGATION
@@ -3345,6 +3346,15 @@
 
   <!-- ===================== JAVASCRIPT ===================== -->
   <script>
+    /* Enable animation mode — content defaults to visible without this class */
+    document.body.classList.add('js-anim');
+
+    /* Immediately reveal anything already in the viewport so there's no flash */
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('visible');
+    });
+
     /* -------------------------------------------------- */
     /* Custom Cursor                                       */
     /* -------------------------------------------------- */
