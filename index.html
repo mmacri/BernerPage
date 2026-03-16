@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bernese Mountain Dog — The Gentle Giant of the Alps</title>
   <meta name="description" content="Discover everything about the majestic Bernese Mountain Dog — history, temperament, care, and why they capture every heart they meet." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
   <meta property="og:title" content="Bernese Mountain Dog — The Gentle Giant of the Alps" />
   <meta property="og:description" content="Discover everything about the majestic Bernese Mountain Dog." />
   <meta property="og:type" content="website" />
@@ -2089,7 +2090,7 @@
           </p>
           <div class="about-features">
             <span class="feature-pill"><span class="pill-icon">🏔️</span> Swiss Alpine Heritage</span>
-            <span class="feature-pill"><span class="pill-icon">👨‍👩‍👧‍�</span> Family Dog</span>
+            <span class="feature-pill"><span class="pill-icon">👪</span> Family Dog</span>
             <span class="feature-pill"><span class="pill-icon">🛡️</span> Natural Guardian</span>
             <span class="feature-pill"><span class="pill-icon">🧠</span> Highly Intelligent</span>
             <span class="feature-pill"><span class="pill-icon">🌨️</span> Loves Cold Weather</span>
@@ -3668,7 +3669,8 @@
       }
     }
 
-    document.getElementById('gallery-refresh').addEventListener('click', loadGallery);
+    const galleryRefreshBtn = document.getElementById('gallery-refresh');
+    if (galleryRefreshBtn) galleryRefreshBtn.addEventListener('click', loadGallery);
     loadGallery();
 
     /* -------------------------------------------------- */
@@ -3857,7 +3859,8 @@
     let resCat      = 'all';
     let resQuery    = '';
     let resShowSaved= false;
-    let resBookmarks= new Set(JSON.parse(localStorage.getItem('bernerBookmarks') || '[]'));
+    let resBookmarks = new Set();
+    try { const _bm = localStorage.getItem('bernerBookmarks'); if (_bm) resBookmarks = new Set(JSON.parse(_bm)); } catch {}
 
     function applyResFilters() {
       let count = 0;
@@ -3880,7 +3883,7 @@
       document.querySelectorAll('.res-bm-btn').forEach(btn => {
         const rid = btn.dataset.rid;
         btn.classList.toggle('bookmarked', resBookmarks.has(rid));
-        btn.textContent = resBookmarks.has(rid) ? '🔖' : '🔖';
+        btn.textContent = resBookmarks.has(rid) ? '🔖' : '☆';
         btn.style.opacity = resBookmarks.has(rid) ? '1' : '0.3';
       });
     }
@@ -4062,7 +4065,8 @@
     document.getElementById('compare-go-btn').addEventListener('click', () => {
       const val = document.getElementById('breed-select').value;
       if (!val) return;
-      const other = JSON.parse(val);
+      let other;
+      try { other = JSON.parse(val); } catch { showToast('Could not load breed data', 'error'); return; }
       renderComparison(other);
 
       // Draw radar
@@ -4213,7 +4217,10 @@
       });
     });
 
+    let nameSpinning = false;
     function generateName() {
+      if (nameSpinning) return;
+      nameSpinning = true;
       let list = nameData[currentCat];
       if (currentGender !== 'any') {
         const filtered = list.filter(n => n.gender === currentGender || n.gender === 'any');
@@ -4235,6 +4242,7 @@
           nameEl.textContent    = entry.name;
           meaningEl.textContent = entry.meaning;
           nameEl.classList.remove('spinning');
+          nameSpinning = false;
           addRecentName(entry.name);
           if (heartBtn) heartBtn.textContent = nameBookmarks.includes(entry.name) ? '❤️' : '🤍';
         }
@@ -4280,12 +4288,12 @@
     document.getElementById('copy-btn').addEventListener('click', () => {
       const name = document.getElementById('name-display').textContent;
       if (name === 'Click Generate') return;
+      const btn = document.getElementById('copy-btn');
       navigator.clipboard.writeText(name).then(() => {
         showToast(`📋 "${name}" copied!`, 'success');
-        const btn = document.getElementById('copy-btn');
         btn.textContent = '✅ Copied!';
-        setTimeout(() => btn.textContent = '📋 Copy', 2000);
-      });
+        setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+      }).catch(() => { showToast('Could not copy to clipboard', 'error'); });
     });
 
     document.getElementById('share-name-btn')?.addEventListener('click', () => {
@@ -4295,7 +4303,7 @@
       if (navigator.share) {
         navigator.share({ title: 'Berner Name Generator', text }).catch(() => {});
       } else {
-        navigator.clipboard.writeText(text).then(() => showToast('↗ Shared text copied!', 'success'));
+        navigator.clipboard.writeText(text).then(() => showToast('↗ Shared text copied!', 'success')).catch(() => showToast('Could not copy', 'error'));
       }
     });
 
@@ -4457,8 +4465,12 @@
     document.getElementById('game-start-btn').addEventListener('click', startGame);
     document.getElementById('game-reset-btn').addEventListener('click', () => {
       document.getElementById('game-win-overlay').classList.remove('active');
-      if (gameImages.length) { resetGameState(); buildBoard(); gameTimer = setInterval(()=>{gameSeconds++;updateScoreboard();},1000); }
-      else startGame();
+      if (gameImages.length) {
+        clearInterval(gameTimer);
+        resetGameState();
+        buildBoard();
+        gameTimer = setInterval(() => { gameSeconds++; updateScoreboard(); }, 1000);
+      } else { startGame(); }
     });
     document.getElementById('game-win-close').addEventListener('click', () => {
       document.getElementById('game-win-overlay').classList.remove('active');
@@ -4683,7 +4695,7 @@
             navigator.clipboard.writeText(shareText).then(() => {
               showToast('📋 Result copied to clipboard!', 'success');
               shareBtn.textContent = '✅ Copied!';
-            });
+            }).catch(() => { showToast('Could not copy to clipboard', 'error'); });
           }
         });
       }
