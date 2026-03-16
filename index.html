@@ -2057,9 +2057,9 @@
           <div class="about-image-frame">
             <img
               id="about-img"
-              src="https://placehold.co/600x750/3D1C02/D4A843?text=🐾+Berner"
+              src="https://placehold.co/600x750/3D1C02/D4A843?text=Bernese+Mountain+Dog"
               alt="Bernese Mountain Dog portrait"
-              onerror="this.src='https://placehold.co/600x750/3D1C02/D4A843?text=Bernese+Mountain+Dog'"
+              onerror="this.src='https://placehold.co/600x750/3D1C02/D4A843?text=Bernese+Mountain+Dog';this.onerror=null;"
             />
           </div>
           <div class="about-badge">
@@ -3594,29 +3594,8 @@
       'A gentle giant at rest'
     ];
 
-    // Large pool of verified dog.ceo Bernese Mountain Dog images
-    const BERNER_POOL = [
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_1000.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_10160.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_10228.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_10437.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_10715.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_10758.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_10998.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_11136.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_11571.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_12064.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_12210.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_12468.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_12490.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_1000.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_13053.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_1310.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_1371.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_1381.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_1393.jpg',
-      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_1414.jpg'
-    ];
+    // Cache of verified image URLs fetched from the API — grows over time
+    let bernerImageCache = [];
 
     function shuffled(arr) {
       const a = [...arr];
@@ -3656,14 +3635,35 @@
       if (label) label.textContent = 'Loading…';
 
       try {
+        // Primary: fetch 5 fresh random Berner images
         const res  = await fetch('https://dog.ceo/api/breed/mountain/bernese/images/random/5');
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
         if (data.status !== 'success' || !Array.isArray(data.message) || !data.message.length) throw new Error('bad data');
+        // Add to cache so we have a growing pool of verified URLs
+        bernerImageCache.push(...data.message);
         buildGalleryItems(data.message, 'Live photos via Dog CEO API — refreshes every visit');
       } catch {
-        // Fall back to the shuffled local pool — still shows different images each load
-        buildGalleryItems(shuffled(BERNER_POOL), 'Curated Berner photos — click Refresh for new ones');
+        // Secondary: use any previously cached images
+        if (bernerImageCache.length >= 5) {
+          buildGalleryItems(shuffled(bernerImageCache).slice(0, 5), 'Cached Berner photos — click Refresh to try live');
+        } else {
+          // Tertiary: fetch the full breed image list and pick from it
+          try {
+            const res2  = await fetch('https://dog.ceo/api/breed/mountain/bernese/images');
+            if (!res2.ok) throw new Error('HTTP ' + res2.status);
+            const data2 = await res2.json();
+            if (data2.status !== 'success' || !Array.isArray(data2.message) || !data2.message.length) throw new Error('bad data');
+            bernerImageCache = data2.message;
+            buildGalleryItems(shuffled(bernerImageCache).slice(0, 5), 'Berner photo collection');
+          } catch {
+            // Final fallback: solid-color placeholders (no emoji to avoid encoding issues)
+            buildGalleryItems(
+              [1, 2, 3, 4, 5].map(n => `https://placehold.co/600x800/3D1C02/D4A843?text=Berner+${n}`),
+              'Gallery temporarily unavailable — try Refresh'
+            );
+          }
+        }
       } finally {
         if (btn) btn.disabled = false;
       }
@@ -4412,7 +4412,7 @@
         card.innerHTML    = `
           <div class="game-card-inner">
             <div class="game-card-front">${pawSVG}</div>
-            <div class="game-card-back"><img src="${pair.img}" alt="Berner" loading="lazy" /></div>
+            <div class="game-card-back"><img src="${pair.img}" alt="Berner" loading="lazy" onerror="this.src='https://placehold.co/200x280/3D1C02/D4A843?text=Berner';this.onerror=null;" /></div>
           </div>`;
         card.addEventListener('click', () => handleCardClick(card));
         board.appendChild(card);
