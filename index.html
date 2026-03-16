@@ -778,7 +778,33 @@
       padding: clamp(5rem, 10vw, 9rem) 0;
       background: var(--cream-dark);
     }
-    .gallery-header { margin-bottom: 3rem; }
+    .gallery-header { margin-bottom: 2rem; }
+    .gallery-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .gallery-refresh-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.4rem;
+      background: var(--rust);
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .gallery-refresh-btn:hover { background: var(--rust-light); transform: translateY(-2px); }
+    .gallery-refresh-btn:disabled { opacity: 0.6; cursor: default; transform: none; }
+    .gallery-source-label { font-size: 0.75rem; color: var(--gray-mid); font-style: italic; }
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -2321,8 +2347,11 @@
         <div class="divider"></div>
         <p class="section-subtitle">Every angle, every season — the Berner is endlessly photogenic.</p>
       </div>
+      <div class="gallery-controls">
+        <span class="gallery-source-label" id="gallery-label">Loading photos…</span>
+        <button class="gallery-refresh-btn" id="gallery-refresh">🔄 New Photos</button>
+      </div>
       <div class="gallery-grid" id="gallery-grid">
-        <!-- Populated by JS -->
         <div class="gallery-item gallery-skeleton"></div>
         <div class="gallery-item gallery-skeleton"></div>
         <div class="gallery-item gallery-skeleton"></div>
@@ -3533,56 +3562,8 @@
     /* -------------------------------------------------- */
     /* Gallery — Dog CEO API                              */
     /* -------------------------------------------------- */
-    async function loadGallery() {
-      const grid = document.getElementById('gallery-grid');
-      const captions = [
-        'Pure joy in every step',
-        'The quintessential Swiss beauty',
-        'Eyes that speak to the soul',
-        'Mountain-born magnificence',
-        'A gentle giant at rest'
-      ];
-
-      // Stable fallback images (direct Wikimedia Commons URLs)
-      const fallbackUrls = [
-        'https://upload.wikimedia.org/wikipedia/commons/2/2a/Bernese_Mountain_Dog_600.jpg',
-        'https://upload.wikimedia.org/wikipedia/commons/b/b3/Berner_Sennenhund_600.jpg',
-        'https://upload.wikimedia.org/wikipedia/commons/f/f9/BernerSennenhund.jpg',
-        'https://upload.wikimedia.org/wikipedia/commons/9/9c/Bernese_mountain_dog_on_snow.jpg',
-        'https://upload.wikimedia.org/wikipedia/commons/4/4a/Berner_Sennen_Hund.jpg'
-      ];
-
-      function buildItems(urls) {
-        grid.innerHTML = '';
-        urls.slice(0, 5).forEach((url, i) => {
-          const cap = captions[i] || 'Bernese Mountain Dog';
-          const item = document.createElement('div');
-          item.className = 'gallery-item';
-          item.innerHTML = `
-            <img src="${url}" alt="${cap}"
-              onerror="this.src='https://placehold.co/600x800/3D1C02/D4A843?text=🐾+Berner';this.onerror=null" />
-            <div class="gallery-overlay">
-              <div class="gallery-overlay-text">${cap}</div>
-            </div>`;
-          item.addEventListener('click', () => openLightbox(url));
-          grid.appendChild(item);
-        });
-      }
-
-      try {
-        const res  = await fetch('https://dog.ceo/api/breed/mountain/bernese/images/random/5');
-        const data = await res.json();
-        if (data.status !== 'success' || !data.message?.length) throw new Error();
-        buildItems(data.message);
-      } catch {
-        buildItems(fallbackUrls);
-      }
-    }
-
-    loadGallery();
-
     /* -------------------------------------------------- */
-    /* Lightbox                                           */
+    /* Lightbox (defined first so gallery can reference it) */
     /* -------------------------------------------------- */
     const lightbox      = document.getElementById('lightbox');
     const lightboxImg   = document.getElementById('lightbox-img');
@@ -3600,6 +3581,95 @@
     lightboxClose.addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    /* -------------------------------------------------- */
+    /* Gallery — live Dog CEO API + shuffled fallback pool */
+    /* -------------------------------------------------- */
+    const GALLERY_CAPTIONS = [
+      'Pure joy in every step',
+      'The quintessential Swiss beauty',
+      'Eyes that speak to the soul',
+      'Mountain-born magnificence',
+      'A gentle giant at rest'
+    ];
+
+    // Large pool of verified dog.ceo Bernese Mountain Dog images
+    const BERNER_POOL = [
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_1000.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_10160.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_10228.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_10437.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_10715.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_10758.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_10998.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_11136.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_11571.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_12064.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_12210.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_12468.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_12490.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_1000.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_13053.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_1310.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_1371.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_1381.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_1393.jpg',
+      'https://images.dog.ceo/breeds/mountain-bernese/n02107683_1414.jpg'
+    ];
+
+    function shuffled(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function buildGalleryItems(urls, sourceLabel) {
+      const grid  = document.getElementById('gallery-grid');
+      const label = document.getElementById('gallery-label');
+      grid.innerHTML = '';
+      urls.slice(0, 5).forEach((url, i) => {
+        const cap  = GALLERY_CAPTIONS[i];
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        // Use a placeholder in onerror that's guaranteed to work
+        const fallbackUrl = `https://placehold.co/600x800/3D1C02/D4A843?text=Berner+${i + 1}`;
+        item.innerHTML = `
+          <img src="${url}" alt="${cap}"
+            onerror="this.src='${fallbackUrl}';this.onerror=null;" />
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">${cap}</div>
+          </div>`;
+        item.addEventListener('click', () => openLightbox(url));
+        grid.appendChild(item);
+      });
+      if (label) label.textContent = sourceLabel;
+    }
+
+    async function loadGallery() {
+      const btn = document.getElementById('gallery-refresh');
+      const label = document.getElementById('gallery-label');
+      if (btn) btn.disabled = true;
+      if (label) label.textContent = 'Loading…';
+
+      try {
+        const res  = await fetch('https://dog.ceo/api/breed/mountain/bernese/images/random/5');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        if (data.status !== 'success' || !Array.isArray(data.message) || !data.message.length) throw new Error('bad data');
+        buildGalleryItems(data.message, 'Live photos via Dog CEO API — refreshes every visit');
+      } catch {
+        // Fall back to the shuffled local pool — still shows different images each load
+        buildGalleryItems(shuffled(BERNER_POOL), 'Curated Berner photos — click Refresh for new ones');
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    document.getElementById('gallery-refresh').addEventListener('click', loadGallery);
+    loadGallery();
 
     /* -------------------------------------------------- */
     /* Load a real Berner hero image via Dog CEO API      */
