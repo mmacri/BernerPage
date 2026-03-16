@@ -782,7 +782,7 @@
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(2, 280px);
+      grid-template-rows: 300px 260px;
       gap: 1rem;
     }
     .gallery-item {
@@ -792,13 +792,9 @@
       cursor: pointer;
       background: var(--brown-dark);
     }
+    /* First item spans 2 rows for a tall hero image */
     .gallery-item:first-child {
       grid-row: 1 / 3;
-      grid-column: 1;
-    }
-    .gallery-item:nth-child(4) {
-      grid-row: 1 / 3;
-      grid-column: 3;
     }
     .gallery-item img {
       width: 100%; height: 100%;
@@ -1278,7 +1274,7 @@
       .coat-diagram { grid-template-columns: 1fr; }
       .traits-grid { grid-template-columns: repeat(2, 1fr); }
       .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 220px); }
-      .gallery-item:first-child, .gallery-item:nth-child(4) { grid-row: auto; grid-column: auto; }
+      .gallery-item:first-child { grid-row: auto; }
       .health-grid { grid-template-columns: 1fr; }
       .footer-inner { grid-template-columns: 1fr 1fr; }
     }
@@ -2327,7 +2323,6 @@
       </div>
       <div class="gallery-grid" id="gallery-grid">
         <!-- Populated by JS -->
-        <div class="gallery-item gallery-skeleton"></div>
         <div class="gallery-item gallery-skeleton"></div>
         <div class="gallery-item gallery-skeleton"></div>
         <div class="gallery-item gallery-skeleton"></div>
@@ -3545,51 +3540,42 @@
         'The quintessential Swiss beauty',
         'Eyes that speak to the soul',
         'Mountain-born magnificence',
-        'A gentle giant at rest',
-        'That famous tri-color coat'
+        'A gentle giant at rest'
       ];
 
-      try {
-        const res  = await fetch('https://dog.ceo/api/breed/mountain/bernese/images/random/6');
-        const data = await res.json();
-        if (data.status !== 'success') throw new Error();
+      // Stable fallback images (direct Wikimedia Commons URLs)
+      const fallbackUrls = [
+        'https://upload.wikimedia.org/wikipedia/commons/2/2a/Bernese_Mountain_Dog_600.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/b/b3/Berner_Sennenhund_600.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/f/f9/BernerSennenhund.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/9/9c/Bernese_mountain_dog_on_snow.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/4/4a/Berner_Sennen_Hund.jpg'
+      ];
 
+      function buildItems(urls) {
         grid.innerHTML = '';
-        data.message.forEach((url, i) => {
+        urls.slice(0, 5).forEach((url, i) => {
+          const cap = captions[i] || 'Bernese Mountain Dog';
           const item = document.createElement('div');
           item.className = 'gallery-item';
           item.innerHTML = `
-            <img src="${url}" alt="${captions[i]}" loading="lazy" />
-            <div class="gallery-overlay">
-              <div class="gallery-overlay-text">${captions[i]}</div>
-            </div>`;
-          item.addEventListener('click', () => openLightbox(url));
-          grid.appendChild(item);
-        });
-      } catch {
-        // Fallback: use known stable Wikimedia Berner images
-        const fallbacks = [
-          ['https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Bernese_Mountain_Dog_600.jpg/600px-Bernese_Mountain_Dog_600.jpg', 'Classic Berner portrait'],
-          ['https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Berner_Sennenhund_600.jpg/600px-Berner_Sennenhund_600.jpg', 'Berner in the Alps'],
-          ['https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/BernerSennenhund.jpg/600px-BernerSennenhund.jpg', 'Majestic tri-color coat'],
-          ['https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Dog_Breeds_3.jpg/600px-Dog_Breeds_3.jpg', 'Swiss heritage'],
-          ['https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bernese_mountain_dog_on_snow.jpg/600px-Bernese_mountain_dog_on_snow.jpg', 'In their element — snow'],
-          ['https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Berner_Sennen_Hund.jpg/600px-Berner_Sennen_Hund.jpg', 'Gentle giant']
-        ];
-
-        grid.innerHTML = '';
-        fallbacks.forEach(([url, cap]) => {
-          const item = document.createElement('div');
-          item.className = 'gallery-item';
-          item.innerHTML = `
-            <img src="${url}" alt="${cap}" loading="lazy"
-              onerror="this.closest('.gallery-item').style.background='linear-gradient(135deg,#3D1C02,#6B3D1E)';this.style.display='none'" />
+            <img src="${url}" alt="${cap}"
+              onerror="this.src='https://placehold.co/600x800/3D1C02/D4A843?text=🐾+Berner';this.onerror=null" />
             <div class="gallery-overlay">
               <div class="gallery-overlay-text">${cap}</div>
             </div>`;
           item.addEventListener('click', () => openLightbox(url));
           grid.appendChild(item);
         });
+      }
+
+      try {
+        const res  = await fetch('https://dog.ceo/api/breed/mountain/bernese/images/random/5');
+        const data = await res.json();
+        if (data.status !== 'success' || !data.message?.length) throw new Error();
+        buildItems(data.message);
+      } catch {
+        buildItems(fallbackUrls);
       }
     }
 
